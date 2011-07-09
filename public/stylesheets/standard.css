@@ -1,0 +1,18 @@
+body {
+  font-family: "Lucida Console", Lucida, monospace;
+}
+
+#header-container {
+  float: right;
+  padding: 0px 10px;
+}
+
+#header-title {
+  float: right;
+}
+
+.header-text {
+  font-size: 35pt;
+  font-weight: bold;
+  text-shadow: 0px 0px 25px #000;
+}
