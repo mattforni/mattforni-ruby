@@ -2,14 +2,15 @@
   %head
     %title="mattforni"
     = stylesheet_link_tag "standard"
-    = stylesheet_link_tag "rounding"
+    = stylesheet_link_tag @view_path if stylesheet_exist?(@view_path)
     = javascript_include_tag :defaults
     =# csrf_meta_tag
   
   %body
-    #header-container
-      #header-title.header-text
-        mattforni
-        
-    = yield
-    
+    #body-container
+      #header-container
+        #header-title.header-text
+          = "mattforni"
+      #content-container 
+        = yield
+      

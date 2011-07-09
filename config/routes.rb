@@ -1,6 +1,8 @@
 Mattforni::Application.routes.draw do
   
   root :to => 'splash#index' 
+  
+  match 'posts', :to => 'splash#posts'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
