@@ -25,9 +25,18 @@ body {
 }
 
 .header-text {
-  font-size: 35pt;
+  font-size: 28pt;
   font-weight: bold;
-  text-shadow: 4px 2px 6px #000;
+  color: #ddd;
+  text-shadow: 4px 2px 8px #000;
+}
+
+.sub-header-text {
+  font-size: 11pt;
+  font-weight: bold;
+  color: #ddd;
+  text-shadow: 1px 0px 3px #000;
+  float: right;
 }
 
 

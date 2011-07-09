@@ -28,3 +28,32 @@
     %br
     T
   =# image_tag get_view_image(@view_path, 'right-arrow.png'), :class => "valign"
+
+:javascript
+  jQuery(function($){
+    $(document).ready(function() {
+      $('#right-buffer').click(function() {
+        alert('next');
+      });
+      
+      $('#left-buffer').click(function() {
+        alert('prev');
+      });
+      
+      $('#right-buffer').mouseenter(function() {
+        $('#right-buffer').fadeTo(350, .9);
+      });
+
+      $('#left-buffer').mouseenter(function() {
+        $('#left-buffer').fadeTo(350, .9);  
+      });
+
+      $('#right-buffer').mouseleave(function() {
+        $('#right-buffer').fadeTo(350, .5);
+      });
+
+      $('#left-buffer').mouseleave(function() {
+        $('#left-buffer').fadeTo(350, .5);
+      });
+    });
+  });
