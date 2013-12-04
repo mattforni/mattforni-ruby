@@ -25,6 +25,11 @@ group :development, :test do
   gem 'sqlite3', '~> 1.3'
 end
 
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
+end
+
 group :assets do
   gem 'coffee-rails', '~> 4.0'
   gem 'sass-rails', '~> 4.0'

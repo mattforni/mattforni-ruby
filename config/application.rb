@@ -6,11 +6,8 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
-module Itsmadetoorder
+module Mattforni 
   class Application < Rails::Application
-    # TODO remove this once using proper caching
-    config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public/cached"
-
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
