@@ -1,0 +1,10 @@
+= @post.title
+- if !@post.description.nil?
+  %br
+  = @post.description
+%br
+= @post.content
+%br
+= link_to 'edit', edit_post_path(@post)
+= button_to 'delete', post_path(@post), method: :delete
+

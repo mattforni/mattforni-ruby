@@ -11,3 +11,4 @@ module ApplicationHelper
     File.join(view, filename)
   end
 end
+

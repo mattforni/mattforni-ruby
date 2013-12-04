@@ -1,0 +1,27 @@
+Position Sizing
+= form_tag '/finance/position_sizing' do
+  %table{class: 'position_sizing'}
+    %tr
+      %td
+        = label_tag :account_size, 'Account Size ($)'
+      %td
+        = text_field_tag :account_size, 0, size: 10
+    %tr
+      %td
+        = label_tag :risk, 'Risk (%)'
+      %td
+        = number_field_tag :risk, 1, in: 1..100, step: 0.01, size: 10
+    %tr
+      %td
+        = label_tag :stop, 'Stop (%)'
+      %td
+        = number_field_tag :stop, 1, in: 1..100, step: 0.01, size: 10
+    %tr
+      %td
+        = label_tag :symbol, 'Symbol'
+      %td
+        = text_field_tag :symbol, nil, size: 10, maxlength: 5
+    %tr
+      %td{colspan: 2}
+        = submit_tag 'Calculate'
+

@@ -1,0 +1,14 @@
+= form_for @post do |f|
+  = f.text_field :title
+  %br
+  = f.text_field :short_url
+  %br
+  = f.text_field :description
+  %br
+  = f.text_field :content
+  %br
+  - if @post.id.nil?
+    = f.submit "Create"
+  - else
+    = f.submit "Update"
+
