@@ -1,10 +1,11 @@
 require 'yahoofinance'
-include YahooFinance
 
-module Finance
-  FIELDS = {
-    :get_standard_quotes => [:lastTrade]
-  }
+module Stocks 
+	NA = 'N/A'
+
+	def self.exists?(symbol)
+		get_quote(symbol, ['date'])['date'] != NA
+	end
 
   def self.get_quote(symbol, fields)
     data = {}

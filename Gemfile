@@ -12,8 +12,10 @@ gem 'yahoofinance', '~> 1.2'
 gem 'haml-rails', '~> 0.4'
 gem 'RedCloth', '>= 4.2.9'
 
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
+# The JavaScript libraries
+gem 'jquery-rails', '~> 3.1'
+gem 'angularjs-rails', '~> 1.2'
+gem 'chartjs-rails', '~> 0.1'
 
 # Authorizaion gems
 gem 'devise', '~> 3.2'
