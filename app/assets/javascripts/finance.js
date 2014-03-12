@@ -2,14 +2,14 @@
 
 var QUOTE_URL = '/finance/quote';
 
-function FinanceController($scope) {
-  $scope.accountSize = 0;
+mattforni.controller('FinanceController', function($scope) {
+    $scope.accountSize = 0;
 	$scope.lastTrade = 0;
 	$scope.numShares = 0;
 	$scope.positionSize = 0;
-  $scope.risk = 5;
-  $scope.stop = 25; 
-  $scope.symbol = '';
+    $scope.risk = 5;
+    $scope.stop = 25; 
+    $scope.symbol = '';
 
 	var a = 0;
 	var r = 0;
@@ -39,5 +39,5 @@ function FinanceController($scope) {
 			url: QUOTE_URL
 		});
 	}
-}
+});
 
