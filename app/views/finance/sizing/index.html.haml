@@ -1,31 +1,35 @@
 .position-sizing{'ng-controller' => 'FinanceController'}
-	Position Sizing
-	%table{class: 'position_sizing'}
-		%tr
-			%td
-				= label_tag :accountSize, 'Account Size ($)'
-			%td
-				= number_field_tag :accountSize, 0, size: 10, 'ng-model' => 'accountSize', 'ng-change' => 'update()'
-		%tr
-			%td
-				= label_tag :risk, 'Risk (%)'
-			%td
-				= number_field_tag :risk, 0, in: 0..100, step: 0.01, size: 10, 'ng-model' => 'risk', 'ng-change' => 'update()'
-		%tr
-			%td
-				= label_tag :stop, 'Stop (%)'
-			%td
-				= number_field_tag :stop, 0, in: 0..100, step: 0.01, size: 10, 'ng-model' => 'stop', 'ng-change' => 'update()'
+    Position Sizing
+    %table{class: 'position_sizing'}
+        %tr
+            %td
+                = label_tag :accountSize, 'Account Size ($)'
+            %td
+                = number_field_tag :accountSize, 0, size: 10, 'ng-model' => 'accountSize', 'ng-change' => 'update()', 'ng-blur' => 'sanitize()'
+        %tr
+            %td
+                = label_tag :risk, 'Risk (%)'
+            %td
+                = number_field_tag :risk, 0, in: 0..100, step: 0.01, size: 10, 'ng-model' => 'risk', 'ng-change' => 'update()'
+        %tr
+            %td
+                = label_tag :stop, 'Stop (%)'
+            %td
+                = number_field_tag :stop, 0, in: 0..100, step: 0.01, size: 10, 'ng-model' => 'stop', 'ng-change' => 'update()'
 
-		%tr
-			%td
-				= label_tag :symbol, 'Symbol'
-			%td
-				= text_field_tag :symbol, '', size: 10, maxlength: 5, 'ng-model' => 'symbol', 'ng-blur' => 'quote()'
-	%br
-	Position Size: ${{positionSize}}
-	%br
-	Last Trade: ${{lastTrade}}
-	%br
-	Num Shares: {{numShares}}
+        %tr
+            %td
+                = label_tag :symbol, 'Symbol'
+            %td
+                = text_field_tag :symbol, '', size: 10, maxlength: 5, 'ng-model' => 'symbol', 'ng-blur' => 'quote()'
+    %br
+    Position Size: ${{positionSize}}
+    %br
+    Num Shares: {{numShares}}
+    %br
+    Last Trade: ${{lastTrade}}
+    %br
+    Stop Price: ${{stopPrice}}
+    %br
+    Possible Loss: ${{possibleLoss}}
 
