@@ -1,12 +1,12 @@
 /**
  * This file contains all JavaScript logic pertinent to the finance pages.
- * 
+ *
  * @author Matt Fornaciari (mattforni@gmail.com)
  */
 
 //= require chart
 
-var QUOTE_URL = '/finance/quote';
+var LAST_TRADE_URL = '/finance/last_trade';
 
 /**
  * Creates, scopes and binds the FinanceController to the angular module
@@ -22,30 +22,32 @@ mattforni.controller('FinanceController', ['$scope',
         $scope.positionSize = 0;
         $scope.possibleLoss = 0;
         $scope.risk = 5;
-        $scope.stop = 25; 
+        $scope.stop = 25;
         $scope.stopPrice = 0;
         $scope.symbol = "";
 
         var a = 0;
         var r = 0;
 
-
         /**
          * Formats the stock symbol and then attempts to retrieves a quote for
          * said symbol, updating the lastTrade value on success.
          */
-        $scope.quote = function() {
-            if (!$scope.symbol) { return; }
-            // Make symbol upper case for compliance 
+        $scope.last_trade = function() {
+            // Makes symbol upper case for compliance
             $scope.symbol = $scope.symbol.toUpperCase();
-            var request = $.ajax({
+                $.ajax({
                 accepts: 'json',
                 data: {
-                    symbol: $scope.symbol 
+                    symbol: $scope.symbol
                 },
                 dataType: 'json',
                 type: 'GET',
-                url: QUOTE_URL
+                success: function(data, code, jqXHR) {
+                    $scope.lastTrade = data
+                    $scope.update(true);
+                },
+                url: LAST_TRADE_URL
             });
 
             // Bind the success handler to the ajax request object
@@ -53,7 +55,7 @@ mattforni.controller('FinanceController', ['$scope',
                 $scope.lastTrade = data['lastTrade'];
                 $scope.update(true);
             });
-        } // End $scope.quote
+        } // End $scope.last_trade
 
         /**
          * Updates all variables associated with position sizing. 

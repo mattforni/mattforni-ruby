@@ -1,0 +1,12 @@
+%tr
+    %td
+        = stop.symbol
+    %td
+        = stop.percentage
+    %td
+        = stop.stop_price.round(3)
+    %td
+        = stop.quantity.nil? ? Stop::NA : stop.quantity
+    %td
+        = stop.updated_at
+

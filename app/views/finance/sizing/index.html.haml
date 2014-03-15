@@ -16,12 +16,11 @@
                 = label_tag :stop, 'Stop (%)'
             %td
                 = number_field_tag :stop, 0, in: 0..100, step: 0.01, size: 10, 'ng-model' => 'stop', 'ng-change' => 'update()'
-
         %tr
             %td
                 = label_tag :symbol, 'Symbol'
             %td
-                = text_field_tag :symbol, '', size: 10, maxlength: 5, 'ng-model' => 'symbol', 'ng-blur' => 'quote()'
+                = text_field_tag :symbol, '', size: 10, maxlength: 5, 'ng-model' => 'symbol', 'ng-blur' => 'last_trade()'
     %br
     Position Size: ${{positionSize}}
     %br
