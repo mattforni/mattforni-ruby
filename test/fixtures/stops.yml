@@ -1,0 +1,5 @@
+default:
+  symbol: ABC 
+  percentage: 5 
+  stop_price: 20 
+

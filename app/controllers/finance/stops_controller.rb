@@ -1,3 +1,7 @@
+require 'stocks'
+include Stocks
+
+# TODO test all methods except index
 module Finance
 	class StopsController < ApplicationController
 		before_action :find_stop, except: [:create, :index, :new]
@@ -5,7 +9,9 @@ module Finance
 		def create
 			@stop = Stop.new(stop_params)
 			@stop.symbol.upcase!
-			@stop.save!
+      @stop.attempt_update if @stop.stop_price.nil?
+      @stop.save!
+      redirect_to finance_stops_path
 		end
 
 		def destroy
@@ -14,7 +20,7 @@ module Finance
 		def edit
 		end
 
-		def index 
+		def index
 			@stops = Stop.all
 		end
 
@@ -37,9 +43,7 @@ module Finance
 		def stop_params
 			params.require(:stop).permit(
 				:percentage,
-				:pinnacle_date,
-				:pinnacle_price,
-				:quantity, 
+				:quantity,
 				:stop_price,
 				:symbol)
 		end

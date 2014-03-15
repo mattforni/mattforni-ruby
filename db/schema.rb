@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131012202722) do
+ActiveRecord::Schema.define(version: 20140310025441) do
 
   create_table "posts", force: true do |t|
     t.string   "title",       null: false
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 20131012202722) do
   add_index "posts", ["content"], name: "post_content_index"
   add_index "posts", ["short_url"], name: "post_short_url_uniqueness", unique: true
   add_index "posts", ["title"], name: "post_title_uniqueness", unique: true
+
+  create_table "stops", force: true do |t|
+    t.string   "symbol",         limit: 10,                          null: false
+    t.decimal  "percentage",                precision: 15, scale: 5, null: false
+    t.decimal  "stop_price",                precision: 15, scale: 5, null: false
+    t.decimal  "quantity",                  precision: 15, scale: 3
+    t.decimal  "pinnacle_price",            precision: 15, scale: 5
+    t.datetime "pinnacle_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "taggings", force: true do |t|
     t.integer  "tag_id"

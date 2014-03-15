@@ -21,7 +21,7 @@
 			%td
 				= label_tag :symbol, 'Symbol'
 			%td
-				= text_field_tag :symbol, '', size: 10, maxlength: 5, 'ng-model' => 'symbol', 'ng-blur' => 'quote()'
+				= text_field_tag :symbol, '', size: 10, maxlength: 5, 'ng-model' => 'symbol', 'ng-blur' => 'last_trade()'
 	%br
 	Position Size: ${{positionSize}}
 	%br

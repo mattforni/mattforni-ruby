@@ -2,12 +2,10 @@ require 'stocks'
 
 module Finance
 	class AjaxController < ApplicationController
-		def quote
-			@quote = Stocks.get_quote(params[:symbol], [:lastTrade])
-			
+		def last_trade 
 			# TODO update to reject HTML requests
 			respond_to do |format|
-				format.json { render json: @quote }
+				format.json { render json: Stocks.last_trade(params[:symbol]) }
 			end
 		end
 	end
