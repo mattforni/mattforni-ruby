@@ -4,13 +4,12 @@ include Stocks
 # TODO test all methods except index
 module Finance
 	class StopsController < ApplicationController
-		before_action :find_stop, except: [:create, :index, :new]
+		before_action :find_stop, only: [:destroy, :edit, :show, :update]
 
 		def create
 			@stop = Stop.new(stop_params)
 			@stop.symbol.upcase!
-      @stop.attempt_update if @stop.stop_price.nil?
-      @stop.save!
+      @stop.save! if @stop.update?
       redirect_to finance_stops_path
 		end
 

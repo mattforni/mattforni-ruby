@@ -4,6 +4,8 @@
     %td
         = stop.percentage
     %td
+        = stop.last_trade.round(3)
+    %td
         = stop.stop_price.round(3)
     %td
         = stop.quantity.nil? ? Stop::NA : stop.quantity

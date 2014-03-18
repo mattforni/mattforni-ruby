@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20140310025441) do
   create_table "stops", force: true do |t|
     t.string   "symbol",         limit: 10,                          null: false
     t.decimal  "percentage",                precision: 15, scale: 5, null: false
+    t.decimal  "last_trade",                precision: 15, scale: 5, null: false
     t.decimal  "stop_price",                precision: 15, scale: 5, null: false
     t.decimal  "quantity",                  precision: 15, scale: 3
     t.decimal  "pinnacle_price",            precision: 15, scale: 5

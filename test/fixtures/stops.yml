@@ -1,5 +1,6 @@
 default:
   symbol: ABC 
   percentage: 5 
+  last_trade: 40
   stop_price: 20 
 
