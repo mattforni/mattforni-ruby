@@ -24,7 +24,7 @@ module Finance
               stopped_out << stop if stop.stopped_out?
             end
           end
-          StopMailer.stopped_out(stopped_out).deliver
+          StopMailer.stopped_out(stopped_out).deliver if !stopped_out.empty?
           render json: {
             evaluated: stops.size,
             stop_updated: {number: stop_updated.size, records: stop_updated},
