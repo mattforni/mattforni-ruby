@@ -11,9 +11,10 @@ Mattforni::Application.routes.draw do
 
   # Finance controllers
   namespace 'finance' do
-    get '/sizing', to: 'sizing#index'
-    resources :stops
     get '/last_trade', to: 'ajax#last_trade'
+    get '/sizing', to: 'sizing#index'
+    get '/stops/analyze', to: 'stops#analyze'
+    resources :stops
   end
 end
 
