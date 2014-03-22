@@ -1,4 +1,7 @@
+require 'stocks'
 require 'test_helper'
+
+include Stocks
 
 class StopTest < ActiveSupport::TestCase
   setup { @stop = stops(:default) }
@@ -10,7 +13,7 @@ class StopTest < ActiveSupport::TestCase
     # Test when stop symbol is invalid
     @stop.symbol = 'Invalid'
     last_trade = @stop.last_trade
-    assert_nothing_raised { assert !@stop.update_last_trade?, 'Stop was updated despite being invalid' }
+    assert_raises (RetrievalError) { @stop.update_last_trade? }
     assert_equal last_trade, @stop.last_trade, 'Last trade does not still equal previous value'
 
     # Test when last_trade is nil 
@@ -38,8 +41,8 @@ class StopTest < ActiveSupport::TestCase
     # Test when last_trade is nil
     @stop.last_trade = nil
     stop_price = @stop.stop_price
-    assert_nothing_raised { assert !@stop.update_stop_price?, 'Stop was updated despite being invalid' }
-    assert_equal stop_price, @stop.stop_price, 'Stop price does not still equal previous value'
+    assert_nothing_raised { assert @stop.update_stop_price?, 'Stop failed to update nil last trade' }
+    assert_not_equal stop_price, @stop.stop_price, 'Stop price was not updated despite change'
 
     # Test when stop_price is nil
     @stop.symbol = symbol

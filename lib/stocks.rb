@@ -10,7 +10,15 @@ module Stocks
 	end
 
   def self.last_trade(symbol)
-    quote(symbol)[:lastTrade]
+    last_trade = quote(symbol)[:lastTrade]
+    raise RetrievalError.new("Could not retrieve last trade for '#{symbol}'") if last_trade == 0 or last_trade == NA
+    last_trade
+  end
+
+  class RetrievalError < RuntimeError
+    def new(message)
+      super(message)
+    end
   end
 
   private
