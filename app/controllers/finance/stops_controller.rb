@@ -9,7 +9,7 @@ module Finance
     def create
       @stop = Stop.new(stop_params)
       @stop.symbol.upcase!
-      @stop.save! if @stop.update_stop_price?
+      @stop.save! if @stop.update?
       redirect_to finance_stops_path
     end
 

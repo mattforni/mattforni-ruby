@@ -10,6 +10,12 @@ class Stop < ActiveRecord::Base
   validates :symbol, presence: true, uniqueness: true
   validates_with StockValidator
 
+  def update?
+    update_lt = update_last_trade?
+    update_sp = update_stop_price?
+    update_lt or update_sp
+  end
+
   def update_last_trade?
     last_trade = get_last_trade
     if self.last_trade.nil? or self.last_trade != last_trade
