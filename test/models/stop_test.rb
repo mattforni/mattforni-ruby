@@ -6,6 +6,22 @@ include Stocks
 class StopTest < ActiveSupport::TestCase
   setup { @stop = stops(:default) }
 
+  test 'stopped out functionality' do
+    assert_respond_to @stop, :stopped_out?, 'Stop cannot determine if stopped out'
+
+    # Test when last_trade less than stop_price
+    @stop.last_trade = @stop.stop_price - 1
+    assert @stop.stopped_out?, 'Not stopped out despite last_trade being less than stop_price'
+
+    # Test when last_trade equal to stop_price
+    @stop.last_trade = @stop.stop_price
+    assert @stop.stopped_out?, 'Not stopped out despite last_trade being equal to stop_price'
+
+    # Test when last_trade greater than stop_price
+    @stop.last_trade = @stop.stop_price + 1
+    assert !@stop.stopped_out?, 'Stopped out despite last_trade being greater than stop_price'
+  end
+
   test 'update last trade functionality' do
     symbol = @stop.symbol
     assert_respond_to @stop, :update_last_trade?, 'Stop cannot update last trade'
@@ -62,62 +78,62 @@ class StopTest < ActiveSupport::TestCase
     assert_nothing_raised { assert @stop.update_stop_price?, 'Stop was not updated despite negative stop price' }
     assert_not_equal -1, @stop.stop_price, 'Stop still equals previous value'
 
-    # Test when stop_price has not changed 
+    # Test when stop_price has not changed
     stop_price = @stop.stop_price
     assert_nothing_raised { assert !@stop.update_stop_price?, 'Stop was updated despite still being equal to previous value' }
     assert_equal stop_price, @stop.stop_price, 'Stop price does not still equal previous value'
   end
 
-  test 'last_trade presence validation' do
+  test 'validate last_trade presence' do
     @stop.last_trade = nil
     assert !@stop.valid?, 'Stop is considered valid'
     assert !@stop.save, 'Stop saved without a last trade'
     assert @stop.errors[:last_trade].any?, 'Stop does not have an error on last_trade'
   end
 
-  test 'last_trade under range validation' do
-    @stop.last_trade = 0 
+  test 'validate last_trade under range' do
+    @stop.last_trade = 0
     assert !@stop.valid?, 'Stop is considered valid'
     assert !@stop.save, 'Stop saved with a last_trade equal to 0'
     assert @stop.errors[:last_trade].any?, 'Stop does not have an error on last_trade'
   end
 
-  test 'precentage presence validation' do
+  test 'validate precentage presence' do
     @stop.percentage = nil
     assert !@stop.valid?, 'Stop is considered valid'
     assert !@stop.save, 'Stop saved without a percentage'
     assert @stop.errors[:percentage].any?, 'Stop does not have an error on percentage'
   end
 
-  test 'percentage over range validation' do
+  test 'validate percentage over range' do
     @stop.percentage = 100
     assert !@stop.valid?, 'Stop is considered valid'
     assert !@stop.save, 'Stop saved with a percentage equal to 100'
     assert @stop.errors[:percentage].any?, 'Stop does not have an error on percentage'
   end
 
-  test 'precentage under range validation' do
-    @stop.percentage = 0 
+  test 'validate precentage under range' do
+    @stop.percentage = 0
     assert !@stop.valid?, 'Stop is considered valid'
     assert !@stop.save, 'Stop saved with a percentage equal to 0'
     assert @stop.errors[:percentage].any?, 'Stop does not have an error on percentage'
   end
 
-  test 'stop_price presence validation' do
+  test 'validate stop_price presence' do
     @stop.stop_price = nil
     assert !@stop.valid?, 'Stop is considered valid'
     assert !@stop.save, 'Stop saved without a stop price'
     assert @stop.errors[:stop_price].any?, 'Stop does not have an error on stop_price'
   end
 
-  test 'symbol presence validation' do
+  test 'validate symbol presence' do
     @stop.symbol = nil
     assert !@stop.valid?, 'Stop is considered valid'
     assert !@stop.save, 'Stop saved without a symbol'
     assert @stop.errors[:symbol].any?, 'Stop does not have an error on symbol'
   end
 
-  test 'symbol uniqueness validation' do
+  test 'validate symbol uniqueness' do
     @stop = Stop.new
     stops(:default).initialize_dup(@stop)
     assert !@stop.valid?, 'Stop is considered valid'
@@ -125,7 +141,7 @@ class StopTest < ActiveSupport::TestCase
     assert @stop.errors[:symbol].any?, 'Stop does not have an error on symbol'
   end
 
-  test 'symbol validity validation' do
+  test 'validate symbol validity' do
     @stop.symbol = 'Invalid'
     assert !@stop.save, 'Stop saved with an invalid symbol'
     assert @stop.errors[:symbol].any?, 'Stop does not have an error on symbol'

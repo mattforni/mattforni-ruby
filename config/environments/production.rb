@@ -79,6 +79,6 @@ Mattforni::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   # Added for devise.
-  config.action_mailer.default_url_options = { :host => 'itsmadetoorder.com' }
+  config.action_mailer.default_url_options = { :host => 'mattforni.com' }
 end
 

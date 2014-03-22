@@ -13,15 +13,22 @@ module Finance
           # Render a 401 and return if an invalid token is provided
           render json: {}, status: 401 and return if params[:token].nil? or params[:token] != 'f0rnuc0pia'
           # Else evaluate all stops and update stop price if necessary
-          updated = []
+          stopped_out = []
+          stop_updated = []
           stops = Stop.all
           stops.each do |stop|
-            if stop.update_stop_price?
+            # If last trade has not changed no need to evaluate
+            if stop.update_last_trade?
+              stop_updated << stop if stop.update_stop_price?
               stop.save!
-              updated << {symbol: stop.symbol, stop_price: stop.stop_price}
+              stopped_out << stop if stop.stopped_out?
             end
           end
-          render json: {evaluated: stops.size, updated: {number: updated.size, records: updated}}
+          StopMailer.stopped_out(stopped_out).deliver
+          render json: {
+            evaluated: stops.size,
+            stop_updated: {number: stop_updated.size, records: stop_updated},
+            stopped_out: {number: stopped_out.size, records: stopped_out}}
         end
       end
     end
