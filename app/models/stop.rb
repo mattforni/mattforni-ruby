@@ -10,6 +10,10 @@ class Stop < ActiveRecord::Base
   validates :symbol, presence: true, uniqueness: true
   validates_with StockValidator
 
+  def price_diff
+    self.last_trade - self.stop_price
+  end
+
   def stopped_out?
     self.last_trade <= self.stop_price
   end

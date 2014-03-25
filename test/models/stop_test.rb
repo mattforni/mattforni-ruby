@@ -6,6 +6,22 @@ include Stocks
 class StopTest < ActiveSupport::TestCase
   setup { @stop = stops(:default) }
 
+  test 'price diff functionality' do
+    assert_respond_to @stop, :price_diff, 'Stop cannot calculate price diff'
+
+    # Test when last_trade less than stop_price
+    @stop.last_trade = @stop.stop_price - 1
+    assert_equal -1, @stop.price_diff, 'Price diff not calculated correctly when last_trade less than stop_price'
+
+    # Test when last_trade equal to stop_price
+    @stop.last_trade = @stop.stop_price
+    assert_equal 0, @stop.price_diff, 'Price diff not calculated correctly when last_trade equal to stop_price'
+
+    # Test when last_trade greater than stop_price
+    @stop.last_trade = @stop.stop_price + 1
+    assert_equal 1, @stop.price_diff, 'Price diff not calculated correctly when last_trade greater than stop_price'
+  end
+
   test 'stopped out functionality' do
     assert_respond_to @stop, :stopped_out?, 'Stop cannot determine if stopped out'
 

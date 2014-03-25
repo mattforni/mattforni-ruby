@@ -8,6 +8,8 @@
     %td
         = stop.stop_price.round(3)
     %td
+        = stop.price_diff.round(3)
+    %td
         = stop.quantity.nil? ? Stop::NA : stop.quantity
     %td
         = stop.updated_at
