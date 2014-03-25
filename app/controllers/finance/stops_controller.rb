@@ -48,7 +48,7 @@ module Finance
     end
 
     def index
-      @stops = Stop.all.order(:symbol)
+      @stops = Stop.order(:symbol)
     end
 
     def new

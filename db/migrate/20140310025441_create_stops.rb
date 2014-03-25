@@ -13,3 +13,4 @@ class CreateStops < ActiveRecord::Migration
     end
   end
 end
+

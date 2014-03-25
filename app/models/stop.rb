@@ -24,7 +24,6 @@ class Stop < ActiveRecord::Base
     update_lt or update_sp
   end
 
-  # TODO incorporate pinnacle_price and pinnacle_date
   def update_last_trade?
     last_trade = get_last_trade
     if self.last_trade.nil? or self.last_trade != last_trade
@@ -38,6 +37,8 @@ class Stop < ActiveRecord::Base
     stop_price = calc_stop_price
     if self.stop_price.nil? or self.stop_price < stop_price
       self.stop_price = stop_price
+      self.pinnacle_price = self.last_trade
+      self.pinnacle_date = Date.today
       return true
     end
     false

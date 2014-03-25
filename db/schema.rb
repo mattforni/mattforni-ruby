@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140310025441) do
+ActiveRecord::Schema.define(version: 20140325054155) do
 
   create_table "posts", force: true do |t|
     t.string   "title",       null: false
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20140310025441) do
     t.decimal  "stop_price",                precision: 15, scale: 5, null: false
     t.decimal  "quantity",                  precision: 15, scale: 3
     t.decimal  "pinnacle_price",            precision: 15, scale: 5
-    t.datetime "pinnacle_date"
+    t.date     "pinnacle_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -59,14 +59,20 @@ ActiveRecord::Schema.define(version: 20140310025441) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true
 
   create_table "users", force: true do |t|
-    t.string   "login",                         null: false
-    t.string   "email",                         null: false
-    t.string   "crypted_password",              null: false
-    t.string   "password_salt",                 null: false
-    t.string   "persistence_token",             null: false
-    t.integer  "login_count",       default: 0, null: false
-    t.datetime "last_login_at"
-    t.string   "last_login_ip"
+    t.string   "email",                              null: false
+    t.string   "encrypted_password",                 null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

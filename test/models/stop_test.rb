@@ -66,23 +66,29 @@ class StopTest < ActiveSupport::TestCase
   end
 
   test 'update stop price functionality' do
-    symbol = @stop.symbol
     last_trade = @stop.last_trade
+
     assert_respond_to @stop, :update_stop_price?, 'Stop cannot update stop price'
 
     # Test when last_trade is nil
     @stop.last_trade = nil
     stop_price = @stop.stop_price
+    assert_nil @stop.pinnacle_price, 'Stop has a pinnacle price'
+    assert_nil @stop.pinnacle_date, 'Stop has a pinnacle date'
     assert_nothing_raised { assert @stop.update_stop_price?, 'Stop failed to update nil last trade' }
     assert_not_equal stop_price, @stop.stop_price, 'Stop price was not updated despite change'
+    assert_not_nil @stop.pinnacle_price, 'Stop does note have a pinnacle price'
+    assert_not_nil @stop.pinnacle_date, 'Stop does not have a pinnacle date'
 
     # Test when stop_price is nil
-    @stop.symbol = symbol
-    @stop.last_trade = last_trade
+    @stop.last_trade= last_trade
     @stop.stop_price = nil
-    assert_nil @stop.stop_price, 'Stop has an associated stop price'
+    @stop.pinnacle_price = nil
+    @stop.pinnacle_date = nil
     assert_nothing_raised { assert @stop.update_stop_price?, 'Stop was not updated despite nil stop price' }
     assert_not_nil @stop.stop_price, 'Stop does not have an associated stop price'
+    assert_not_nil @stop.pinnacle_price, 'Stop does note have a pinnacle price'
+    assert_not_nil @stop.pinnacle_date, 'Stop does not have a pinnacle date'
 
     # Test when new stop is less than stop_price
     @stop.stop_price = BigDecimal::INFINITY
@@ -90,9 +96,13 @@ class StopTest < ActiveSupport::TestCase
     assert_equal BigDecimal::INFINITY, @stop.stop_price, 'Stop price still equals infinity'
 
     # Test when new stop is greater than stop_price
-    @stop.stop_price = -1 
+    @stop.stop_price = -1
+    @stop.pinnacle_price = nil
+    @stop.pinnacle_date = nil
     assert_nothing_raised { assert @stop.update_stop_price?, 'Stop was not updated despite negative stop price' }
     assert_not_equal -1, @stop.stop_price, 'Stop still equals previous value'
+    assert_not_nil @stop.pinnacle_price, 'Stop does note have a pinnacle price'
+    assert_not_nil @stop.pinnacle_date, 'Stop does not have a pinnacle date'
 
     # Test when stop_price has not changed
     stop_price = @stop.stop_price
