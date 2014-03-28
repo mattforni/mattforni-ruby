@@ -1,5 +1,5 @@
 module Finance
-  class SizingController < ApplicationController
+  class SizingController < FinanceController
     def index 
     end
   end

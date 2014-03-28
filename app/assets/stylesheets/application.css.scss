@@ -1,9 +1,70 @@
+@mixin rounded-corners($radius) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+}
+
+@mixin box-shadow($offset-x, $offset-y, $blur, $color) {
+  box-shadow: $offset-x $offset-y $blur $color;
+  -moz-box-shadow: $offset-x $offset-y $blur $color;
+  -webkit-box-shadow: $offset-x $offset-y $blur $color;
+}
+
+@mixin gradient($top, $bottom) {
+  // old browsers
+  background: $top;
+  // ff3.6+
+  background: -moz-linear-gradient(top, $top 0%, $bottom 100%);
+  // chrome, safari4+
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$top), color-stop(100%,$bottom));
+  // chrome10+, safari5.1+
+  background: -webkit-linear-gradient(top, $top 0%,$bottom 100%);
+  // ie10+
+  background: -ms-linear-gradient(top, $top 0%,$bottom 100%);
+  // w3c
+  background: linear-gradient(to bottom, $top 0%,$bottom 100%);
+  // ie6-9
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$top, endColorstr=$bottom,GradientType=0 );
+}
+
 * {
   font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  padding: 0;
+}
+
+#header {
+  display: block;
+  width: 100%;
+  @include box-shadow(0px, 1px, 5px, black);
+  #logo-wrapper {
+    display: inline-block;
+    padding: 5px 10px;
+    #logo {
+      height: 40px;
+    }
+  }
+  #caption {
+    display: inline-block;
+    font-style: italic;
+    vertical-align: 15px;
+  }
+  #login-wrapper {
+    float: right;
+    padding: 15px 10px;
+  }
+}
+
+#content-wrapper {
+  display: block;
+  margin: 10px;
+  #content {
+    display: block;
+  }
 }
 
 #nothing {
-  float: left;
+  display: inline-block;
   margin: 250px 0px 0px 275px;
   font-size: 32px;
 }
