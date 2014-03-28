@@ -1,7 +1,5 @@
 class AddDeviseToUsers < ActiveRecord::Migration
   def self.up
-    # TODO remember to remove
-    drop_table :users
     create_table :users do |t|
       ## Database authenticatable
       t.string :email, null: false, unique: true
