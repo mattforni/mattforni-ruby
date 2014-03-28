@@ -3,7 +3,8 @@ include Stocks
 
 # TODO test all methods except index
 module Finance
-  class StopsController < ApplicationController
+  class StopsController < FinanceController
+    before_action :authenticate_user!, except: [:analyze]
     before_action :find_stop, only: [:destroy, :edit, :show, :update]
 
     def analyze

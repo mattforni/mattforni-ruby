@@ -1,10 +1,11 @@
 Mattforni::Application.routes.draw do
   root :to => 'application#splash' 
-  resource :user_session
+
+  devise_for :users
 
   # Blog controllers
 =begin TODO uncomment when properly setup
-  namespace '/blog' do
+  namespace 'blog' do
     resources :posts
   end
 =end
