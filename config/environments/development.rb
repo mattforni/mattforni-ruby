@@ -31,12 +31,12 @@ Mattforni::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {
     address: 'smtp.gmail.com',
-    port: 587,
-    domain: 'gmail.com',
-    user_name: 'matthew.fornaciari@gmail.com',
-    password: 'W3lc0m3!',
     authentication: 'plain',
-    enable_starttls_auto: true
+    domain: 'gmail.com',
+    enable_starttls_auto: true,
+    password: 'W3lc0m3!',
+    port: 587,
+    user_name: 'matthew.fornaciari@gmail.com'
   }
 end
 
