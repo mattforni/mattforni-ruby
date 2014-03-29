@@ -1,5 +1,5 @@
 class StopMailer < ActionMailer::Base
-  default from: "sentinel@example.com"
+  default from: "sentinel@mattforni.com"
 
   STOPPED_OUT_SUBJECT = 'Some of your positions have stopped out'
 
@@ -8,3 +8,4 @@ class StopMailer < ActionMailer::Base
     mail(to: 'mattforni@gmail.com', subject: STOPPED_OUT_SUBJECT)
   end
 end
+
