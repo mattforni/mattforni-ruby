@@ -1,21 +1,5 @@
 - if @stops.empty?
     No stops yet.
 - else
-    %table
-        %tr
-            %th
-                Symbol
-            %th
-                Percentage (%)
-            %th
-                Last Trade
-            %th
-                Stop Price
-            %th
-                Price Diff
-            %th
-                Quantity
-            %th
-                Last Updated
-        - @stops.each do |stop|
-            = render partial: 'stop_row', locals: {stop: stop}
+    = render partial: 'stop_table', locals: {stops: @stops}
+

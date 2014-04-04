@@ -1,22 +1,5 @@
 %html
     %body
-        %table
-            %tr
-                %th
-                    Symbol
-                %th
-                    Percentage (%)
-                %th
-                    Last Trade
-                %th
-                    Stop Price
-                %th
-                    Price Diff
-                %th
-                    Quantity
-                %th
-                    Last Updated
-            - @stops.each do |stop|
-                = render partial: 'finance/stops/stop_row', locals: {stop: stop}
+        = render partial: 'stop_table', locals: {stops: @stops}
         = "Please visit #{finance_stops_url} to further assess."
 

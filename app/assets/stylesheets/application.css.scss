@@ -64,16 +64,17 @@
 }
 
 #nothing {
-  display: inline-block;
-  margin: 250px 0px 0px 275px;
+  display: block;
+  padding: 250px 0 0 275px;
   font-size: 32px;
 }
 
 #come-back {
-  float: right;
-  margin: 300px 275px 0px 0px;
+  display: block;
+  padding: 15px 275px 0 0;
   font-weight: bold;
   font-style: italic;
+  text-align: right;
   text-decoration: underline;
 }
 

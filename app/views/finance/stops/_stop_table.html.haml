@@ -1,0 +1,41 @@
+%table
+    %tr
+        %th
+            Symbol
+        %th
+            Percentage (%)
+        %th
+            Last Trade
+        %th
+            Stop Price
+        %th
+            Price Diff
+        %th
+            Quantity
+        %th
+            Pinnacle Price
+        %th
+            Pinnacle Date
+        %th
+            Last Updated
+    - stops.each do |stop|
+        %tr
+            %td
+                = stop.symbol
+            %td
+                = stop.percentage
+            %td
+                = stop.last_trade.round(3)
+            %td
+                = stop.stop_price.round(3)
+            %td
+                = stop.price_diff.round(3)
+            %td
+                = alt_display stop.quantity
+            %td
+                = alt_display stop.pinnacle_price
+            %td
+                = alt_display stop.pinnacle_date
+            %td
+                = stop.updated_at
+

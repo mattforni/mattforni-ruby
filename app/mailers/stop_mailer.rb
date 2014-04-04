@@ -1,5 +1,6 @@
 class StopMailer < ActionMailer::Base
   default from: "sentinel@mattforni.com"
+  helper :application
 
   STOPPED_OUT_SUBJECT = 'Some of your positions have stopped out'
 
