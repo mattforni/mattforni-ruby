@@ -4,3 +4,4 @@ class AddIndicesOnStopsAndUsers < ActiveRecord::Migration
     add_index :users, :email, name: 'by_email'
   end
 end
+

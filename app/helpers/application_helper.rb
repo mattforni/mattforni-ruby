@@ -6,7 +6,7 @@ module ApplicationHelper
   end
 
   def price_class(value)
-    return value > 0 ? 'positive' : 'negative'
+    return value > 0 ? 'positive' : (value == 0 ? '' : 'negative')
   end
 end
 
