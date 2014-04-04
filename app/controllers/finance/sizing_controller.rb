@@ -1,6 +1,6 @@
 module Finance
   class SizingController < FinanceController
-    def index 
+    def index
     end
   end
 end

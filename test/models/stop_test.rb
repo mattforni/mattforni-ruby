@@ -4,7 +4,7 @@ require 'test_helper'
 include Stocks
 
 class StopTest < ActiveSupport::TestCase
-  setup { @stop = stops(:default) }
+  setup { @stop = stops(:stop) }
 
   test 'price diff functionality' do
     assert_respond_to @stop, :price_diff, 'Stop cannot calculate price diff'
@@ -156,14 +156,6 @@ class StopTest < ActiveSupport::TestCase
     @stop.symbol = nil
     assert !@stop.valid?, 'Stop is considered valid'
     assert !@stop.save, 'Stop saved without a symbol'
-    assert @stop.errors[:symbol].any?, 'Stop does not have an error on symbol'
-  end
-
-  test 'validate symbol uniqueness' do
-    @stop = Stop.new
-    stops(:default).initialize_dup(@stop)
-    assert !@stop.valid?, 'Stop is considered valid'
-    assert !@stop.save, 'Stop saved with a duplicate symbol'
     assert @stop.errors[:symbol].any?, 'Stop does not have an error on symbol'
   end
 

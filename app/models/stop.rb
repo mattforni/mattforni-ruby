@@ -7,8 +7,11 @@ class Stop < ActiveRecord::Base
   validates :last_trade, presence: true, numericality: {greater_than: 0}
   validates :percentage, presence: true, numericality: {greater_than: 0, less_than: 100}
   validates :stop_price, presence: true
-  validates :symbol, presence: true, uniqueness: true
+  validates :symbol, presence: true
+  validates :user, presence: true
   validates_with StockValidator
+
+  belongs_to :user
 
   def price_diff
     self.last_trade - self.stop_price

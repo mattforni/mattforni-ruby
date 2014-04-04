@@ -17,6 +17,8 @@
         %th
             Pinnacle Date
         %th
+            Owner
+        %th
             Last Updated
     - stops.each do |stop|
         %tr
@@ -36,6 +38,8 @@
                 = alt_display stop.pinnacle_price
             %td
                 = alt_display stop.pinnacle_date
+            %td
+                = stop.user.email
             %td
                 = stop.updated_at
 
