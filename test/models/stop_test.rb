@@ -6,6 +6,15 @@ include Stocks
 class StopTest < ActiveSupport::TestCase
   setup { @stop = stops(:stop) }
 
+  test 'by_user functionality' do
+    assert_equal 2, Stop.all.size, 'There are not two stops defined'
+
+    # Test stop retrieval by user
+    stops = Stop.by_user(users(:user))
+    assert_equal 1, stops.size, 'Did not find a stop for the default user'
+    assert_equal stops(:stop), stops.first, 'Stop found for the default user is not the default stop'
+  end
+
   test 'price diff functionality' do
     assert_respond_to @stop, :price_diff, 'Stop cannot calculate price diff'
 
@@ -163,6 +172,13 @@ class StopTest < ActiveSupport::TestCase
     @stop.symbol = 'Invalid'
     assert !@stop.save, 'Stop saved with an invalid symbol'
     assert @stop.errors[:symbol].any?, 'Stop does not have an error on symbol'
+  end
+
+  test 'validate user presence' do
+    @stop.user = nil
+    assert !@stop.valid?, 'Stop is considered valid'
+    assert !@stop.save, 'Stop saved without a user'
+    assert @stop.errors[:user].any?, 'Stop does not have an error on user'
   end
 end
 

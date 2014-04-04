@@ -1,7 +1,16 @@
 stop:
+  id: 0
   symbol: ABC
   percentage: 5
   last_trade: 40
   stop_price: 20
-  user: users(:user)
+  user_id: 0
+
+other:
+  id: 1
+  symbol: ABC
+  percentage: 10
+  last_trade: 30
+  stop_price: 20
+  user_id: 1
 

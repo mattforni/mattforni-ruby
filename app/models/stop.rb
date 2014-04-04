@@ -13,6 +13,12 @@ class Stop < ActiveRecord::Base
 
   belongs_to :user
 
+  ## Class methods
+  def self.by_user(user)
+    Stop.where(user_id: user.id)
+  end
+
+  ## Instance methods
   def price_diff
     self.last_trade - self.stop_price
   end
@@ -49,13 +55,13 @@ class Stop < ActiveRecord::Base
 
   private
 
-  def get_last_trade
-    Stocks.last_trade(self.symbol)
-  end
-
   def calc_stop_price
     update_last_trade? if self.last_trade.nil?
     self.last_trade * (1.0 - rate)
+  end
+
+  def get_last_trade
+    Stocks.last_trade(self.symbol)
   end
 
   # TODO protect against percentage being nil

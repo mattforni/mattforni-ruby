@@ -1,4 +1,10 @@
 user:
-  email: dummy@gmail.com
+  id: 0
+  email: user@gmail.com
+  encrypted_password: test1234
+
+other:
+  id: 1
+  email: other@gmail.com
   encrypted_password: test1234
 

@@ -16,6 +16,7 @@ module Finance
           # Else evaluate all stops and update stop price if necessary
           stopped_out = []
           stop_updated = []
+          # TODO update to authenticate_user and use Stop.by_user
           stops = Stop.all
           stops.each do |stop|
             # If last trade has not changed no need to evaluate
@@ -49,7 +50,7 @@ module Finance
     end
 
     def index
-      @stops = Stop.order(:symbol)
+      @stops = Stop.by_user(current_user).order(:symbol)
     end
 
     def new

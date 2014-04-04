@@ -17,8 +17,6 @@
         %th
             Pinnacle Date
         %th
-            Owner
-        %th
             Last Updated
     - stops.each do |stop|
         %tr
@@ -30,7 +28,7 @@
                 = stop.last_trade.round(3)
             %td
                 = stop.stop_price.round(3)
-            %td
+            %td{class: price_class(stop.price_diff)}
                 = stop.price_diff.round(3)
             %td
                 = alt_display stop.quantity
@@ -38,8 +36,6 @@
                 = alt_display stop.pinnacle_price
             %td
                 = alt_display stop.pinnacle_date
-            %td
-                = stop.user.email
             %td
                 = stop.updated_at
 
