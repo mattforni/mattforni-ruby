@@ -80,6 +80,6 @@ ActiveRecord::Schema.define(version: 20140404190608) do
     t.datetime "updated_at"
   end
 
-  add_index "users", ["email"], name: "by_email"
+  add_index "users", ["email"], name: "by_email", unique: true
 
 end

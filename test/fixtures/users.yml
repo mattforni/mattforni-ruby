@@ -3,8 +3,3 @@ user:
   email: user@gmail.com
   encrypted_password: test1234
 
-other:
-  id: 1
-  email: other@gmail.com
-  encrypted_password: test1234
-

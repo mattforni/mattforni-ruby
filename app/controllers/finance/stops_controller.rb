@@ -39,6 +39,7 @@ module Finance
       @stop = Stop.new(stop_params)
       @stop.symbol.upcase!
       @stop.update?
+      @stop.user = current_user
       @stop.save!
       redirect_to finance_stops_path
     end
@@ -50,7 +51,7 @@ module Finance
     end
 
     def index
-      @stops = Stop.by_user(current_user).order(:symbol)
+      @stops = current_user.stops.order(:symbol)
     end
 
     def new

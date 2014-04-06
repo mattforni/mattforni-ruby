@@ -13,12 +13,6 @@ class Stop < ActiveRecord::Base
 
   belongs_to :user
 
-  ## Class methods
-  def self.by_user(user)
-    Stop.where(user_id: user.id)
-  end
-
-  ## Instance methods
   def price_diff
     self.last_trade - self.stop_price
   end

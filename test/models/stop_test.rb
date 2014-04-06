@@ -1,18 +1,13 @@
+require 'model_test'
 require 'stocks'
-require 'test_helper'
 
 include Stocks
 
-class StopTest < ActiveSupport::TestCase
+class StopTest < ModelTest 
   setup { @stop = stops(:stop) }
 
-  test 'by_user functionality' do
-    assert_equal 2, Stop.all.size, 'There are not two stops defined'
-
-    # Test stop retrieval by user
-    stops = Stop.by_user(users(:user))
-    assert_equal 1, stops.size, 'Did not find a stop for the default user'
-    assert_equal stops(:stop), stops.first, 'Stop found for the default user is not the default stop'
+  test 'association of user' do
+    test_association_belongs_to @stop, :user, users(:user)
   end
 
   test 'price diff functionality' do
@@ -120,10 +115,7 @@ class StopTest < ActiveSupport::TestCase
   end
 
   test 'validate last_trade presence' do
-    @stop.last_trade = nil
-    assert !@stop.valid?, 'Stop is considered valid'
-    assert !@stop.save, 'Stop saved without a last trade'
-    assert @stop.errors[:last_trade].any?, 'Stop does not have an error on last_trade'
+    test_field_presence @stop, :last_trade
   end
 
   test 'validate last_trade under range' do
@@ -134,10 +126,7 @@ class StopTest < ActiveSupport::TestCase
   end
 
   test 'validate precentage presence' do
-    @stop.percentage = nil
-    assert !@stop.valid?, 'Stop is considered valid'
-    assert !@stop.save, 'Stop saved without a percentage'
-    assert @stop.errors[:percentage].any?, 'Stop does not have an error on percentage'
+    test_field_presence @stop, :percentage
   end
 
   test 'validate percentage over range' do
@@ -155,17 +144,11 @@ class StopTest < ActiveSupport::TestCase
   end
 
   test 'validate stop_price presence' do
-    @stop.stop_price = nil
-    assert !@stop.valid?, 'Stop is considered valid'
-    assert !@stop.save, 'Stop saved without a stop price'
-    assert @stop.errors[:stop_price].any?, 'Stop does not have an error on stop_price'
+    test_field_presence @stop, :stop_price
   end
 
   test 'validate symbol presence' do
-    @stop.symbol = nil
-    assert !@stop.valid?, 'Stop is considered valid'
-    assert !@stop.save, 'Stop saved without a symbol'
-    assert @stop.errors[:symbol].any?, 'Stop does not have an error on symbol'
+    test_field_presence @stop, :symbol
   end
 
   test 'validate symbol validity' do
@@ -175,10 +158,7 @@ class StopTest < ActiveSupport::TestCase
   end
 
   test 'validate user presence' do
-    @stop.user = nil
-    assert !@stop.valid?, 'Stop is considered valid'
-    assert !@stop.save, 'Stop saved without a user'
-    assert @stop.errors[:user].any?, 'Stop does not have an error on user'
+    test_field_presence @stop, :user
   end
 end
 
