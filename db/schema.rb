@@ -11,7 +11,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140404190608) do
+ActiveRecord::Schema.define(version: 20140412042023) do
+
+  create_table "holdings", force: true do |t|
+    t.string   "symbol",           limit: 10,                                        null: false
+    t.decimal  "quantity",                    precision: 15, scale: 3,               null: false
+    t.decimal  "purchase_price",              precision: 15, scale: 5,               null: false
+    t.date     "purchase_date",                                                      null: false
+    t.decimal  "commission_price",            precision: 15, scale: 5, default: 0.0, null: false
+    t.integer  "user_id",                                                            null: false
+    t.integer  "position_id",                                                        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "holdings", ["position_id"], name: "holding_by_position_index"
+  add_index "holdings", ["user_id"], name: "holding_by_user_index"
+
+  create_table "positions", force: true do |t|
+    t.string   "symbol",           limit: 10,                                        null: false
+    t.decimal  "quantity",                    precision: 15, scale: 3,               null: false
+    t.decimal  "purchase_price",              precision: 15, scale: 5,               null: false
+    t.decimal  "commission_price",            precision: 15, scale: 5, default: 0.0, null: false
+    t.integer  "user_id",                                                            null: false
+    t.integer  "stock_id",                                                           null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "positions", ["stock_id"], name: "position_by_stock_index"
+  add_index "positions", ["user_id"], name: "position_by_user_index"
 
   create_table "posts", force: true do |t|
     t.string   "title",       null: false
@@ -26,17 +55,34 @@ ActiveRecord::Schema.define(version: 20140404190608) do
   add_index "posts", ["short_url"], name: "post_short_url_uniqueness", unique: true
   add_index "posts", ["title"], name: "post_title_uniqueness", unique: true
 
-  create_table "stops", force: true do |t|
+  create_table "stocks", force: true do |t|
     t.string   "symbol",         limit: 10,                          null: false
-    t.decimal  "percentage",                precision: 15, scale: 5, null: false
+    t.string   "name"
+    t.decimal  "previous_close",            precision: 15, scale: 5
     t.decimal  "last_trade",                precision: 15, scale: 5, null: false
-    t.decimal  "stop_price",                precision: 15, scale: 5, null: false
-    t.decimal  "quantity",                  precision: 15, scale: 3
-    t.decimal  "pinnacle_price",            precision: 15, scale: 5
-    t.date     "pinnacle_date"
+    t.decimal  "trough_price",              precision: 15, scale: 5, null: false
+    t.datetime "trough_time",                                        null: false
+    t.decimal  "crest_price",               precision: 15, scale: 5, null: false
+    t.datetime "crest_time",                                         null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id",                                            null: false
+  end
+
+  add_index "stocks", ["symbol"], name: "stock_by_symbol_index", unique: true
+
+  create_table "stops", force: true do |t|
+    t.string   "symbol",       limit: 10,                                                          null: false
+    t.decimal  "percentage",              precision: 15, scale: 5,                                 null: false
+    t.decimal  "stop_price",              precision: 15, scale: 5,                                 null: false
+    t.decimal  "quantity",                precision: 15, scale: 3
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id",                                                                          null: false
+    t.decimal  "crest_price",                                      default: 1.0,                   null: false
+    t.datetime "crest_time",                                       default: '2014-04-12 00:00:00', null: false
+    t.integer  "position_id",                                                                      null: false
+    t.decimal  "trough_price",            precision: 15, scale: 5,                                 null: false
+    t.datetime "trough_time",                                                                      null: false
   end
 
   add_index "stops", ["user_id"], name: "by_user"
