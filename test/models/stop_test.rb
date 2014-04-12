@@ -42,33 +42,6 @@ class StopTest < ModelTest
     assert !@stop.stopped_out?, 'Stopped out despite last_trade being greater than stop_price'
   end
 
-  test 'update last trade functionality' do
-    symbol = @stop.symbol
-    assert_respond_to @stop, :update_last_trade?, 'Stop cannot update last trade'
-
-    # Test when stop symbol is invalid
-    @stop.symbol = 'Invalid'
-    last_trade = @stop.last_trade
-    assert_raises (RetrievalError) { @stop.update_last_trade? }
-    assert_equal last_trade, @stop.last_trade, 'Last trade does not still equal previous value'
-
-    # Test when last_trade is nil 
-    @stop.symbol = symbol
-    @stop.last_trade = nil
-    assert_nothing_raised { assert @stop.update_last_trade?, 'Stop was not updated despite nil last trade' }
-    assert_not_equal last_trade, @stop.last_trade , 'Last trade still equals previous value'
-
-    # Test when last_trade has changed 
-    @stop.last_trade = -1
-    assert_nothing_raised { assert @stop.update_last_trade?, 'Stop was not updated despite negative last trade' }
-    assert_not_equal -1, @stop.last_trade , 'Last trade still equals previous value'
-
-    # Test when last_trade has not changed 
-    last_trade = @stop.last_trade
-    assert_nothing_raised { assert !@stop.update_last_trade?, 'Stop was updated despite still being equal to previous value' }
-    assert_equal last_trade, @stop.last_trade , 'Last trade does not still equal previous value'
-  end
-
   test 'update stop price functionality' do
     last_trade = @stop.last_trade
 
