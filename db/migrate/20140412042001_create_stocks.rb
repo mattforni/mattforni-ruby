@@ -5,10 +5,17 @@ class CreateStocks < ActiveRecord::Migration
       t.string :name
       t.decimal :previous_close, precision: 15, scale: 5
       t.decimal :last_trade, null: false, precision: 15, scale: 5
+<<<<<<< HEAD
       t.decimal :trough_price, null: false, precision: 15, scale: 5
       t.timestamp :trough_time, null: false
       t.decimal :crest_price, null: false, precision: 15, scale: 5
       t.timestamp :crest_time, null: false
+=======
+      t.decimal :lowest_price, null: false, precision: 15, scale: 5
+      t.timestamp :lowest_time, null: false
+      t.decimal :highest_price, null: false, precision: 15, scale: 5
+      t.timestamp :highest_time, null: false
+>>>>>>> master
 
       t.timestamps
     end

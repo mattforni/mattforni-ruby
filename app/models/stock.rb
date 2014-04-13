@@ -4,12 +4,21 @@ require 'validators/stock_validator'
 include Validators
 
 class Stock < ActiveRecord::Base
+<<<<<<< HEAD
   validates :crest_price, presence: true
   validates :crest_time, presence: true
   validates :last_trade, presence: true, numericality: {greater_than: 0}
   validates :symbol, presence: true, uniqueness: true
   validates :trough_price, presence: true
   validates :trough_time, presence: true
+=======
+  validates :highest_price, presence: true
+  validates :highest_time, presence: true
+  validates :last_trade, presence: true, numericality: {greater_than: 0}
+  validates :symbol, presence: true, uniqueness: true
+  validates :lowest_price, presence: true
+  validates :lowest_time, presence: true
+>>>>>>> master
   validates_with StockValidator
 
   has_many :positions
