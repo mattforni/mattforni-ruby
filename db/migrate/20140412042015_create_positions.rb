@@ -20,10 +20,10 @@ class CreatePositions < ActiveRecord::Migration
     Stop.all.each do |stop|
       stock = Stock.new({
         symbol: stop.symbol,
-        last_trade: stop.last_trade.nil? ? BigDecimal.new("-Infinity") : stop.last_trade,
-        lowest_price: stop.pinnacle_price.nil? ? BigDecimal.new("Infinity") : stop.pinnacle_price,
+        last_trade: stop.last_trade.nil? ? 0.00001 : stop.last_trade,
+        lowest_price: stop.pinnacle_price.nil? ? 10000 : stop.pinnacle_price,
         lowest_time: stop.pinnacle_date.nil? ? Time.now.utc : stop.pinnacle_date,
-        highest_price: stop.pinnacle_price.nil? ? BigDecimal.new("-Infinity") : stop.pinnacle_price,
+        highest_price: stop.pinnacle_price.nil? ? 0.00001 : stop.pinnacle_price,
         highest_time: stop.pinnacle_date.nil? ? Time.now.utc : stop.pinnacle_date
       })
       stock.save!
@@ -36,7 +36,7 @@ class CreatePositions < ActiveRecord::Migration
       })
       position.save!
       stop.position_id = position.id
-      stop.pinnacle_price = 0.01 if stop.pinnacle_price.nil?
+      stop.pinnacle_price = 0.00001 if stop.pinnacle_price.nil?
       stop.pinnacle_date = Date.today if stop.pinnacle_date.nil?
       stop.lowest_price = stop.pinnacle_price
       stop.lowest_time = stop.pinnacle_date
