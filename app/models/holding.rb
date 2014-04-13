@@ -10,6 +10,6 @@ class Holding < ActiveRecord::Base
   belongs_to :position
   belongs_to :user
 
-  #TODO delegate :stock, to: :position, allow_nil: false
+  delegate :stock, to: :position, allow_nil: false
 end
 

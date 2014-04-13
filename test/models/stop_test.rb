@@ -6,23 +6,35 @@ include Stocks
 class StopTest < ModelTest 
   setup { @stop = stops(:stop) }
 
+  test 'association of position' do
+    test_association_belongs_to @stop, :position, positions(:position)
+  end
+
   test 'association of user' do
     test_association_belongs_to @stop, :user, users(:user)
+  end
+
+  test 'delegation of stock to position' do
+    test_delegation(@stop, @stop.position, :stock)
+  end
+
+  test 'delegation of last_trade to stock' do
+    test_delegation(@stop, @stop.position.stock, :last_trade)
   end
 
   test 'price diff functionality' do
     assert_respond_to @stop, :price_diff, 'Stop cannot calculate price diff'
 
     # Test when last_trade less than stop_price
-    @stop.last_trade = @stop.stop_price - 1
+    @stop.position.stock.last_trade = @stop.stop_price - 1
     assert_equal -1, @stop.price_diff, 'Price diff not calculated correctly when last_trade less than stop_price'
 
     # Test when last_trade equal to stop_price
-    @stop.last_trade = @stop.stop_price
+    @stop.position.stock.last_trade = @stop.stop_price
     assert_equal 0, @stop.price_diff, 'Price diff not calculated correctly when last_trade equal to stop_price'
 
     # Test when last_trade greater than stop_price
-    @stop.last_trade = @stop.stop_price + 1
+    @stop.position.stock.last_trade = @stop.stop_price + 1
     assert_equal 1, @stop.price_diff, 'Price diff not calculated correctly when last_trade greater than stop_price'
   end
 
@@ -30,15 +42,15 @@ class StopTest < ModelTest
     assert_respond_to @stop, :stopped_out?, 'Stop cannot determine if stopped out'
 
     # Test when last_trade less than stop_price
-    @stop.last_trade = @stop.stop_price - 1
+    @stop.position.stock.last_trade = @stop.stop_price - 1
     assert @stop.stopped_out?, 'Not stopped out despite last_trade being less than stop_price'
 
     # Test when last_trade equal to stop_price
-    @stop.last_trade = @stop.stop_price
+    @stop.position.stock.last_trade = @stop.stop_price
     assert @stop.stopped_out?, 'Not stopped out despite last_trade being equal to stop_price'
 
     # Test when last_trade greater than stop_price
-    @stop.last_trade = @stop.stop_price + 1
+    @stop.position.stock.last_trade = @stop.stop_price + 1
     assert !@stop.stopped_out?, 'Stopped out despite last_trade being greater than stop_price'
   end
 
@@ -48,24 +60,22 @@ class StopTest < ModelTest
     assert_respond_to @stop, :update_stop_price?, 'Stop cannot update stop price'
 
     # Test when last_trade is nil
-    @stop.last_trade = nil
+    @stop.position.stock.last_trade = nil
     stop_price = @stop.stop_price
-    assert_nil @stop.pinnacle_price, 'Stop has a pinnacle price'
-    assert_nil @stop.pinnacle_date, 'Stop has a pinnacle date'
     assert_nothing_raised { assert @stop.update_stop_price?, 'Stop failed to update nil last trade' }
     assert_not_equal stop_price, @stop.stop_price, 'Stop price was not updated despite change'
-    assert_not_nil @stop.pinnacle_price, 'Stop does note have a pinnacle price'
-    assert_not_nil @stop.pinnacle_date, 'Stop does not have a pinnacle date'
+    assert_not_nil @stop.highest_price, 'Stop does not have a highest price'
+    assert_not_nil @stop.highest_time, 'Stop does not have a highest time'
 
     # Test when stop_price is nil
-    @stop.last_trade= last_trade
+    @stop.position.stock.last_trade = last_trade
     @stop.stop_price = nil
-    @stop.pinnacle_price = nil
-    @stop.pinnacle_date = nil
+    @stop.highest_price = nil
+    @stop.highest_time = nil
     assert_nothing_raised { assert @stop.update_stop_price?, 'Stop was not updated despite nil stop price' }
     assert_not_nil @stop.stop_price, 'Stop does not have an associated stop price'
-    assert_not_nil @stop.pinnacle_price, 'Stop does note have a pinnacle price'
-    assert_not_nil @stop.pinnacle_date, 'Stop does not have a pinnacle date'
+    assert_not_nil @stop.highest_price, 'Stop does not have a highest price'
+    assert_not_nil @stop.highest_time, 'Stop does not have a highest time'
 
     # Test when new stop is less than stop_price
     @stop.stop_price = BigDecimal::INFINITY
@@ -74,12 +84,12 @@ class StopTest < ModelTest
 
     # Test when new stop is greater than stop_price
     @stop.stop_price = -1
-    @stop.pinnacle_price = nil
-    @stop.pinnacle_date = nil
+    @stop.highest_price = nil
+    @stop.highest_time = nil
     assert_nothing_raised { assert @stop.update_stop_price?, 'Stop was not updated despite negative stop price' }
     assert_not_equal -1, @stop.stop_price, 'Stop still equals previous value'
-    assert_not_nil @stop.pinnacle_price, 'Stop does note have a pinnacle price'
-    assert_not_nil @stop.pinnacle_date, 'Stop does not have a pinnacle date'
+    assert_not_nil @stop.highest_price, 'Stop does note have a highest price'
+    assert_not_nil @stop.highest_time, 'Stop does not have a highest time'
 
     # Test when stop_price has not changed
     stop_price = @stop.stop_price
@@ -87,15 +97,19 @@ class StopTest < ModelTest
     assert_equal stop_price, @stop.stop_price, 'Stop price does not still equal previous value'
   end
 
-  test 'validate last_trade presence' do
-    test_field_presence @stop, :last_trade
+  test 'validate highest_price presence' do
+    test_field_presence @stop, :highest_price
   end
 
-  test 'validate last_trade under range' do
-    @stop.last_trade = 0
+  test 'validate highest_price under range' do
+    @stop.highest_price = 0
     assert !@stop.valid?, 'Stop is considered valid'
-    assert !@stop.save, 'Stop saved with a last_trade equal to 0'
-    assert @stop.errors[:last_trade].any?, 'Stop does not have an error on last_trade'
+    assert !@stop.save, 'Stop saved with a highest price equal to 0'
+    assert @stop.errors[:highest_price].any?, 'Stop does not have an error on highest_price'
+  end
+
+  test 'validate highest_time presence' do
+    test_field_presence @stop, :highest_time
   end
 
   test 'validate precentage presence' do
@@ -116,22 +130,42 @@ class StopTest < ModelTest
     assert @stop.errors[:percentage].any?, 'Stop does not have an error on percentage'
   end
 
+  test 'validate position_id presence' do
+    test_field_presence @stop, :position_id
+  end
+
   test 'validate stop_price presence' do
     test_field_presence @stop, :stop_price
+  end
+
+  test 'validate stop_price under range' do
+    @stop.stop_price = 0
+    assert !@stop.valid?, 'Stop is considered valid'
+    assert !@stop.save, 'Stop saved with a stop price equal to 0'
+    assert @stop.errors[:stop_price].any?, 'Stop does not have an error on stop_price'
   end
 
   test 'validate symbol presence' do
     test_field_presence @stop, :symbol
   end
 
-  test 'validate symbol validity' do
-    @stop.symbol = 'Invalid'
-    assert !@stop.save, 'Stop saved with an invalid symbol'
-    assert @stop.errors[:symbol].any?, 'Stop does not have an error on symbol'
+  test 'validate lowest_price presence' do
+    test_field_presence @stop, :lowest_price
   end
 
-  test 'validate user presence' do
-    test_field_presence @stop, :user
+  test 'validate lowest_price under range' do
+    @stop.lowest_price = 0
+    assert !@stop.valid?, 'Stop is considered valid'
+    assert !@stop.save, 'Stop saved with a lowest price equal to 0'
+    assert @stop.errors[:lowest_price].any?, 'Stop does not have an error on lowest_price'
+  end
+
+  test 'validate lowest_time presence' do
+    test_field_presence @stop, :lowest_time
+  end
+
+  test 'validate user_id presence' do
+    test_field_presence @stop, :user_id
   end
 end
 

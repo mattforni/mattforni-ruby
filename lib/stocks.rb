@@ -3,7 +3,11 @@ require 'yahoofinance'
 # TODO test this module
 # TODO add a caching layer with 1-min TTL
 module Stocks
+  COMMISSION_RANGE = {greater_than_or_equal_to: 0}
 	NA = 'N/A'
+  PRICE_RANGE = {greater_than: 0}
+  PERCENTAGE_RANGE =  {greater_than: 0, less_than: 100}
+  QUANTITY_RANGE = {greater_than: 0}
 
 	def self.exists?(symbol)
 		quote(symbol, [:date])[:date] != NA

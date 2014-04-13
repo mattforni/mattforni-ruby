@@ -1,15 +1,23 @@
+require 'stocks'
+
+include Stocks
+
 class Stop < ActiveRecord::Base
-  validates :percentage, presence: true, numericality: {greater_than: 0, less_than: 100}
+  validates :highest_price, presence: true, numericality: PRICE_RANGE
+  validates :highest_time, presence: true
+  validates :percentage, presence: true, numericality: PERCENTAGE_RANGE
   validates :position_id, presence: true
-  validates :stop_price, presence: true
+  validates :stop_price, presence: true, numericality: PRICE_RANGE
   validates :symbol, presence: true
+  validates :lowest_price, presence: true, numericality: PRICE_RANGE
+  validates :lowest_time, presence: true
   validates :user_id, presence: true
 
   belongs_to :position
   belongs_to :user
 
-  #TODO delegate :stock, to: :position, allow_nil: false
-  #TODO delegate :last_trade, to: :stock, allow_nil: false
+  delegate :stock, to: :position, allow_nil: false
+  delegate :last_trade, to: :stock, allow_nil: false
 
   def price_diff
     self.last_trade - self.stop_price
@@ -23,8 +31,8 @@ class Stop < ActiveRecord::Base
     stop_price = calc_stop_price
     if self.stop_price.nil? or self.stop_price < stop_price
       self.stop_price = stop_price
-      self.pinnacle_price = self.last_trade
-      self.pinnacle_date = Date.today
+      self.highest_price = self.last_trade
+      self.highest_time = Time.now.utc
       return true
     end
     false

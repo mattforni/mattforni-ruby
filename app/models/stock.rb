@@ -1,18 +1,19 @@
 require 'stocks'
 require 'validators/stock_validator'
 
+include Stocks
 include Validators
 
 class Stock < ActiveRecord::Base
-  validates :highest_price, presence: true
-  validates :highest_time, presence: true
-  validates :last_trade, presence: true, numericality: {greater_than: 0}
+  validates :last_trade, presence: true, numericality: PRICE_RANGE
   validates :symbol, presence: true, uniqueness: true
-  validates :lowest_price, presence: true
+  validates :highest_price, presence: true, numericality: PRICE_RANGE
+  validates :highest_time, presence: true
+  validates :last_trade, presence: true, numericality: PRICE_RANGE
+  validates :lowest_price, presence: true, numericality: PRICE_RANGE
   validates :lowest_time, presence: true
+  validates :symbol, presence: true, uniqueness: true
   validates_with StockValidator
-
-  has_many :positions
 
   def update_last_trade?
     last_trade = get_last_trade
