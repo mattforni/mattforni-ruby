@@ -1,11 +1,16 @@
 require 'test_helper'
 
 class Finance::StopsControllerTest < ActionController::TestCase
-  setup { @stop = stops(:default) }
+  def setup
+    @user = users(:user)
+    controller.stub(:authenticate_user!).and_return(true)
+    controller.stub(:current_user).and_return(@user)
+  end
 
+  # TODO figure out mocking and fix this
   test 'get index functionality and template' do
     get :index
-    assert_response :success, 'Stops index returned an error code'
+    assert_response :success
     assert_template :index
     assert_template layout: 'layouts/application'
     stops = assigns(:stops)

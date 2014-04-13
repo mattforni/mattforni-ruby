@@ -60,17 +60,10 @@ ActiveRecord::Schema.define(version: 20140412042023) do
     t.string   "name"
     t.decimal  "previous_close",            precision: 15, scale: 5
     t.decimal  "last_trade",                precision: 15, scale: 5, null: false
-<<<<<<< HEAD
-    t.decimal  "trough_price",              precision: 15, scale: 5, null: false
-    t.datetime "trough_time",                                        null: false
-    t.decimal  "crest_price",               precision: 15, scale: 5, null: false
-    t.datetime "crest_time",                                         null: false
-=======
     t.decimal  "lowest_price",              precision: 15, scale: 5, null: false
     t.datetime "lowest_time",                                        null: false
     t.decimal  "highest_price",             precision: 15, scale: 5, null: false
     t.datetime "highest_time",                                       null: false
->>>>>>> master
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -78,20 +71,6 @@ ActiveRecord::Schema.define(version: 20140412042023) do
   add_index "stocks", ["symbol"], name: "stock_by_symbol_index", unique: true
 
   create_table "stops", force: true do |t|
-<<<<<<< HEAD
-    t.string   "symbol",       limit: 10,                                                          null: false
-    t.decimal  "percentage",              precision: 15, scale: 5,                                 null: false
-    t.decimal  "stop_price",              precision: 15, scale: 5,                                 null: false
-    t.decimal  "quantity",                precision: 15, scale: 3
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id",                                                                          null: false
-    t.decimal  "crest_price",                                      default: 1.0,                   null: false
-    t.datetime "crest_time",                                       default: '2014-04-12 00:00:00', null: false
-    t.integer  "position_id",                                                                      null: false
-    t.decimal  "trough_price",            precision: 15, scale: 5,                                 null: false
-    t.datetime "trough_time",                                                                      null: false
-=======
     t.string   "symbol",        limit: 10,                                                          null: false
     t.decimal  "percentage",               precision: 15, scale: 5,                                 null: false
     t.decimal  "stop_price",               precision: 15, scale: 5,                                 null: false
@@ -104,7 +83,6 @@ ActiveRecord::Schema.define(version: 20140412042023) do
     t.integer  "position_id",                                                                       null: false
     t.decimal  "lowest_price",             precision: 15, scale: 5,                                 null: false
     t.datetime "lowest_time",                                                                       null: false
->>>>>>> master
   end
 
   add_index "stops", ["user_id"], name: "by_user"

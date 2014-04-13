@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  before_action :set_user 
   layout 'application'
 
   def splash
@@ -7,12 +6,6 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html { render status: 200 }
     end
-  end
-
-  private
-
-  def set_user
-    @user = current_user
   end
 end
 

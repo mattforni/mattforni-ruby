@@ -13,9 +13,9 @@
         %th
             Quantity
         %th
-            Pinnacle Price
+            Highest Price
         %th
-            Pinnacle Date
+            Highest Time 
         %th
             Last Updated
     - stops.each do |stop|
@@ -33,9 +33,9 @@
             %td
                 = alt_display stop.quantity
             %td
-                = alt_display stop.pinnacle_price
+                = alt_display stop.highest_price
             %td
-                = alt_display stop.pinnacle_date
+                = alt_display stop.highest_time
             %td
                 = stop.updated_at
 

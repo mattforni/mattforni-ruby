@@ -1,9 +1,9 @@
 stock:
  id: 0
- crest_price: 25
- crest_time: Time.now.utc
+ highest_price: 25
+ highest_time: Time.now.utc
  last_trade: 10
  symbol: ABC
- trough_price: 5
- trough_time: Time.now.utc
+ lowest_price: 5
+ lowest_time: Time.now.utc
 

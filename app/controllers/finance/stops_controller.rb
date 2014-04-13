@@ -74,8 +74,7 @@ module Finance
       params.require(:stop).permit(
         :percentage,
         :quantity,
-        :stop_price,
-        :symbol)
+        :stop_price)
     end
   end
 end
