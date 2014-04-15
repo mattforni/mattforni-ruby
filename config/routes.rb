@@ -14,6 +14,7 @@ Mattforni::Application.routes.draw do
   get '/finance/last_trade', to: 'finance#last_trade'
   namespace 'finance' do
     get '/sizing', to: 'sizing#index'
+    get '/stocks/update_last_trade', to: 'stocks#update_last_trade'
     get '/stops/analyze', to: 'stops#analyze'
     resources :stops
   end

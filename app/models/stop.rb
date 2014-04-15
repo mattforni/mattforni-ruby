@@ -28,14 +28,26 @@ class Stop < ActiveRecord::Base
   end
 
   def update_stop_price?
+    update = false
     stop_price = calc_stop_price
+    # If stop_price has not been set or has gone up, update it
     if self.stop_price.nil? or self.stop_price < stop_price
       self.stop_price = stop_price
+      update = true
+    end
+    # If delegated last_trade is less than the current lowest_price, update it
+    if self.last_trade < self.lowest_price
+      self.lowest_price = self.last_trade
+      self.lowest_time = Time.now.utc
+      update = true
+    end
+    # If delegated last_trade is greater than the current highest_price, update it
+    if self.last_trade > self.highest_price
       self.highest_price = self.last_trade
       self.highest_time = Time.now.utc
-      return true
+      update = true
     end
-    false
+    update
   end
 
   private
