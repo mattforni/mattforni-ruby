@@ -15,27 +15,31 @@
         %th
             Highest Price
         %th
-            Highest Time 
+            Highest Time
         %th
-            Last Updated
+            Lowest Price
+        %th
+            Lowest Time
     - stops.each do |stop|
         %tr
             %td
                 = stop.symbol
             %td
                 = stop.percentage
-            %td
-                = stop.last_trade.round(3)
-            %td
-                = stop.stop_price.round(3)
-            %td{class: price_class(stop.price_diff)}
-                = stop.price_diff.round(3)
+            %td.number-cell
+                = dec_display stop.last_trade
+            %td.number-cell
+                = dec_display stop.stop_price
+            %td{class: "number-cell #{price_class(stop.price_diff)}"}
+                = dec_display stop.price_diff
             %td
                 = alt_display stop.quantity
+            %td.number-cell
+                = dec_display stop.highest_price
             %td
-                = alt_display stop.highest_price
+                = time_display stop.highest_time
+            %td.number-cell
+                = dec_display stop.lowest_price
             %td
-                = alt_display stop.highest_time
-            %td
-                = stop.updated_at
+                = time_display stop.lowest_time
 
