@@ -4,6 +4,7 @@ ruby '1.9.3'
 
 # Core gems
 gem 'rails', '4.0.0'
+gem 'unicorn', '~> 4.8'
 
 # Finance gems
 gem 'yahoofinance', '~> 1.2'

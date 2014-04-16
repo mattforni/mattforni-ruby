@@ -6,6 +6,7 @@ module Stocks
   COMMISSION_RANGE = {greater_than_or_equal_to: 0}
 	NA = 'N/A'
   PRICE_RANGE = {greater_than: 0}
+  PRICE_SCALE = 5
   PERCENTAGE_RANGE =  {greater_than: 0, less_than: 100}
   QUANTITY_RANGE = {greater_than: 0}
 
