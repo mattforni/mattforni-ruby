@@ -4,15 +4,21 @@ require 'yahoofinance'
 # TODO add a caching layer with 1-min TTL
 module Stocks
   COMMISSION_RANGE = {greater_than_or_equal_to: 0}
-	NA = 'N/A'
+  EPSILON = 0.00001
+  NA = 'N/A'
   PRICE_RANGE = {greater_than: 0}
   PRICE_SCALE = 5
   PERCENTAGE_RANGE =  {greater_than: 0, less_than: 100}
   QUANTITY_RANGE = {greater_than: 0}
 
-	def self.exists?(symbol)
-		quote(symbol, [:date])[:date] != NA
-	end
+  # TODO move to another lib module
+  def self.equal?(value, other)
+    (value-other).abs < EPSILON
+  end
+
+  def self.exists?(symbol)
+    quote(symbol, [:date])[:date] != NA
+  end
 
   def self.last_trade(symbol)
     last_trade = quote(symbol)[:lastTrade]
