@@ -1,22 +1,19 @@
 Mattforni::Application.routes.draw do
-  root :to => 'application#splash' 
+  # Setup root route
+  root :to => 'application#splash'
 
+  # Setup devise routes for users
   devise_for :users
 
-  # Blog controllers
-=begin TODO uncomment when properly setup
-  namespace 'blog' do
-    resources :posts
+  # Setup finance routes
+  scope '/finance' do
+    get '/last_trade', to: 'finance#last_trade'
+    get '/sizing', to: 'finance#sizing'
   end
-=end
-
-  # Finance controllers
-  get '/finance/last_trade', to: 'finance#last_trade'
   namespace 'finance' do
-    get '/sizing', to: 'sizing#index'
     get '/stocks/update_last_trade', to: 'stocks#update_last_trade'
     get '/stops/analyze', to: 'stops#analyze'
-    resources :stops
+    resources :holdings, :stops
   end
 end
 

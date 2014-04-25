@@ -5,7 +5,15 @@ module ApplicationHelper
     return value.nil? ? alternative : value
   end
 
-  def dec_display(decimal)
+  def currency_display(currency)
+    number_to_currency(currency, delimiter: ',', precision: 3)
+  end
+
+  def date_display(time)
+    time.strftime("%^b %d %Y")
+  end
+
+  def decimal_display(decimal)
     number_with_precision(decimal, delimiter: ',', precision: 3)
   end
 

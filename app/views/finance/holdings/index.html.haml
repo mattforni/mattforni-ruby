@@ -1,0 +1,5 @@
+- if @holdings.empty?
+    No holdings yet.
+- else
+    = render partial: 'holding_table', locals: {holdings: @holdings}
+

@@ -1,5 +1,6 @@
 # TODO Test all methods except index
 class Finance::StocksController < ApplicationController
+  # TODO change the name of this (and ec2 box after that) to 'update'
   def update_last_trade
     respond_to do |format|
       # Only accept json requests
@@ -10,7 +11,7 @@ class Finance::StocksController < ApplicationController
         updated = []
         stocks = Stock.all
         stocks.each do |stock|
-          if stock.update_last_trade?
+          if stock.update?
             stock.save!
             updated << stock
           end

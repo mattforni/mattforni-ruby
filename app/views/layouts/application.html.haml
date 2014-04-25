@@ -19,10 +19,13 @@
             = submit_tag 'login'
         - else
           = link_to 'logout', destroy_user_session_path, method: 'delete'
-    #notice
-      = notice
-    #alert
-      = alert
+    - if alert
+      #alert
+        = alert
+    - if notice
+      #notice
+        = notice
+
     #content-wrapper
       #content
         = yield

@@ -57,12 +57,12 @@ class StopTest < ModelTest
   test 'update stop price functionality' do
     last_trade = @stop.last_trade
 
-    assert_respond_to @stop, :update_stop_price?, 'Stop cannot update stop price'
+    assert_respond_to @stop, :update?, 'Stop cannot update stop price'
 
     # Test when last_trade is nil
     @stop.position.stock.last_trade = nil
     stop_price = @stop.stop_price
-    assert_nothing_raised { assert @stop.update_stop_price?, 'Stop failed to update nil last trade' }
+    assert_nothing_raised { assert @stop.update?, 'Stop failed to update nil last trade' }
     assert_not_equal stop_price, @stop.stop_price, 'Stop price was not updated despite change'
     assert_not_nil @stop.highest_price, 'Stop does not have a highest price'
     assert_not_nil @stop.highest_time, 'Stop does not have a highest time'
@@ -72,28 +72,28 @@ class StopTest < ModelTest
     @stop.stop_price = nil
     @stop.highest_price = nil
     @stop.highest_time = nil
-    assert_nothing_raised { assert @stop.update_stop_price?, 'Stop was not updated despite nil stop price' }
+    assert_nothing_raised { assert @stop.update?, 'Stop was not updated despite nil stop price' }
     assert_not_nil @stop.stop_price, 'Stop does not have an associated stop price'
     assert_not_nil @stop.highest_price, 'Stop does not have a highest price'
     assert_not_nil @stop.highest_time, 'Stop does not have a highest time'
 
     # Test when new stop is less than stop_price
     @stop.stop_price = BigDecimal::INFINITY
-    assert_nothing_raised { assert !@stop.update_stop_price?, 'Stop was updated despite infinite stop price' }
+    assert_nothing_raised { assert !@stop.update?, 'Stop was updated despite infinite stop price' }
     assert_equal BigDecimal::INFINITY, @stop.stop_price, 'Stop price still equals infinity'
 
     # Test when new stop is greater than stop_price
     @stop.stop_price = -1
     @stop.highest_price = nil
     @stop.highest_time = nil
-    assert_nothing_raised { assert @stop.update_stop_price?, 'Stop was not updated despite negative stop price' }
+    assert_nothing_raised { assert @stop.update?, 'Stop was not updated despite negative stop price' }
     assert_not_equal -1, @stop.stop_price, 'Stop still equals previous value'
     assert_not_nil @stop.highest_price, 'Stop does note have a highest price'
     assert_not_nil @stop.highest_time, 'Stop does not have a highest time'
 
     # Test when stop_price has not changed
     stop_price = @stop.stop_price
-    assert_nothing_raised { assert !@stop.update_stop_price?, 'Stop was updated despite still being equal to previous value' }
+    assert_nothing_raised { assert !@stop.update?, 'Stop was updated despite still being equal to previous value' }
     assert_equal stop_price, @stop.stop_price, 'Stop price does not still equal previous value'
   end
 

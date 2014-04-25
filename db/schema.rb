@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140412042023) do
+ActiveRecord::Schema.define(version: 20140423054512) do
 
   create_table "holdings", force: true do |t|
     t.string   "symbol",           limit: 10,                                        null: false
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20140412042023) do
   end
 
   add_index "holdings", ["position_id"], name: "holding_by_position_index"
+  add_index "holdings", ["user_id", "symbol"], name: "holding_by_user_and_symbol_index"
   add_index "holdings", ["user_id"], name: "holding_by_user_index"
 
   create_table "positions", force: true do |t|
@@ -40,6 +41,7 @@ ActiveRecord::Schema.define(version: 20140412042023) do
   end
 
   add_index "positions", ["stock_id"], name: "position_by_stock_index"
+  add_index "positions", ["user_id", "symbol"], name: "position_by_user_and_symbol_index"
   add_index "positions", ["user_id"], name: "position_by_user_index"
 
   create_table "posts", force: true do |t|

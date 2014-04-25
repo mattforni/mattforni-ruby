@@ -33,10 +33,10 @@ class Finance::StopsController < FinanceController
   end
 
   def create
+    params[:stop][:symbol].upcase!
     @stop = Stop.new(stop_params)
-    @stop.symbol.upcase!
-    @stop.update?
     @stop.user = current_user
+    @stop.update?
     @stop.save!
     redirect_to finance_stops_path
   end

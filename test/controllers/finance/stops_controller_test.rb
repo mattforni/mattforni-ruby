@@ -3,8 +3,8 @@ require 'test_helper'
 class Finance::StopsControllerTest < ActionController::TestCase
   def setup
     @user = users(:user)
-    controller.stub(:authenticate_user!).and_return(true)
-    controller.stub(:current_user).and_return(@user)
+    #stub(:authenticate_user!).and_return(true)
+    #stub(:current_user).and_return(@user)
   end
 
   # TODO figure out mocking and fix this

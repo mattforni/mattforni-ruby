@@ -3,6 +3,10 @@ require 'model_test'
 class UserTest < ModelTest
   setup { @user = users(:user) }
 
+  test 'association of holdings' do
+    test_association_has_many @user, :holdings, Holding.where(user_id: @user.id)
+  end
+
   test 'association of stops' do
     test_association_has_many @user, :stops, Stop.where(user_id: @user.id)
   end

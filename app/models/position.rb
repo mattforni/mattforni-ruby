@@ -13,6 +13,12 @@ class Position < ActiveRecord::Base
   belongs_to :stock
   belongs_to :user
 
+  has_many :holdings
+
   delegate :last_trade, to: :stock, allow_nil: false
+
+  def self.by_user_and_symbol(user, symbol)
+    Position.where({user_id: user.id, symbol: symbol}).first
+  end
 end
 
