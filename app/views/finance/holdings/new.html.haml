@@ -4,7 +4,7 @@
             %th
                 = f.label :commission_price, 'Commission Price'
             %td
-                = f.number_field :commission_price
+                = f.number_field :commission_price, step: 0.001
         %tr
             %th
                 = f.label :purchase_date, 'Purchase Date'
@@ -14,12 +14,12 @@
             %th
                 = f.label :purchase_price, 'Purchase Price'
             %td
-                = f.number_field :purchase_price
+                = f.number_field :purchase_price, step: 0.001
         %tr
             %th
                 = f.label :quantity, 'Quantity'
             %td
-                = f.number_field :quantity
+                = f.number_field :quantity, step: 0.001
         %tr
             %th
                 = f.label :symbol, 'Symbol'

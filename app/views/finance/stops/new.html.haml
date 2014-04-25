@@ -9,17 +9,17 @@
             %th
                 = f.label :percentage, 'Percentage'
             %td
-                = f.number_field :percentage
+                = f.number_field :percentage, step: 0.001
         %tr
             %th
                 = f.label :stop_price, 'Stop Price'
             %td
-                = f.number_field :stop_price, step: 0.01
+                = f.number_field :stop_price, step: 0.001
         %tr
             %th
                 = f.label :quantity, 'Quantity'
             %td
-                = f.number_field :quantity
+                = f.number_field :quantity, step: 0.001
         %tr
             %td{colspan: 2}
                 = f.submit
