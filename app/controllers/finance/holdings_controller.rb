@@ -13,12 +13,13 @@ class Finance::HoldingsController < FinanceController
     holding.user = current_user
     begin
       holding.create!
-      flash[:notice] = "Successfully created Holding: #{holding.symbol}"
+      flash[:notice] = "Successfully created holding for #{holding.symbol}."
       redirect_to finance_holdings_path and return
     rescue ActiveRecord::RecordInvalid
-      error_msg = "Unable to create #{$!.record.class}"
+      error_msg = "Unable to create #{$!.record.class.to_s.downcase}"
+      error_msg += " for #{holding.symbol}" if !(holding.symbol.nil? or holding.symbol.empty?)
       logger.error "#{error_msg}: #{$!.record.errors.full_messages.join(', ')}"
-      flash[:alert] = error_msg
+      flash[:alert] = "#{error_msg}."
       flash[:errors] = $!.record.errors.full_messages
       redirect_to new_finance_holding_path and return
     end
