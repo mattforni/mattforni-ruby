@@ -25,8 +25,10 @@ class Holding < ActiveRecord::Base
 
       # Check if there is already a position model for this user and symbol
       position = Position.by_user_and_symbol(self.user, symbol)
+      position_existed = true
       # If there is not already a position then attempt to create one
       if position.nil?
+        position_existed = false
         position = Position.new({
           commission_price: self.commission_price,
           purchase_price: self.purchase_price,
@@ -35,19 +37,19 @@ class Holding < ActiveRecord::Base
         })
         position.stock = stock
         position.user = self.user
-      else
-        # Only update the existion position if all necessary attributes are defined
-        if self.commission_price and self.purchase_price and self.quantity
-          position.commission_price = (position.commission_price + self.commission_price) / (position.holdings.size + 1)
-          position.purchase_price = (position.purchase_price + self.purchase_price) / (position.holdings.size + 1)
-          position.increment(:quantity, self.quantity)
-        end
+        position.save!
       end
-      position.save!
 
       # Attempt to save the new holding model
       self.position = position
       self.save!
+
+      # Update the existing position if necessary
+      if position_existed
+        position.update_weighted_avg!(:commission_price)
+        position.update_weighted_avg!(:purchase_price)
+        position.increment(:quantity, self.quantity)
+      end
     end
   end
 end

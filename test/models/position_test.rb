@@ -42,6 +42,28 @@ class PositionsTest < ModelTest
     test_delegation(@position, @position.stock, :last_trade)
   end
 
+  test 'update_weighted_avg! functionality' do
+    assert_respond_to @position, :update_weighted_avg!, 'Position cannot update weighted avg'
+
+    get_holding(@position).save!
+    assert_equal 2, @position.holdings.size, 'Position does not have two holdings'
+
+    # Test that other attributes raise an ArgumentError
+    assert_raise ArgumentError do
+      @position.update_weighted_avg!(:random)
+    end
+
+    # Test commission price is updated
+    commission_price = @position.commission_price
+    @position.update_weighted_avg!(:commission_price)
+    assert_not_equal commission_price, @position.commission_price, 'Commission price was not updated'
+
+    # Test purchase price is updated
+    purchase_price = @position.purchase_price
+    @position.update_weighted_avg!(:purchase_price)
+    assert_not_equal purchase_price, @position.purchase_price, 'Purchase price was not updated'
+  end
+
   test 'validate commission_price presence' do
     test_field_presence @position, :commission_price
   end
@@ -85,6 +107,21 @@ class PositionsTest < ModelTest
 
   test 'validate user_id presence' do
     test_field_presence @position, :user_id
+  end
+
+  private
+
+  def get_holding(position)
+    holding = Holding.new({
+      commission_price: 10,
+      purchase_date: Date.today,
+      purchase_price: 20,
+      quantity: 200,
+      symbol: 'AMZN',
+      user_id: users(:user).id
+    })
+    holding.position = position
+    holding
   end
 end
 
