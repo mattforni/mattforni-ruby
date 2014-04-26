@@ -1,9 +1,0 @@
-stock:
- id: 0
- highest_price: 25
- highest_time: Time.now.utc
- last_trade: 10
- symbol: ABC
- lowest_price: 5
- lowest_time: Time.now.utc
-

@@ -1,19 +1,30 @@
 require 'model_test'
 
-class HoldingsTest < ModelTest 
-  setup { @holding = holdings(:holding) }
+class HoldingsTest < ModelTest
+  def setup
+    @user = create(:user)
+    @stock = create(:stock)
+    @position = create(:position,
+      stock: @stock,
+      user: @user
+    )
+    @holding = create(:holding,
+      position: @position,
+      user: @user
+    )
+  end
 
-  test 'association of stock' do
-    test_association_belongs_to @holding, :stock, stocks(:stock)
+  test 'association of position' do
+    test_association_belongs_to @holding, :position, @position
   end
 
   test 'association of user' do
-    test_association_belongs_to @holding, :user, users(:user)
+    test_association_belongs_to @holding, :user, @user
   end
 
   test 'create! functionality when symbol is nil or invalid' do
-    holding = get_holding
-    
+    holding = build_holding(@position)
+
     # Test when symbol is nil
     holding.symbol = nil
     assert_exception(holding, Stock)
@@ -24,84 +35,88 @@ class HoldingsTest < ModelTest
   end
 
   test 'create! functionality when cp, pp or q is nil or invalid and Position does not exist' do
-    user = get_user 
-    holding = get_holding(user)
+    holding = build_holding(@position)
+    @position.destroy!
+    @stock.destroy!
+    holding.position = nil
 
     # Test when commission_price is nil
     holding.commission_price = nil
     assert_exception(holding, Position)
 
     # Test when commission_price is negative
-    holding.commission_price = -0.00001 
+    holding.commission_price = -0.00001
     assert_exception(holding, Position)
 
     # Test when purchase_price is nil
     holding.purchase_price = nil
     assert_exception(holding, Position)
 
-    # Test when purchase_price is zero 
-    holding.commission_price = 0 
+    # Test when purchase_price is zero
+    holding.commission_price = 0
     assert_exception(holding, Position)
 
     # Test when quantity is nil
     holding.quantity = nil
     assert_exception(holding, Position)
 
-    # Test when quantity is zero 
-    holding.quantity = 0 
+    # Test when quantity is zero
+    holding.quantity = 0
     assert_exception(holding, Position)
   end
 
   test 'create! functionality when cp, pp or q is nil or invalid and Position does exist' do
-    holding = get_holding
-    stock = get_stock(holding)
-    position = get_position(holding, stock)
+    position = create_position(create_stock('AMZN'))
+    holding = build_holding(position)
 
     # Test when commission_price is nil
     holding.commission_price = nil
     assert_exception(holding, Holding, false)
 
     # Test when commission_price is negative
-    holding.commission_price = -0.00001 
+    holding.commission_price = -0.00001
     assert_exception(holding, Holding, false)
 
     # Test when purchase_price is nil
     holding.purchase_price = nil
     assert_exception(holding, Holding, false)
 
-    # Test when purchase_price is zero 
-    holding.commission_price = 0 
+    # Test when purchase_price is zero
+    holding.commission_price = 0
     assert_exception(holding, Holding, false)
 
     # Test when quantity is nil
     holding.quantity = nil
     assert_exception(holding, Holding, false)
 
-    # Test when quantity is zero 
-    holding.quantity = 0 
+    # Test when quantity is zero
+    holding.quantity = 0
     assert_exception(holding, Holding, false)
   end
 
   test 'create! functionality when purchase_date is nil' do
-    holding = get_holding
+    position = create_position(create_stock('AMZN'))
+    holding = build_holding(position)
 
     # Test when purchase_date is nil
     holding.purchase_date = nil
-    assert_exception(holding, Holding)
+    assert_exception(holding, Holding, false)
   end
 
   test 'create! functionality when Stock and Position do not exist' do
-    user = get_user 
-    holding = get_holding(user)
+    holding = build_holding(@position)
+    @position.destroy!
+    @stock.destroy!
+    holding.position = nil
 
     # There should not be a Stock or Position
     assert_nil Stock.by_symbol(holding.symbol), "Stock '#{holding.symbol}' already exists"
-    assert_nil Position.by_user_and_symbol(user, holding.symbol), "Position '#{holding.symbol}' already exists"
+    assert_nil Position.by_user_and_symbol(@user, holding.symbol), "Position '#{holding.symbol}' already exists"
     assert_nothing_raised { holding.create! }
 
     # There should be a Stock and Position
     assert_not_nil Stock.by_symbol(holding.symbol), "Stock '#{holding.symbol}' does not exists"
-    assert_not_nil Position.by_user_and_symbol(user, holding.symbol), "Position '#{holding.symbol}' does not exist"
+    assert_not_nil Position.by_user_and_symbol(@user, holding.symbol), "Position '#{holding.symbol}' does not exist"
 
     assert_equal holding.commission_price, holding.position.commission_price, 'Commission prices are not equal'
     assert_equal holding.purchase_price, holding.position.purchase_price, 'Purchase prices are not equal'
@@ -109,13 +124,11 @@ class HoldingsTest < ModelTest
   end
 
   test 'create! functionality when Stock and Position exist' do
-    user = get_user 
-    holding = get_holding(user)
-    holding.symbol = holdings(:holding).symbol
+    holding = build_holding(@position)
 
     # There should be a Stock or Position
     assert_not_nil Stock.by_symbol(holding.symbol), "Stock '#{holding.symbol}' does not exist"
-    assert_not_nil Position.by_user_and_symbol(user, holding.symbol), "Position '#{holding.symbol}' does not exist"
+    assert_not_nil Position.by_user_and_symbol(@user, holding.symbol), "Position '#{holding.symbol}' does not exist"
     assert_nothing_raised { holding.create! }
 
     assert_not_equal holding.commission_price, holding.position.commission_price, 'Commission prices are equal'
@@ -178,50 +191,31 @@ class HoldingsTest < ModelTest
     exception = assert_raise ActiveRecord::RecordInvalid do
       holding.create!
     end
-    assert_equal exception_on, exception.record.class, 'Exception was not on Stock model'
+    assert_equal exception_on, exception.record.class, "Exception was not on #{exception_on} model"
     if run_assertions
       assert_nil Stock.by_symbol(holding.symbol), "Stock '#{holding.symbol}' should not exist"
       assert_nil Position.by_user_and_symbol(holding.user, holding.symbol), "Position '#{holding.symbol}' does not exist"
     end
   end
 
-  def get_holding(user = get_user)
-    holding = Holding.new({
+
+  def create_position(stock)
+    position = create(:position,
       commission_price: 10,
-      purchase_date: Date.today,
       purchase_price: 20,
       quantity: 200,
-      symbol: 'AMZN',
-      user_id: user.id
-    })
-  end
-
-  def get_position(holding, stock)
-    position = Position.new({
-      commission_price: holding.commission_price,
-      purchase_price: holding.purchase_price,
-      quantity: holding.quantity,
-      symbol: holding.symbol
-    })
-    position.stock = stock
-    position.user = holding.user
-    assert position.save, "Position '#{holding.symbol}' could not be saved"
-    assert_not_nil Position.by_user_and_symbol(holding.user, holding.symbol), "Position '#{holding.symbol}' does not exist"
+      stock: stock,
+      symbol: stock.symbol,
+      user: @user
+    )
     position
   end
 
-  def get_stock(holding)
-    stock = Stock.new({symbol: holding.symbol})
-    stock.update?
-    assert stock.save, "Stock '#{holding.symbol}' could not be saved"
-    assert_not_nil Stock.by_symbol(holding.symbol), "Stock '#{holding.symbol}' does not exists"
+  def create_stock(symbol)
+    stock = create(:stock,
+      symbol: symbol
+    )
     stock
-  end
-
-  def get_user
-    user = users(:user)
-    assert_not_nil user, "User '#{user.email}' does not exist"
-    user
   end
 end
 

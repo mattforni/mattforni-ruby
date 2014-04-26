@@ -2,12 +2,19 @@ require 'test_helper'
 
 class Finance::StopsControllerTest < ActionController::TestCase
   def setup
-    @user = users(:user)
-    #stub(:authenticate_user!).and_return(true)
-    #stub(:current_user).and_return(@user)
+    @user = create(:user)
+    @stock = create(:stock)
+    @position = create(:position,
+      stock: @stock,
+      user: @user
+    )
+    @stop = create(:stop,
+      position: @position,
+      user: @user
+    )
+    login(@user)
   end
 
-  # TODO figure out mocking and fix this
   test 'get index functionality and template' do
     get :index
     assert_response :success

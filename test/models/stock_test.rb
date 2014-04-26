@@ -1,7 +1,9 @@
 require 'model_test'
 
 class StocksTest < ModelTest
-  setup { @stock = stocks(:stock) }
+  def setup
+    @stock = create(:stock)
+  end
 
   test 'by symbol functionality' do
     assert_respond_to Stock, :by_symbol, 'Stock cannot be found by symbol'

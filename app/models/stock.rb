@@ -5,8 +5,6 @@ include Stocks
 include Validators
 
 class Stock < ActiveRecord::Base
-  validates :last_trade, presence: true, numericality: PRICE_RANGE
-  validates :symbol, presence: true, uniqueness: true
   validates :highest_price, presence: true, numericality: PRICE_RANGE
   validates :highest_time, presence: true
   validates :last_trade, presence: true, numericality: PRICE_RANGE

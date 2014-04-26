@@ -1,7 +1,6 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    RedCloth (4.2.9)
     actionmailer (4.0.0)
       actionpack (= 4.0.0)
       mail (~> 2.5.3)
@@ -33,7 +32,6 @@ GEM
     atomic (1.1.14)
     bcrypt-ruby (3.1.2)
     builder (3.1.4)
-    cancan (1.6.10)
     chartjs-rails (0.1)
       railties (>= 3.1)
     coffee-rails (4.0.1)
@@ -51,6 +49,11 @@ GEM
       warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.0.2)
+    factory_girl (4.4.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.4.1)
+      factory_girl (~> 4.4.0)
+      railties (>= 3.0.0)
     haml (4.0.4)
       tilt
     haml-rails (0.5.1)
@@ -68,8 +71,11 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    metaclass (0.0.4)
     mime-types (1.25.1)
     minitest (4.7.5)
+    mocha (1.0.0)
+      metaclass (~> 0.0.1)
     multi_json (1.8.2)
     orm_adapter (0.5.0)
     pg (0.17.0)
@@ -140,17 +146,17 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  RedCloth (>= 4.2.9)
   acts-as-taggable-on (>= 2.4.1)
   angularjs-rails (~> 1.2)
-  cancan (~> 1.6)
   chartjs-rails (~> 0.1)
   coffee-rails (~> 4.0)
   devise (~> 3.2)
+  factory_girl_rails (~> 4.4)
   haml-rails (~> 0.4)
   jquery-rails (~> 3.1)
+  mocha (~> 1.0)
   pg
-  rails (= 4.0.0)
+  rails (~> 4.0)
   rails_12factor
   sass-rails (~> 4.0)
   sdoc

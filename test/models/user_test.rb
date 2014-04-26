@@ -1,7 +1,22 @@
 require 'model_test'
 
 class UserTest < ModelTest
-  setup { @user = users(:user) }
+  def setup
+    @user = create(:user)
+    @stock = create(:stock)
+    @position = create(:position,
+      stock: @stock,
+      user: @user
+    )
+    @holding = create(:holding,
+      position: @position,
+      user: @user
+    )
+    @stop = create(:stop,
+      position: @position,
+      user: @user
+    )
+  end
 
   test 'association of holdings' do
     test_association_has_many @user, :holdings, Holding.where(user_id: @user.id)

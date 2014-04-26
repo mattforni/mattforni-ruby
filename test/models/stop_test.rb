@@ -4,14 +4,25 @@ require 'stocks'
 include Stocks
 
 class StopTest < ModelTest 
-  setup { @stop = stops(:stop) }
+  def setup
+    @user = create(:user)
+    @stock = create(:stock)
+    @position = create(:position,
+      stock: @stock,
+      user: @user
+    )
+    @stop = create(:stop,
+      position: @position,
+      user: @user
+    )
+  end
 
   test 'association of position' do
-    test_association_belongs_to @stop, :position, positions(:position)
+    test_association_belongs_to @stop, :position, @position
   end
 
   test 'association of user' do
-    test_association_belongs_to @stop, :user, users(:user)
+    test_association_belongs_to @stop, :user, @user
   end
 
   test 'delegation of stock to position' do

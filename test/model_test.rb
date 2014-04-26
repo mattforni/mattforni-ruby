@@ -3,6 +3,27 @@ require 'test_helper'
 class ModelTest < ActiveSupport::TestCase
   protected
 
+  # Specific methods
+  def build_holding(position = nil)
+    if position.nil?
+      holding = build(:holding,
+        commission_price: 10,
+        purchase_price: 20,
+        quantity: 200,
+        user: @user
+      )
+    else
+      holding = build(:holding,
+        commission_price: 10,
+        position: position,
+        purchase_price: 20,
+        quantity: 200,
+        user: @user
+      )
+    end
+  end
+
+  # Generic methods
   def test_association_belongs_to(model, field, target)
     clazz = model.class
     assert_respond_to model, field, "#{clazz} cannot find associated #{field}"

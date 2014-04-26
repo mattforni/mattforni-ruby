@@ -57,7 +57,6 @@ class Stop < ActiveRecord::Base
     self.last_trade * (1.0 - rate)
   end
 
-  # TODO protect against percentage being nil
   def rate
     self.percentage / 100.0
   end
