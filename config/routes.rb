@@ -9,11 +9,12 @@ Mattforni::Application.routes.draw do
   scope '/finance' do
     get '/last_trade', to: 'finance#last_trade'
     get '/sizing', to: 'finance#sizing'
+    get '/stocks/update', to: 'finance#update_stocks'
   end
   namespace 'finance' do
-    get '/stocks/update_last_trade', to: 'stocks#update_last_trade'
     get '/stops/analyze', to: 'stops#analyze'
-    resources :holdings, :stops
+    resources :holdings
+    resources :stops
   end
 end
 
