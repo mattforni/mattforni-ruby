@@ -34,7 +34,7 @@ class HoldingsTest < ModelTest
     assert_exception(holding, Stock)
   end
 
-  test 'create! functionality when cp, pp or q is nil or invalid and Position does not exist' do
+  test 'create! functionality when cp, pp or q is nil or invalid and position does not exist' do
     holding = build_holding(@position)
     @position.destroy!
     @stock.destroy!
@@ -65,7 +65,7 @@ class HoldingsTest < ModelTest
     assert_exception(holding, Position)
   end
 
-  test 'create! functionality when cp, pp or q is nil or invalid and Position does exist' do
+  test 'create! functionality when cp, pp or q is nil or invalid and position does exist' do
     position = create_position(create_stock('AMZN'))
     holding = build_holding(position)
 
@@ -103,7 +103,7 @@ class HoldingsTest < ModelTest
     assert_exception(holding, Holding, false)
   end
 
-  test 'create! functionality when Stock and Position do not exist' do
+  test 'create! functionality when stock and position do not exist' do
     holding = build_holding(@position)
     @position.destroy!
     @stock.destroy!
@@ -123,7 +123,7 @@ class HoldingsTest < ModelTest
     assert_equal holding.quantity, holding.position.quantity, 'Quantities are not equal'
   end
 
-  test 'create! functionality when Stock and Position exist' do
+  test 'create! functionality when stock and position exist' do
     holding = build_holding(@position)
 
     # There should be a Stock or Position

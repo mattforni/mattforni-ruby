@@ -50,6 +50,14 @@ body {
   z-index: 0;
 }
 
+a {
+  color: #000;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 td.number-cell {
   text-align: right;
 }
@@ -153,8 +161,5 @@ a.dismiss {
   color: #000;
   font-weight: bold;
   text-decoration: none;
-  &:hover {
-    color: #222;
-  }
 }
 

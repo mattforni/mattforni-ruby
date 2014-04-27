@@ -32,7 +32,7 @@ class Finance::HoldingsController < FinanceController
   end
 
   def index
-    @holdings = current_user.holdings.order(:symbol)
+    @holdings = current_user.holdings.order(:symbol, :purchase_date)
   end
 
   def new

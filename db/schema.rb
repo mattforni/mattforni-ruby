@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140423054512) do
+ActiveRecord::Schema.define(version: 20140427010053) do
 
   create_table "holdings", force: true do |t|
     t.string   "symbol",           limit: 10,                                        null: false

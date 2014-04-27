@@ -19,6 +19,17 @@ class Stop < ActiveRecord::Base
   delegate :stock, to: :position, allow_nil: false
   delegate :last_trade, to: :stock, allow_nil: false
 
+  def create!
+    position = Position.by_user_and_symbol(self.user, self.symbol)
+    if position.nil?
+      self.errors.add(:position_id, "could not be found")
+      raise ActiveRecord::RecordInvalid.new(self)
+    end
+    self.position = position
+    self.update?
+    self.save!
+  end
+
   def price_diff
     self.last_trade - self.stop_price
   end

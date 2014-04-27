@@ -33,12 +33,23 @@ class Finance::StopsController < FinanceController
   end
 
   def create
+    # Create the new stop model from params
     params[:stop][:symbol].upcase!
-    @stop = Stop.new(stop_params)
-    @stop.user = current_user
-    @stop.update?
-    @stop.save!
-    redirect_to finance_stops_path
+    stop = Stop.new(stop_params)
+    stop.user = current_user
+    puts stop.inspect
+    begin
+      stop.create!
+      flash[:notice] = "Successfully created stop for #{stop.symbol}"
+      redirect_to finance_stops_path and return
+    rescue ActiveRecord::RecordInvalid
+      error_msg = "Unable to create #{$!.record.class.to_s.downcase}"
+      error_msg += " for #{stop.symbol}" if !(stop.symbol.nil? or stop.symbol.empty?)
+      logger.error "#{error_msg}: #{$!.record.errors.full_messages.join(', ')}"
+      flash[:alert] = "#{error_msg}."
+      flash[:errors] = $!.record.errors.full_messages
+      redirect_to new_finance_stop_path and return
+    end
   end
 
   def destroy
@@ -71,7 +82,8 @@ class Finance::StopsController < FinanceController
     params.require(:stop).permit(
       :percentage,
       :quantity,
-      :stop_price
+      :stop_price,
+      :symbol
     )
   end
 end

@@ -25,6 +25,29 @@ class StopTest < ModelTest
     test_association_belongs_to @stop, :user, @user
   end
 
+  test 'create! functionality when position does not exist' do
+    @stop.destroy!
+    @position.destroy!
+
+    stop = create(:stop,
+      position: @position,
+      user: @user
+    )
+    stop.position = nil
+    exception = assert_raise ActiveRecord::RecordInvalid do
+      stop.create!
+    end
+  end
+
+  test 'create! functionality when position does exist' do
+    stop = create(:stop,
+      position: @position,
+      user: @user
+    )
+    stop.position = nil
+    assert_nothing_raised { stop.create! }
+  end
+
   test 'delegation of stock to position' do
     test_delegation(@stop, @stop.position, :stock)
   end
