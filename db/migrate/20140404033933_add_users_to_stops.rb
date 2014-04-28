@@ -1,7 +1,7 @@
 class AddUsersToStops < ActiveRecord::Migration
   def change
     add_column :stops, :user_id, :integer
-    if !Rails.env.development?
+    if Rails.env.production?
       execute <<-SQL
         ALTER TABLE stops 
           ADD CONSTRAINT fk_stops_users

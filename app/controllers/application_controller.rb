@@ -7,5 +7,17 @@ class ApplicationController < ActionController::Base
       format.html { render status: 200 }
     end
   end
+
+  protected
+
+  def json_only
+    raise ArgumentError.new('Block must be provided') if !block_given?
+    respond_to do |format|
+      format.json do
+        yield
+      end
+      format.all { head 400 }
+    end
+  end
 end
 

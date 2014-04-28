@@ -26,6 +26,10 @@ class Stop < ActiveRecord::Base
       raise ActiveRecord::RecordInvalid.new(self)
     end
     self.position = position
+    if self.percentage.nil?
+      self.errors.add(:percentage, "cannot be nil")
+      raise ActiveRecord::RecordInvalid.new(self)
+    end
     self.update?
     self.save!
   end
