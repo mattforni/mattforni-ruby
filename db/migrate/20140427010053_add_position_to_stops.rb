@@ -1,4 +1,4 @@
-class UpdateIndicesAndStops < ActiveRecord::Migration
+class AddPositionToStops < ActiveRecord::Migration
   def change
     Stop.all.each do |s|
       if (s.position.nil?)

@@ -1,7 +1,5 @@
 class AddUsersToStops < ActiveRecord::Migration
   def change
-    user = User.where(email: 'mattforni@gmail.com').first
-    raise 'No user with email \'mattforni@gmail.com\'' if user.nil?
     add_column :stops, :user_id, :integer
     if !Rails.env.development?
       execute <<-SQL
@@ -11,9 +9,14 @@ class AddUsersToStops < ActiveRecord::Migration
           REFERENCES users(id)
       SQL
     end
-    Stop.all.each do |stop|
-      stop.user_id = user.id
-      stop.save!
+    stops = Stop.all
+    if !stops.empty?
+      user = User.where(email: 'mattforni@gmail.com').first
+      raise 'No user with email \'mattforni@gmail.com\'' if user.nil?
+      Stop.all.each do |stop|
+        stop.user_id = user.id
+        stop.save!
+      end
     end
     change_column :stops, :user_id, :integer, null: false
   end
