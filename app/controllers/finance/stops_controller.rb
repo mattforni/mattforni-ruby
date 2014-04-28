@@ -18,7 +18,7 @@ class Finance::StopsController < FinanceController
         # TODO update to authenticate_user and use Stop.by_user
         stops = Stop.all
         stops.each do |stop|
-          updated << stop if stop.update_stop_price?
+          updated << stop if stop.update?
           stop.save!
           stopped_out << stop if stop.stopped_out?
         end
