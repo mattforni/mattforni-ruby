@@ -8,6 +8,31 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  module Messages
+    def error_on_create(record)
+      additional = ''
+      if (record.respond_to?(:symbol)
+        symbol = record.symbol
+        additional = " for #{record.symbol}" if !(record.symbol.nil? or record.symbol.empty?))
+      end
+      CREATE_ERROR_MESSAGE % {record: record.class.to_s.downcase, additional: additional}
+    end
+
+    def success_on_create(record)
+      additional = ''
+      if (record.respond_to?(:symbol)
+        symbol = record.symbol
+        additional = " for #{record.symbol}" if !(record.symbol.nil? or record.symbol.empty?))
+      end
+      CREATE_SUCCESS_MESSAGE % {record: record.class.to_s.downcase, additional: additional}
+    end
+
+    private
+
+    CREATE_ERROR_MESSAGE = "Unable to create %{record}%{additional}."
+    CREATE_SUCCESS_MESSAGE = "Successfully created %{record}%{additional}"
+  end
+
   protected
 
   def json_only

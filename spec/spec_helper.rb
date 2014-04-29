@@ -46,5 +46,8 @@ RSpec.configure do |config|
   # Include Devise methods
   config.include Devise::TestHelpers, type: :controller
   config.extend DeviseController, type: :controller
+
+  # Include ApplicationController messaging
+  config.include ApplicationController::Messages, type: :controller
 end
 

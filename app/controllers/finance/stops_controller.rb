@@ -1,7 +1,9 @@
 require 'stocks'
+
+include ApplicationController::Messages
 include Stocks
 
-# TODO Test all methods except index
+# TODO Test analyze, index, new
 class Finance::StopsController < FinanceController
   before_action :authenticate_user!, except: [:analyze]
   before_action :find_stop, only: [:destroy, :edit, :show, :update]
@@ -34,18 +36,17 @@ class Finance::StopsController < FinanceController
 
   def create
     # Create the new stop model from params
-    params[:stop][:symbol].upcase!
+    params[:stop][:symbol].upcase! rescue nil
     stop = Stop.new(stop_params)
     stop.user = current_user
     begin
       stop.create!
-      flash[:notice] = "Successfully created stop for #{stop.symbol}"
+      flash[:notice] = success_on_create(stop)
       redirect_to finance_stops_path and return
     rescue ActiveRecord::RecordInvalid
-      error_msg = "Unable to create #{$!.record.class.to_s.downcase}"
-      error_msg += " for #{stop.symbol}" if !(stop.symbol.nil? or stop.symbol.empty?)
-      logger.error "#{error_msg}: #{$!.record.errors.full_messages.join(', ')}"
-      flash[:alert] = "#{error_msg}."
+      error_message = error_on_create($!.record)
+      logger.error "#{error_message} - #{$!.record.errors.full_messages.join(', ')}"
+      flash[:alert] = error_message
       flash[:errors] = $!.record.errors.full_messages
       redirect_to new_finance_stop_path and return
     end

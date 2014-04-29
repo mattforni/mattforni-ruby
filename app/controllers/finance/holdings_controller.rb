@@ -8,7 +8,7 @@ class Finance::HoldingsController < FinanceController
 
   def create
     # Create the new holding model from params
-    params[:holding][:symbol].upcase!
+    params[:holding][:symbol].upcase! rescue nil
     holding = Holding.new(holding_params)
     holding.user = current_user
     begin
