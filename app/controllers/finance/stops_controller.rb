@@ -1,12 +1,9 @@
-require 'stocks'
-
-include ApplicationController::Messages
-include Stocks
-
-# TODO Test analyze, index, new
+# TODO Test analyze, new
 class Finance::StopsController < FinanceController
   before_action :authenticate_user!, except: [:analyze]
-  before_action :find_stop, only: [:destroy, :edit, :show, :update]
+  # CanCan does not currently support StrongParameters
+  authorize_resource only: [:create]
+  load_and_authorize_resource except: [:analyze, :create]
 
   def analyze
     respond_to do |format|
@@ -36,20 +33,10 @@ class Finance::StopsController < FinanceController
 
   def create
     # Create the new stop model from params
-    params[:stop][:symbol].upcase! rescue nil
-    stop = Stop.new(stop_params)
-    stop.user = current_user
-    begin
-      stop.create!
-      flash[:notice] = success_on_create(stop)
-      redirect_to finance_stops_path and return
-    rescue ActiveRecord::RecordInvalid
-      error_message = error_on_create($!.record)
-      logger.error "#{error_message} - #{$!.record.errors.full_messages.join(', ')}"
-      flash[:alert] = error_message
-      flash[:errors] = $!.record.errors.full_messages
-      redirect_to new_finance_stop_path and return
-    end
+    @stop = Stop.new(stop_params)
+    @stop.symbol.try(:upcase!)
+    @stop.user = current_user
+    attempt_create!(@stop, finance_stops_path, new_finance_stop_path)
   end
 
   def destroy
@@ -59,11 +46,10 @@ class Finance::StopsController < FinanceController
   end
 
   def index
-    @stops = current_user.stops.order(:symbol)
+    @stops.order!(:symbol)
   end
 
   def new
-    @stop = Stop.new
   end
 
   def show
@@ -73,10 +59,6 @@ class Finance::StopsController < FinanceController
   end
 
   private
-
-  def find_stop
-    @stop = Stop.find(params[:id])
-  end
 
   def stop_params
     params.require(:stop).permit(

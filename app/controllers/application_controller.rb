@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   layout 'application'
+  rescue_from CanCan::AccessDenied, with: :access_denied
 
   def splash
     @posts = Post.all.order("created_at DESC") rescue []
@@ -43,6 +44,12 @@ class ApplicationController < ActionController::Base
       end
       format.all { head 400 }
     end
+  end
+
+  private
+
+  def access_denied
+    head 401
   end
 end
 

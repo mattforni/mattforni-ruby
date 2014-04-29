@@ -26,12 +26,12 @@ class Stop < ActiveRecord::Base
   def create!
     position = Position.by_user_and_symbol(self.user, self.symbol)
     if position.nil?
-      self.errors.add(:position_id, "could not be found")
+      self.errors.add(:position_id, 'could not be found')
       raise ActiveRecord::RecordInvalid.new(self)
     end
     self.position = position
     if self.percentage.nil?
-      self.errors.add(:percentage, "cannot be nil")
+      self.errors.add(:percentage, 'cannot be nil')
       raise ActiveRecord::RecordInvalid.new(self)
     end
     self.update?

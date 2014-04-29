@@ -1,5 +1,8 @@
 require 'stocks'
 
+include ApplicationController::Messages
+include Stocks
+
 class FinanceController < ApplicationController
   def last_trade
     json_only do
@@ -31,6 +34,22 @@ class FinanceController < ApplicationController
         evaluated: stocks.size,
         updated: {number: updated.size, records: updated}
       }
+    end
+  end
+
+  protected
+
+  def attempt_create!(record, success_redirect, failure_redirect)
+    begin
+      record.create!
+      flash[:notice] = success_on_create(record)
+      redirect_to success_redirect and return
+    rescue ActiveRecord::RecordInvalid
+      error_message = error_on_create($!.record)
+      logger.error "#{error_message} - #{$!.record.errors.full_messages.join(', ')}"
+      flash[:alert] = error_message
+      flash[:errors] = $!.record.errors.full_messages
+      redirect_to failure_redirect and return
     end
   end
 end

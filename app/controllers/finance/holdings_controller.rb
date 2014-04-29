@@ -1,28 +1,16 @@
-require 'stocks'
-include Stocks
-
-# TODO Test all methods except index
+# TODO Test create, index
 class Finance::HoldingsController < FinanceController
   before_action :authenticate_user!
-  before_action :find_holding, only: [:destroy, :edit, :show, :update]
+  # CanCan does not currently support StrongParameters
+  authorize_resource only: [:create]
+  load_and_authorize_resource except: [:create]
 
   def create
     # Create the new holding model from params
-    params[:holding][:symbol].upcase! rescue nil
-    holding = Holding.new(holding_params)
-    holding.user = current_user
-    begin
-      holding.create!
-      flash[:notice] = "Successfully created holding for #{holding.symbol}."
-      redirect_to finance_holdings_path and return
-    rescue ActiveRecord::RecordInvalid
-      error_msg = "Unable to create #{$!.record.class.to_s.downcase}"
-      error_msg += " for #{holding.symbol}" if !(holding.symbol.nil? or holding.symbol.empty?)
-      logger.error "#{error_msg}: #{$!.record.errors.full_messages.join(', ')}"
-      flash[:alert] = "#{error_msg}."
-      flash[:errors] = $!.record.errors.full_messages
-      redirect_to new_finance_holding_path and return
-    end
+    @holding = Holding.new(holding_params)
+    @holding.symbol.try(:upcase!)
+    @holding.user = current_user
+    attempt_create!(@holding, finance_holdings_path, new_finance_holding_path)
   end
 
   def destroy
@@ -32,11 +20,10 @@ class Finance::HoldingsController < FinanceController
   end
 
   def index
-    @holdings = current_user.holdings.order(:symbol, :purchase_date)
+    @holdings.order!(:symbol, :purchase_date)
   end
 
   def new
-    @holding = Holding.new
   end
 
   def show
@@ -46,10 +33,6 @@ class Finance::HoldingsController < FinanceController
   end
 
   private
-
-  def find_holding
-    @holding = Holding.find(params[:id])
-  end
 
   def holding_params
     params.require(:holding).permit(

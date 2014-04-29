@@ -22,7 +22,7 @@ gem 'chartjs-rails', '~> 0.1'
 gem 'devise', '~> 3.2'
 
 # Authorization
-# gem 'cancan', '~> 1.6'
+gem 'cancan', '~> 1.6'
 
 gem 'acts-as-taggable-on', '>= 2.4.1'
 

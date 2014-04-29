@@ -32,6 +32,7 @@ GEM
     atomic (1.1.14)
     bcrypt-ruby (3.1.2)
     builder (3.1.4)
+    cancan (1.6.10)
     chartjs-rails (0.1)
       railties (>= 3.1)
     coffee-rails (4.0.1)
@@ -161,6 +162,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (>= 2.4.1)
   angularjs-rails (~> 1.2)
+  cancan (~> 1.6)
   chartjs-rails (~> 0.1)
   coffee-rails (~> 4.0)
   devise (~> 3.2)
