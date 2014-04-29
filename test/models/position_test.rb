@@ -40,7 +40,7 @@ class PositionsTest < ModelTest
     # Test when there is no position with provided user and symbol
     assert_nil Position.by_user_and_symbol(@user, 'NoSymbol'), 'Position was found for an invalid user and symbol'
 
-    # Test when there is a stock with provided user and symbol
+    # Test when there is a position with provided user and symbol
     @user.id = user_id 
     found = Position.by_user_and_symbol(@user, @stock.symbol)
     assert_not_nil found, 'No position was found for the default user and symbol'

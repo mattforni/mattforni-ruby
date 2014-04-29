@@ -11,7 +11,7 @@ end
 class ActionController::TestCase < ActiveSupport::TestCase
   protected
 
-  def login(user = users(:user))
+  def login(user)
     @controller.stubs(:authenticate_user!).returns(true)
     @controller.stubs(:current_user).returns(user)
   end

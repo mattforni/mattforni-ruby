@@ -19,6 +19,10 @@ class Stop < ActiveRecord::Base
   delegate :stock, to: :position, allow_nil: false
   delegate :last_trade, to: :stock, allow_nil: false
 
+  def self.by_user_and_symbol(user, symbol)
+    Stop.where({user_id: user.id, symbol: symbol})
+  end
+
   def create!
     position = Position.by_user_and_symbol(self.user, self.symbol)
     if position.nil?

@@ -16,7 +16,7 @@ describe FinanceController do
       end
     end
 
-    it 'successfully gets the last trade' do
+    it 'gets the last trade' do
       get :last_trade, {format: 'json', symbol: 'ABC'}
       response.status.should eq(200)
       response.body.should match(/\d+\.\d*/)
@@ -24,7 +24,7 @@ describe FinanceController do
   end
 
   describe 'GET sizing' do
-    it 'successfully renders position sizing' do
+    it 'renders position sizing' do
       get :sizing
       response.status.should eq(200)
     end
@@ -52,9 +52,9 @@ describe FinanceController do
       end
     end
 
-    it 'successfully updates stocks' do
+    it 'updates stocks' do
       get :update_stocks, {format: 'json', token: 'f0rnac0pia'}
-      response.status.should eq(200) 
+      response.status.should eq(200)
     end
   end
 end

@@ -37,7 +37,6 @@ class Finance::StopsController < FinanceController
     params[:stop][:symbol].upcase!
     stop = Stop.new(stop_params)
     stop.user = current_user
-    puts stop.inspect
     begin
       stop.create!
       flash[:notice] = "Successfully created stop for #{stop.symbol}"

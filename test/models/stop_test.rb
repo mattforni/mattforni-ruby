@@ -25,6 +25,28 @@ class StopTest < ModelTest
     test_association_belongs_to @stop, :user, @user
   end
 
+  test 'by user and symbol functionality' do
+    assert_respond_to Stop, :by_user_and_symbol, 'Stop cannot be found by user and symbol'
+
+    # Test when there is no stop with provided symbol
+    assert Stop.by_user_and_symbol(@user, 'NoSymbol').empty?, 'Stop was found for an invalid symbol'
+
+    user_id = @user.id
+    # Test when there is no stop with provided user
+    @user.id = -1
+    assert Stop.by_user_and_symbol(@user, @stock.symbol).empty?, 'Stop was found for an invalid user'
+
+    # Test when there is no stop with provided user and symbol
+    assert Stop.by_user_and_symbol(@user, 'NoSymbol').empty?, 'Stop was found for an invalid user and symbol'
+
+    # Test when there is a stop with provided user and symbol
+    @user.id = user_id
+    stops = Stop.by_user_and_symbol(@user, @stock.symbol)
+    assert !stops.empty?, 'No stops were found for the default user and symbol'
+    assert_equal 1, stops.size, 'There was not one stop for the default user and symbol'
+    assert_equal @stop, stops.first, 'The found stop does not match the default stop'
+  end
+
   test 'create! functionality when position does not exist' do
     @stop.destroy!
     @position.destroy!
