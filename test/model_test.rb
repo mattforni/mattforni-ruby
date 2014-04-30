@@ -78,8 +78,7 @@ class ModelTest < ActiveSupport::TestCase
 
   def test_field_uniqueness(model, field)
     # Create a duplicate of the model
-    dup = model.class.send(:new)
-    dup.initialize_dup(model)
+    dup = model.dup
 
     # Assert the duplicate is invalid based on the field
     clazz = dup.class
