@@ -1,6 +1,6 @@
-require 'model_test'
+require 'test_helper'
 
-class PositionsTest < ModelTest 
+class PositionsTest < ActiveSupport::TestCase
   def setup
     @user = create(:user)
     @stock = create(:stock)
@@ -15,15 +15,15 @@ class PositionsTest < ModelTest
   end
 
   test 'association of holdings' do
-    test_association_has_many @position, :holdings, Holding.where(position_id: @position.id)
+    validates(@position).has_many :holdings, Holding.where(position_id: @position.id)
   end
 
   test 'association of stock' do
-    test_association_belongs_to @position, :stock, @stock
+    validates(@position).belongs_to :stock, @stock
   end
 
   test 'association of user' do
-    test_association_belongs_to @position, :user, @user
+    validates(@position).belongs_to :user, @user
   end
 
   test 'by user and symbol functionality' do
@@ -48,13 +48,18 @@ class PositionsTest < ModelTest
   end
 
   test 'delegation of last_trade to stock' do
-    test_delegation(@position, @position.stock, :last_trade)
+    validates(@position).delegates :last_trade, @position.stock
   end
 
   test 'update_weighted_avg! functionality' do
     assert_respond_to @position, :update_weighted_avg!, 'Position cannot update weighted avg'
 
-    build_holding(@position).save!
+    create(:holding,
+      commission_price: 10,
+      position: @position,
+      purchase_price: 10,
+      user: @user
+    )
     assert_equal 2, @position.holdings.size, 'Position does not have two holdings'
 
     # Test that other attributes raise an ArgumentError
@@ -74,7 +79,7 @@ class PositionsTest < ModelTest
   end
 
   test 'validate commission_price presence' do
-    test_field_presence @position, :commission_price
+    validates(@position).field_presence :commission_price
   end
 
   test 'validate commission_price under range' do
@@ -85,7 +90,7 @@ class PositionsTest < ModelTest
   end
 
   test 'validate purchase_price presence' do
-    test_field_presence @position, :purchase_price
+    validates(@position).field_presence :purchase_price
   end
 
   test 'validate purchase_price under range' do
@@ -96,7 +101,7 @@ class PositionsTest < ModelTest
   end
 
   test 'validate quantity presence' do
-    test_field_presence @position, :quantity
+    validates(@position).field_presence :quantity
   end
 
   test 'validate quantity under range' do
@@ -107,15 +112,15 @@ class PositionsTest < ModelTest
   end
 
   test 'validate stock_id presence' do
-    test_field_presence @position, :stock_id
+    validates(@position).field_presence :stock_id
   end
 
   test 'validate symbol presence' do
-    test_field_presence @position, :symbol
+    validates(@position).field_presence :symbol
   end
 
   test 'validate user_id presence' do
-    test_field_presence @position, :user_id
+    validates(@position).field_presence :user_id
   end
 end
 

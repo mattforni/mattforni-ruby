@@ -1,6 +1,6 @@
-require 'model_test'
+require 'test_helper'
 
-class HoldingsTest < ModelTest
+class HoldingsTest < ActiveSupport::TestCase
   def setup
     @user = create(:user)
     @stock = create(:stock)
@@ -15,11 +15,11 @@ class HoldingsTest < ModelTest
   end
 
   test 'association of position' do
-    test_association_belongs_to @holding, :position, @position
+    validates(@holding).belongs_to :position, @position
   end
 
   test 'association of user' do
-    test_association_belongs_to @holding, :user, @user
+    validates(@holding).belongs_to :user, @user
   end
 
   test 'create! functionality when symbol is nil or invalid' do
@@ -137,11 +137,11 @@ class HoldingsTest < ModelTest
   end
 
   test 'delegation of stock to position' do
-    test_delegation(@holding, @holding.position, :stock)
+    validates(@holding).delegates(:stock, @holding.position)
   end
 
   test 'validate commission_price presence' do
-    test_field_presence @holding, :commission_price
+    validates(@holding).field_presence(:commission_price)
   end
 
   test 'validate commission_price under range' do
@@ -152,11 +152,11 @@ class HoldingsTest < ModelTest
   end
 
   test 'validate purchase_date presence' do
-    test_field_presence @holding, :purchase_date
+    validates(@holding).field_presence(:purchase_date)
   end
 
   test 'validate purchase_price presence' do
-    test_field_presence @holding, :purchase_price
+    validates(@holding).field_presence(:purchase_price)
   end
 
   test 'validate purchase_price under range' do
@@ -167,7 +167,7 @@ class HoldingsTest < ModelTest
   end
 
   test 'validate quantity presence' do
-    test_field_presence @holding, :quantity
+    validates(@holding).field_presence(:quantity)
   end
 
   test 'validate quantity under range' do
@@ -178,11 +178,11 @@ class HoldingsTest < ModelTest
   end
 
   test 'validate symbol presence' do
-    test_field_presence @holding, :symbol
+    validates(@holding).field_presence(:symbol)
   end
 
   test 'validate user_id presence' do
-    test_field_presence @holding, :user_id
+    validates(@holding).field_presence(:user_id)
   end
 
   private
@@ -198,6 +198,24 @@ class HoldingsTest < ModelTest
     end
   end
 
+  def build_holding(position = nil)
+    if position.nil?
+      holding = build(:holding,
+        commission_price: 10,
+        purchase_price: 20,
+        quantity: 200,
+        user: @user
+      )
+    else
+      holding = build(:holding,
+        commission_price: 10,
+        position: position,
+        purchase_price: 20,
+        quantity: 200,
+        user: @user
+      )
+    end
+  end
 
   def create_position(stock)
     position = create(:position,

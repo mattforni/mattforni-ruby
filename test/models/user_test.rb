@@ -1,6 +1,6 @@
-require 'model_test'
+require 'test_helper'
 
-class UserTest < ModelTest
+class UserTest < ActiveSupport::TestCase
   def setup
     @user = create(:user)
     @stock = create(:stock)
@@ -19,23 +19,23 @@ class UserTest < ModelTest
   end
 
   test 'association of holdings' do
-    test_association_has_many @user, :holdings, Holding.where(user_id: @user.id)
+    validates(@user).has_many :holdings, Holding.where(user_id: @user.id)
   end
 
   test 'association of stops' do
-    test_association_has_many @user, :stops, Stop.where(user_id: @user.id)
+    validates(@user).has_many :stops, Stop.where(user_id: @user.id)
   end
 
   test 'validate email presence' do
-    test_field_presence @user, :email
+    validates(@user).field_presence :email
   end
 
   test 'validate email uniqueness' do
-    test_field_uniqueness @user, :email
+    validates(@user).field_uniqueness :email
   end
 
   test 'validate encrypted_password presenece' do
-    test_field_presence @user, :encrypted_password
+    validates(@user).field_presence :encrypted_password
   end
 end
 

@@ -1,6 +1,6 @@
-require 'model_test'
+require 'test_helper'
 
-class StocksTest < ModelTest
+class StockTest < ActiveSupport::TestCase
   def setup
     @stock = create(:stock)
   end
@@ -45,7 +45,7 @@ class StocksTest < ModelTest
   end
 
   test 'validate highest_price presence' do
-    test_field_presence @stock, :highest_price
+    validates(@stock).field_presence :highest_price
   end
 
   test 'validate highest_price under range' do
@@ -56,11 +56,11 @@ class StocksTest < ModelTest
   end
 
   test 'validate highest_time presence' do
-    test_field_presence @stock, :highest_time
+    validates(@stock).field_presence :highest_time
   end
 
   test 'validate last_trade presence' do
-    test_field_presence @stock, :last_trade
+    validates(@stock).field_presence :last_trade
   end
 
   test 'validate last_trade under range' do
@@ -71,7 +71,7 @@ class StocksTest < ModelTest
   end
 
   test 'validate symbol presence' do
-    test_field_presence @stock, :symbol
+    validates(@stock).field_presence :symbol
   end
 
   test 'validate symbol validity' do
@@ -81,7 +81,7 @@ class StocksTest < ModelTest
   end
 
   test 'validate lowest_price presence' do
-    test_field_presence @stock, :lowest_price
+    validates(@stock).field_presence :lowest_price
   end
 
   test 'validate lowest_price under range' do
@@ -92,7 +92,7 @@ class StocksTest < ModelTest
   end
 
   test 'validate lowest_time presence' do
-    test_field_presence @stock, :lowest_time
+    validates(@stock).field_presence :lowest_price
   end
 end
 

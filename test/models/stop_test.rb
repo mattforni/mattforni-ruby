@@ -1,9 +1,6 @@
-require 'model_test'
-require 'stocks'
+require 'test_helper'
 
-include Stocks
-
-class StopTest < ModelTest 
+class StopTest < ActiveSupport::TestCase
   def setup
     @user = create(:user)
     @stock = create(:stock)
@@ -18,11 +15,11 @@ class StopTest < ModelTest
   end
 
   test 'association of position' do
-    test_association_belongs_to @stop, :position, @position
+    validates(@stop).belongs_to :position, @position
   end
 
   test 'association of user' do
-    test_association_belongs_to @stop, :user, @user
+    validates(@stop).belongs_to :user, @user
   end
 
   test 'by user and symbol functionality' do
@@ -71,11 +68,11 @@ class StopTest < ModelTest
   end
 
   test 'delegation of stock to position' do
-    test_delegation(@stop, @stop.position, :stock)
+    validates(@stop).delegates :stock, @stop.position
   end
 
   test 'delegation of last_trade to stock' do
-    test_delegation(@stop, @stop.position.stock, :last_trade)
+    validates(@stop).delegates :last_trade, @stop.position.stock
   end
 
   test 'price diff functionality' do
@@ -154,7 +151,7 @@ class StopTest < ModelTest
   end
 
   test 'validate highest_price presence' do
-    test_field_presence @stop, :highest_price
+    validates(@stop).field_presence :highest_price
   end
 
   test 'validate highest_price under range' do
@@ -165,11 +162,11 @@ class StopTest < ModelTest
   end
 
   test 'validate highest_time presence' do
-    test_field_presence @stop, :highest_time
+    validates(@stop).field_presence :highest_time
   end
 
   test 'validate precentage presence' do
-    test_field_presence @stop, :percentage
+    validates(@stop).field_presence :percentage
   end
 
   test 'validate percentage over range' do
@@ -187,11 +184,11 @@ class StopTest < ModelTest
   end
 
   test 'validate position_id presence' do
-    test_field_presence @stop, :position_id
+    validates(@stop).field_presence :position_id
   end
 
   test 'validate stop_price presence' do
-    test_field_presence @stop, :stop_price
+    validates(@stop).field_presence :stop_price
   end
 
   test 'validate stop_price under range' do
@@ -202,11 +199,11 @@ class StopTest < ModelTest
   end
 
   test 'validate symbol presence' do
-    test_field_presence @stop, :symbol
+    validates(@stop).field_presence :symbol
   end
 
   test 'validate lowest_price presence' do
-    test_field_presence @stop, :lowest_price
+    validates(@stop).field_presence :lowest_price
   end
 
   test 'validate lowest_price under range' do
@@ -217,11 +214,11 @@ class StopTest < ModelTest
   end
 
   test 'validate lowest_time presence' do
-    test_field_presence @stop, :lowest_time
+    validates(@stop).field_presence :lowest_time
   end
 
   test 'validate user_id presence' do
-    test_field_presence @stop, :user_id
+    validates(@stop).field_presence :user_id
   end
 end
 

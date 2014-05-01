@@ -50,5 +50,6 @@ group :test do
   gem 'factory_girl_rails', '~> 4.4'
   gem 'rspec-rails', '~> 2.14'
   gem 'mocha', '~> 1.0'
+  gem 'validity', '~> 0.0'
 end
 
