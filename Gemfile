@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 ruby '2.1.1'
 
 # Core gems
-gem 'rails', '~> 4.0'
+gem 'rails', '~> 4.1'
 gem 'unicorn', '~> 4.8'
 
 # Finance gems
@@ -28,7 +28,6 @@ gem 'acts-as-taggable-on', '>= 2.4.1'
 
 # Gem groups
 group :assets do
-  gem 'coffee-rails', '~> 4.0'
   gem 'sass-rails', '~> 4.0'
   gem 'uglifier', '~> 1.3'
 end
@@ -49,6 +48,7 @@ end
 group :test do
   gem 'factory_girl_rails', '~> 4.4'
   gem 'rspec-rails', '~> 2.14'
+  gem 'minitest', '~> 5.3'
   gem 'mocha', '~> 1.0'
   gem 'validity', '~> 0.0'
 end

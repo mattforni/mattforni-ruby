@@ -52,5 +52,19 @@ class FinanceController < ApplicationController
       redirect_to failure_redirect and return
     end
   end
+
+  def attempt_update!(record, success_redirect, failure_redirect)
+    begin
+      record.save!
+      flash[:notice] = success_on_update(record)
+      redirect_to success_redirect and return
+    rescue ActiveRecord::RecordInvalid
+      error_message = error_on_update($!.record)
+      logger.error "#{error_message} - #{$!.record.errors.full_messages.join(', ')}"
+      flash[:alert] = error_message
+      flash[:errors] = $!.record.errors.full_messages
+      redirect_to failure_redirect and return
+    end
+  end
 end
 

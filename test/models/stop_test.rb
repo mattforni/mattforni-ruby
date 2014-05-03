@@ -9,7 +9,9 @@ class StopTest < ActiveSupport::TestCase
       user: @user
     )
     @stop = create(:stop,
+      percentage: 10,
       position: @position,
+      stop_price: 9,
       user: @user
     )
   end
@@ -107,7 +109,7 @@ class StopTest < ActiveSupport::TestCase
     assert !@stop.stopped_out?, 'Stopped out despite last_trade being greater than stop_price'
   end
 
-  test 'update stop price functionality' do
+  test 'update functionality' do
     last_trade = @stop.last_trade
 
     assert_respond_to @stop, :update?, 'Stop cannot update stop price'
@@ -148,6 +150,16 @@ class StopTest < ActiveSupport::TestCase
     stop_price = @stop.stop_price
     assert_nothing_raised { assert !@stop.update?, 'Stop was updated despite still being equal to previous value' }
     assert_equal stop_price, @stop.stop_price, 'Stop price does not still equal previous value'
+  end
+
+  test 'update percentage functionality' do
+    # Test when percentage is not different
+    assert !@stop.update_percentage?(@stop.percentage), 'Update percentage indicated update was necessary'
+
+    # Test when percentage is difference
+    assert @stop.update_percentage?(15), 'Update percentage did not indicate update was necessary'
+    assert_equal 15, @stop.percentage, 'Stop percentage was not updated'
+    assert_equal 8.5, @stop.stop_price, 'Stop price was not updated'
   end
 
   test 'validate highest_price presence' do

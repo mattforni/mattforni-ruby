@@ -16,13 +16,11 @@ describe FinanceController do
       end
     end
 
-    context 'when all criteria is met' do
-      it 'gets the last trade' do
-        get :last_trade, {format: 'json', symbol: 'ABC'}
-        expect(response.status).to eq(200)
-        expect(response.body).to match(/\d+\.\d*/)
-        expect(response.content_type).to eq(Mime::Type.lookup_by_extension(:json))
-      end
+    it 'gets the last trade' do
+      get :last_trade, {format: 'json', symbol: 'ABC'}
+      expect(response.status).to eq(200)
+      expect(response.body).to match(/\d+\.\d*/)
+      expect(response.content_type).to eq(Mime::Type.lookup_by_extension(:json))
     end
   end
 
@@ -55,12 +53,10 @@ describe FinanceController do
       end
     end
 
-    context 'when all criteria is met' do
-      it 'updates stocks' do
-        get :update_stocks, {format: 'json', token: 'f0rnac0pia'}
-        expect(response.status).to eq(200)
-        expect(response.content_type).to eq(Mime::Type.lookup_by_extension(:json))
-      end
+    it 'updates stocks' do
+      get :update_stocks, {format: 'json', token: 'f0rnac0pia'}
+      expect(response.status).to eq(200)
+      expect(response.content_type).to eq(Mime::Type.lookup_by_extension(:json))
     end
   end
 end

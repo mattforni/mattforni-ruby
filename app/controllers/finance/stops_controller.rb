@@ -1,10 +1,10 @@
-# TODO Test analyze, new
 class Finance::StopsController < FinanceController
   before_action :authenticate_user!, except: [:analyze]
   # CanCan does not currently support StrongParameters
-  authorize_resource only: [:create]
-  load_and_authorize_resource except: [:analyze, :create]
+  authorize_resource only: [:create, :update]
+  load_and_authorize_resource except: [:analyze, :create, :update]
 
+  # TODO test analyze
   def analyze
     respond_to do |format|
       # Only accept json requests
@@ -39,6 +39,7 @@ class Finance::StopsController < FinanceController
     attempt_create!(@stop, finance_stops_path, new_finance_stop_path)
   end
 
+  # TODO implement destroy
   def destroy
   end
 
@@ -52,10 +53,14 @@ class Finance::StopsController < FinanceController
   def new
   end
 
+  # TODO implement? show
   def show
   end
 
   def update
+    @stop = Stop.find(params[:id])
+    @stop.update_percentage?(params[:stop][:percentage])
+    attempt_update!(@stop, finance_stops_path, edit_finance_stop_path(@stop.id))
   end
 
   private

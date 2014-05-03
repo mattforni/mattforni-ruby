@@ -69,15 +69,25 @@ class Stop < ActiveRecord::Base
     update
   end
 
+  # TODO test update_percentage?
+  def update_percentage?(percentage)
+    return false if self.percentage == percentage
+    original = self.stop_price / rate(true)
+    self.percentage = percentage
+    self.stop_price = rate(true) * original
+    true
+  end
+
   private
 
   def calc_stop_price
     self.stock.update? if self.last_trade.nil?
-    self.last_trade * (1.0 - rate)
+    self.last_trade * rate(true)
   end
 
-  def rate
-    self.percentage / 100.0
+  def rate(inverse = false)
+    rate = self.percentage / 100.0
+    return inverse ? 1 - rate : rate
   end
 end
 

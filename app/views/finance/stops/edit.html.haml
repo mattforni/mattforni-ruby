@@ -1,0 +1,21 @@
+= form_for [:finance, @stop] do |f|
+    %table
+        %tr
+            %th
+                Symbol
+            %td
+                = @stop.symbol
+        %tr
+            %th
+                Stop Price
+            %td
+                = @stop.stop_price
+        %tr
+            %th
+                = f.label 'Percentage'
+            %td
+                = f.number_field :percentage, step: 0.001
+        %tr
+            %td{colspan: 2}
+                = f.submit 'update'
+

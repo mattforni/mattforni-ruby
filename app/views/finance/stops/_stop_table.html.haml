@@ -20,6 +20,7 @@
             Lowest Price
         %th
             Lowest Time
+        %th
     - stops.each do |stop|
         %tr
             %td
@@ -42,4 +43,7 @@
                 = currency_display stop.lowest_price
             %td
                 = time_display stop.lowest_time
+            %td
+                = link_to 'E', edit_finance_stop_path(stop.id) if editable and can? :update, @stop
+
 
