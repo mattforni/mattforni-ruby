@@ -19,6 +19,14 @@ class ApplicationController < ActionController::Base
       generate_message CREATE_SUCCESS_MESSAGE, record
     end
 
+    def error_on_destroy(record)
+      generate_message DESTROY_ERROR_MESSAGE, record
+    end
+
+    def success_on_destroy(record)
+      generate_message DESTROY_SUCCESS_MESSAGE, record
+    end
+
     def error_on_update(record)
       generate_message UPDATE_ERROR_MESSAGE, record
     end
@@ -40,6 +48,8 @@ class ApplicationController < ActionController::Base
 
     CREATE_ERROR_MESSAGE = "Unable to create %{record}%{additional}."
     CREATE_SUCCESS_MESSAGE = "Successfully created %{record}%{additional}."
+    DESTROY_ERROR_MESSAGE = "Unable to destroy %{record}%{additional}."
+    DESTROY_SUCCESS_MESSAGE = "Successfully destroyed %{record}%{additional}."
     UPDATE_ERROR_MESSAGE = "Unable to update %{record}%{additional}."
     UPDATE_SUCCESS_MESSAGE = "Successfully updated %{record}%{additional}."
   end

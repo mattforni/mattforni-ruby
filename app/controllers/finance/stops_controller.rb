@@ -41,6 +41,7 @@ class Finance::StopsController < FinanceController
 
   # TODO implement destroy
   def destroy
+    attempt_destroy!(@stop, finance_stops_path)
   end
 
   def edit
@@ -58,7 +59,6 @@ class Finance::StopsController < FinanceController
   end
 
   def update
-    @stop = Stop.find(params[:id])
     @stop.update_percentage?(params[:stop][:percentage])
     attempt_update!(@stop, finance_stops_path, edit_finance_stop_path(@stop.id))
   end

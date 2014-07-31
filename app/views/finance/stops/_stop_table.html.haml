@@ -21,10 +21,13 @@
         %th
             Lowest Time
         %th
-    - stops.each do |stop|
-        %tr
+    - stops.each_with_index do |stop, i|
+        %tr{class: (i+1)%2 == 1 ? 'odd' : 'even'}
             %td
-                = stop.symbol
+                - if editable and can? :update, @stop
+                    = link_to stop.symbol, edit_finance_stop_path(stop.id)
+                - else
+                    = stop.symbol
             %td
                 = stop.percentage
             %td.number-cell
@@ -44,6 +47,6 @@
             %td
                 = time_display stop.lowest_time
             %td
-                = link_to 'E', edit_finance_stop_path(stop.id) if editable and can? :update, @stop
+                = link_to 'X', finance_stop_path(stop.id), method: 'DELETE' if editable and can? :destroy, @stop
 
 

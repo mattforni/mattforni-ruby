@@ -2,5 +2,5 @@
     No holdings yet.
 - else
     = render partial: 'holding_table', locals: {holdings: @holdings}
-= link_to '+', new_finance_holding_path if can? :create, Holding
+= add_link new_finance_holding_path, can?(:create, Holding)
 

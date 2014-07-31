@@ -10,8 +10,8 @@
             Purchase Price
         %th
             Commission Price
-    - holdings.each do |holding|
-        %tr
+    - holdings.each_with_index do |holding, i|
+        %tr{class: (i+1)%2 == 1 ? 'odd' : 'even'}
             %td
                 = holding.symbol
             %td

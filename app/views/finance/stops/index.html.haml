@@ -2,5 +2,5 @@
     No stops yet.
 - else
     = render partial: 'stop_table', locals: {stops: @stops, editable: true}
-= link_to '+', new_finance_stop_path if can? :create, Stop
+= add_link new_finance_stop_path, can?(:create, Stop)
 

@@ -52,10 +52,32 @@ body {
 
 a {
   color: #000;
-  text-decoration: none;
+  text-decoration: underline;
   &:hover {
-    text-decoration: underline;
+    font-weight: bold;
+    text-decoration: none;
   }
+  &.no-underline {
+    text-decoration: none;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+tr {
+  &.odd {
+    background-color: #eee;
+  }
+  &.even {
+    background-color: #ddd;
+  }
+}
+
+th,td {
+  padding: 3px 5px;
 }
 
 td.number-cell {
