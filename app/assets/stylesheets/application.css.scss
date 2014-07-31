@@ -96,6 +96,7 @@ td.number-cell {
   }
   #message-wrapper {
     margin: auto;
+    padding: 15px 10px;
     position: relative;
     width: 50%;
     @include box-shadow(1px, 1px, 5px, #000);
@@ -107,18 +108,6 @@ td.number-cell {
     &.alert {
       background-color: #A32900;
       @include gradient(#A32900, #B82E00);
-    }
-    table {
-      padding: 15px;
-      tr {
-        vertical-align: top;
-      }
-      td#message {
-        width: 99%;
-      }
-      td#dismiss {
-        width: 1%;
-      }
     }
   }
 }

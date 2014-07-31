@@ -25,7 +25,7 @@ $( document ).ready(function() {
     setTimeout(dismissOverlay, 7000);
   }
 
-  $('div#overlay a.dismiss').click(function() {
+  $('div#overlay').click(function() {
     dismissOverlay();
   });
 });

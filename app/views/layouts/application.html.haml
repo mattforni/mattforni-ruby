@@ -9,19 +9,12 @@
   %body
     #overlay{class: (alert or notice) ? '' : 'dismissed'}
       #message-wrapper{class: alert ? 'alert' : 'notice'}
-        %table
-          %tr
-            %td#message
-              #message
-                - if alert
-                  = alert
-                  - (flash[:errors] || []).each do |e|
-                    %li=e
-                - else
-                  = notice
-            %td#dismiss
-              #dismiss
-                %a.dismiss{href: ''}='x'
+        - if alert
+          = alert
+          - (flash[:errors] || []).each do |e|
+            %li=e
+        - else
+          = notice
 
     #header
       #logo-wrapper
