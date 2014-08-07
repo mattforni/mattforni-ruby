@@ -1,8 +1,8 @@
 class Finance::StopsController < FinanceController
   before_action :authenticate_user!, except: [:analyze]
   # CanCan does not currently support StrongParameters
-  authorize_resource only: [:create, :update]
-  load_and_authorize_resource except: [:analyze, :create, :update]
+  authorize_resource only: [:create]
+  load_and_authorize_resource except: [:analyze, :create]
 
   # TODO test analyze
   def analyze
