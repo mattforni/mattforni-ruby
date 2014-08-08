@@ -37,7 +37,8 @@ module Stocks
       one_month: {label: '1 Month', offset: 1.months},
       three_months: {label: '3 Months', offset: 3.months},
       six_months: {label: '6 Months', offset: 6.months},
-      one_year: {label: '1 Year', offset: 1.years}
+      one_year: {label: '1 Year', offset: 1.years},
+      five_years: {label: '5 Years', offset: 5.years}
     }
 
     def self.quote(symbol, period)
