@@ -12,7 +12,7 @@ const CHART_OPTIONS = {
         mode: 'time',
     },
     yaxis: {
-        minTickSize: 0.5
+        minTickSize: 1
     }
 }
 
@@ -24,8 +24,15 @@ function HistoricalChart() {
 
     var locked = false;
     var priceData = {};
-    priceData[gon.period] = {};
-    priceData[gon.period][getDate()]= gon.series;
+    putData(
+        gon.period,
+        getDate(),
+        {
+            max: gon.max,
+            min: gon.min,
+            time_series_data: gon.time_series_data
+        }
+    );
 
     function cachedData(period, date) {
         return priceData[period] && priceData[period][date];
@@ -81,7 +88,9 @@ function HistoricalChart() {
     }
 
     function renderData(data, period) {
-        $.plot(CHART_SELECTOR, [formatData(data)], CHART_OPTIONS);
+        CHART_OPTIONS.yaxis.max = data.max;
+        CHART_OPTIONS.yaxis.min = data.min;
+        $.plot(CHART_SELECTOR, [formatData(data.time_series_data)], CHART_OPTIONS);
         $('div.period').removeClass(SELECTED_CLASS);
         $('div.period#'+period).addClass(SELECTED_CLASS);
     }

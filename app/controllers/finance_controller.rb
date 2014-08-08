@@ -5,45 +5,37 @@ include ApplicationController::Messages
 class FinanceController < ApplicationController
   include Stocks
 
+  around_action :json_only, only: [:historical, :last_trade]
+
   def chart
+    @period = params[:period] || DEFAULT_PERIOD
     @periods = Historical::PERIODS
     @symbol = params[:symbol].upcase
-    gon.symbol = @symbol
-    gon.period = params[:period] || DEFAULT_PERIOD
-    begin
-      gon.series = Historical.quote(gon.symbol, gon.period).map do |quote|
-        [Date.parse(quote.date).strftime('%Q').to_i, quote.adjClose]
-      end
-    rescue ArgumentError
+
+    historical_data = get_historical_data(@symbol, @period) do
       logger.error $!.message
       flash[:alert] = $!.message
       redirect_to historical_path gon.symbol
     end
+    gon.max = historical_data[:max]
+    gon.min = historical_data[:min]
+    gon.time_series_data = historical_data[:time_series_data]
+    gon.symbol = @symbol
+    gon.period = @period
   end
 
   def historical
-    begin
-      @quotes = Historical.quote(params[:symbol], params[:period]).map do |quote|
-        [Date.parse(quote.date).strftime('%Q').to_i, quote.adjClose]
-      end
-      respond_to do |format|
-        format.html { render status: 200 }
-        format.json { render json: @quotes }
-      end
-    rescue ArgumentError
-      logger.error $!.message
-      flash[:alert] = $!.message
-      redirect_to historical_path params[:symbol]
-    end
+    period = params[:period] || DEFAULT_PERIOD
+    symbol = params[:symbol].upcase
+    historical_data = get_historical_data(symbol, period)
+    render json: historical_data if historical_data
   end
 
   def last_trade
-    json_only do
-      begin
-        render json: Stocks.last_trade(params[:symbol])
-      rescue Stocks::RetrievalError
-        head 400
-      end
+    begin
+      render json: Stocks.last_trade(params[:symbol])
+    rescue Stocks::RetrievalError
+      head 400
     end
   end
 
@@ -118,5 +110,20 @@ class FinanceController < ApplicationController
   private
 
   DEFAULT_PERIOD = 'six_months'
+
+  def get_historical_data(symbol, period, &error_handler)
+    begin
+      max = Float::MIN
+      min = Float::MAX
+      time_series_data = Historical.quote(symbol, period).map do |quote|
+        max = quote.adjClose if max < quote.adjClose
+        min = quote.adjClose if min > quote.adjClose
+        [Date.parse(quote.date).strftime('%Q').to_i, quote.adjClose]
+      end
+      {max: max, min: min, time_series_data: time_series_data}
+    rescue ArgumentError
+      error_handler.call if block_given?
+    end
+  end
 end
 
