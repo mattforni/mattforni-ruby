@@ -22,7 +22,7 @@ $( document ).ready(function() {
   });
 
   if (!$('div#overlay').hasClass('dismissed')) {
-    setTimeout(dismissOverlay, 7000);
+    setTimeout(dismissOverlay, 5000);
   }
 
   $('div#overlay').click(function() {

@@ -4,8 +4,6 @@
  * @author Matt Fornaciari (mattforni@gmail.com)
  */
 
-//= require chart
-
 var LAST_TRADE_URL = '/finance/last_trade';
 
 /**
