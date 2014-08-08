@@ -1,3 +1,10 @@
 #symbol=@symbol
 #chart
 
+#period_select
+    - @periods.keys.each_with_index do |key, i|
+        - clazz = 'first' if i == 0
+        - clazz = 'last' if i == @periods.size - 1
+        .period{class: clazz, data: {value: key}, id: key.to_s, style: "width: #{100/@periods.size}%"}
+            = @periods[key][:label]
+

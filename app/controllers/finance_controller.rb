@@ -6,6 +6,7 @@ class FinanceController < ApplicationController
   include Stocks
 
   def chart
+    @periods = Historical::PERIODS
     @symbol = params[:symbol].upcase
     gon.symbol = @symbol
     gon.period = params[:period] || DEFAULT_PERIOD

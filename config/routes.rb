@@ -13,7 +13,6 @@ Mattforni::Application.routes.draw do
     get '/historical/:symbol/(:period)',
       as: :historical,
       defaults: {
-        #format: 'json',
         period: 'one_month'
       },
       to: 'finance#historical'

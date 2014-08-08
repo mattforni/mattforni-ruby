@@ -1,12 +1,67 @@
+// TODO move to application once imports figured out
+@mixin rounded-left-corners($radius) {
+  border-bottom-left-radius: $radius;
+  -moz-border-radius-bottomleft: $radius;
+  -webkit-border-bottom-left-radius: $radius;
+
+  border-top-left-radius: $radius;
+  -moz-border-radius-topleft: $radius;
+  -webkit-border-top-left-radius: $radius;
+}
+
+@mixin rounded-right-corners($radius) {
+  border-bottom-right-radius: $radius;
+  -moz-border-radius-bottomright: $radius;
+  -webkit-border-bottom-right-radius: $radius;
+
+  border-top-right-radius: $radius;
+  -moz-border-radius-topright: $radius;
+  -webkit-border-top-right-radius: $radius;
+}
+
+$selector_round: 25px;
+
 div#chart {
   height: 400px;
+  position: relative;
   width: 100%;
+  z-index: 0;
+}
+
+div#loading {
+  background-color: rgba(0, 0, 0, 0.1);
+  height: 100%;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+div.period {
+  background-color: #eee;
+  cursor: hand;
+  float: left;
+  padding: 15px 0;
+  text-align: center;
+  &.first {
+    @include rounded-left-corners($selector_round);
+  }
+  &.last {
+    @include rounded-right-corners($selector_round);
+  }
+  &.selected {
+    background-color: #ddd;
+  }
+}
+
+div#period_select {
+  padding: 25px 0;
 }
 
 div#symbol {
   font-size: 1.25em;
   font-weight: bold;
   padding: 15px 0;
+  text-align: center;
   width: 100%;
 }
 

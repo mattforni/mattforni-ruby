@@ -33,20 +33,18 @@ module Stocks
   end
 
   module Historical
+    PERIODS = {
+      one_month: {label: '1 Month', offset: 1.months},
+      three_months: {label: '3 Months', offset: 3.months},
+      six_months: {label: '6 Months', offset: 6.months},
+      one_year: {label: '1 Year', offset: 1.years}
+    }
+
     def self.quote(symbol, period)
       raise ArgumentError.new("Period must be provided for a historical quote") if period.nil?
       raise ArgumentError.new("'#{period}' is not a supported period") if !PERIODS.has_key?(period.to_sym)
       YahooFinance::get_HistoricalQuotes(symbol, Date.today - PERIODS[period.to_sym][:offset], Date.today)
     end
-
-    private
-
-    PERIODS = {
-      one_month: {offset: 1.months},
-      three_months: {offset: 3.months},
-      six_months: {offset: 6.months},
-      one_year: {offset: 1.years}
-    }
   end
 
   private
