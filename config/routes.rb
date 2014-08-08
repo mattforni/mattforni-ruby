@@ -7,6 +7,16 @@ Mattforni::Application.routes.draw do
 
   # Setup finance routes
   scope '/finance' do
+    get '/chart/:symbol',
+      as: :chart,
+      to: 'finance#chart'
+    get '/historical/:symbol/(:period)',
+      as: :historical,
+      defaults: {
+        #format: 'json',
+        period: 'one_month'
+      },
+      to: 'finance#historical'
     get '/last_trade', to: 'finance#last_trade'
     get '/sizing', to: 'finance#sizing'
     get '/stocks/update', to: 'finance#update_stocks'

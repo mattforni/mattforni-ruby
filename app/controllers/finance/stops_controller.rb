@@ -39,7 +39,6 @@ class Finance::StopsController < FinanceController
     attempt_create!(@stop, finance_stops_path, new_finance_stop_path)
   end
 
-  # TODO implement destroy
   def destroy
     attempt_destroy!(@stop, finance_stops_path)
   end
@@ -54,7 +53,7 @@ class Finance::StopsController < FinanceController
   def new
   end
 
-  # TODO implement? show
+  # TODO implement show?
   def show
   end
 

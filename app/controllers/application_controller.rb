@@ -15,20 +15,20 @@ class ApplicationController < ActionController::Base
       generate_message CREATE_ERROR_MESSAGE, record
     end
 
-    def success_on_create(record)
-      generate_message CREATE_SUCCESS_MESSAGE, record
-    end
-
     def error_on_destroy(record)
       generate_message DESTROY_ERROR_MESSAGE, record
     end
 
-    def success_on_destroy(record)
-      generate_message DESTROY_SUCCESS_MESSAGE, record
-    end
-
     def error_on_update(record)
       generate_message UPDATE_ERROR_MESSAGE, record
+    end
+
+    def success_on_create(record)
+      generate_message CREATE_SUCCESS_MESSAGE, record
+    end
+
+    def success_on_destroy(record)
+      generate_message DESTROY_SUCCESS_MESSAGE, record
     end
 
     def success_on_update(record)

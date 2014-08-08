@@ -1,9 +1,41 @@
 require 'stocks'
 
 include ApplicationController::Messages
-include Stocks
 
 class FinanceController < ApplicationController
+  include Stocks
+
+  def chart
+    @symbol = params[:symbol].upcase
+    gon.symbol = @symbol
+    gon.period = params[:period] || DEFAULT_PERIOD
+    begin
+      gon.series = Historical.quote(gon.symbol, gon.period).map do |quote|
+        [Date.parse(quote.date).strftime('%Q').to_i, quote.adjClose]
+      end
+    rescue ArgumentError
+      logger.error $!.message
+      flash[:alert] = $!.message
+      redirect_to historical_path gon.symbol
+    end
+  end
+
+  def historical
+    begin
+      @quotes = Historical.quote(params[:symbol], params[:period]).map do |quote|
+        [Date.parse(quote.date).strftime('%Q').to_i, quote.adjClose]
+      end
+      respond_to do |format|
+        format.html { render status: 200 }
+        format.json { render json: @quotes }
+      end
+    rescue ArgumentError
+      logger.error $!.message
+      flash[:alert] = $!.message
+      redirect_to historical_path params[:symbol]
+    end
+  end
+
   def last_trade
     json_only do
       begin
@@ -81,5 +113,9 @@ class FinanceController < ApplicationController
       redirect_to failure_redirect and return
     end
   end
+
+  private
+
+  DEFAULT_PERIOD = 'six_months'
 end
 
