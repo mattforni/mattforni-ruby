@@ -14,9 +14,10 @@ gem 'haml-rails', '~> 0.4'
 # gem 'RedCloth', '>= 4.2.9'
 
 # The JavaScript libraries
-gem 'jquery-rails', '~> 3.1'
 gem 'angularjs-rails', '~> 1.2'
-gem 'chartjs-rails', '~> 0.1'
+gem 'flot-rails', '~> 0.0'
+gem 'jquery-rails', '~> 3.1'
+gem 'gon', '~> 5.1'
 
 # Authentication
 gem 'devise', '~> 3.2'
