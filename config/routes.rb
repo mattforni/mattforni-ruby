@@ -7,9 +7,12 @@ Mattforni::Application.routes.draw do
 
   # Setup finance routes
   scope '/finance' do
-    get '/chart/:symbol',
-      as: :chart,
-      to: 'finance#chart'
+    get '/charts/:symbol/(:period)',
+      as: :charts,
+      defaults: {
+        period: 'six_months'
+      },
+      to: 'finance#charts'
     get '/historical/:symbol/(:period)',
       as: :historical,
       defaults: {

@@ -7,7 +7,7 @@ class FinanceController < ApplicationController
 
   around_action :json_only, only: [:historical, :last_trade]
 
-  def chart
+  def charts
     @period = params[:period] || DEFAULT_PERIOD
     @periods = Historical::PERIODS
     @symbol = params[:symbol].upcase
@@ -15,7 +15,7 @@ class FinanceController < ApplicationController
     historical_data = get_historical_data(@symbol, @period) do
       logger.error $!.message
       flash[:alert] = $!.message
-      redirect_to historical_path gon.symbol
+      redirect_to charts_path @symbol and return
     end
     gon.max = historical_data[:max]
     gon.min = historical_data[:min]
@@ -27,7 +27,10 @@ class FinanceController < ApplicationController
   def historical
     period = params[:period] || DEFAULT_PERIOD
     symbol = params[:symbol].upcase
-    historical_data = get_historical_data(symbol, period)
+    historical_data = get_historical_data(symbol, period) do
+      logger.error $!.message
+      head 400 and return
+    end
     render json: historical_data if historical_data
   end
 
