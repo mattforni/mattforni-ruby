@@ -100,7 +100,7 @@ function HistoricalChart() {
     };
 }
 
-if (gon) {
+if (typeof gon !== 'undefined') {
   $(document).ready(function() {
       var chart = new HistoricalChart();
       chart.getData(gon.period, true);
@@ -109,7 +109,5 @@ if (gon) {
           chart.getData($(this).data('value'), true);
       });
   });
-} else {
-  alert('Charting is broken.');
 }
 

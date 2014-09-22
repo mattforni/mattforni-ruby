@@ -1,3 +1,4 @@
+//= require_self
 //= require_tree .
 
 @mixin rounded-corners($radius) {
@@ -46,7 +47,9 @@
 }
 
 body {
+  height: 100%;
   position: relative;
+  width: 100%;
   z-index: 0;
 }
 
@@ -84,7 +87,7 @@ td.number-cell {
   text-align: right;
 }
 
-#overlay {
+div#overlay {
   background-color: rgba(0, 0, 0, 0.75);
   height: 100%;
   position: fixed;
@@ -94,7 +97,7 @@ td.number-cell {
     display: none;
     z-index: -1;
   }
-  #message-wrapper {
+  div#message-wrapper {
     margin: auto;
     padding: 15px 10px;
     position: relative;
@@ -112,60 +115,11 @@ td.number-cell {
   }
 }
 
-#header {
+div#content-wrapper {
   display: block;
-  width: 100%;
-  @include box-shadow(0px, 1px, 5px, #000);
-  #logo-wrapper {
-    display: inline-block;
-    padding: 5px 10px;
-    #logo {
-      height: 40px;
-    }
-  }
-  #caption {
-    display: inline-block;
-    font-style: italic;
-    vertical-align: 15px;
-  }
-  #login-wrapper {
-    float: right;
-    padding: 15px 10px;
-  }
-}
-
-#content-wrapper {
-  display: block;
-  margin: 10px;
   #content {
     display: block;
   }
-}
-
-#top {
-  display: block;
-  padding: 150px 0 0 75px;
-  font-size: 32px;
-}
-
-#middle {
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  display: block;
-  padding: 100px 0 100px 0;
-  opacity: 0.05;
-  font-size: 26px;
-  font-style: italic;
-  text-align: center;
-}
-
-#bottom {
-  display: block;
-  padding-right: 75px;
-  font-size: 20px;
-  font-weight: bold;
-  font-variant: small-caps;
-  text-align: right;
 }
 
 a.dismiss {

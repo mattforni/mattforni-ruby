@@ -1,0 +1,9 @@
+#login-wrapper
+- if !user_signed_in?
+  = form_tag user_session_path do
+    = email_field_tag 'user[email]', nil, placeholder: 'email...'
+    = password_field_tag 'user[password]', nil, placeholder: 'password...'
+    = submit_tag 'login'
+- else
+  = link_to 'logout', destroy_user_session_path, method: 'delete'
+

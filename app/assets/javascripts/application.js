@@ -14,16 +14,15 @@ function dismissOverlay() {
 }
 
 $( document ).ready(function() {
-  $('#middle').hover(function() {
-    $(this).css('opacity', 1);
-  },
-  function() {
-    $(this).css('opacity', 0.05);
-  });
-
   if (!$('div#overlay').hasClass('dismissed')) {
     setTimeout(dismissOverlay, 5000);
   }
+
+  $('div.social-logo img').hover(function() {
+    $(this).addClass('hover');
+  }, function() {
+    $(this).removeClass('hover');
+  });
 
   $('div#overlay').click(function() {
     dismissOverlay();

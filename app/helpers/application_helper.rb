@@ -28,5 +28,9 @@ module ApplicationHelper
   def time_display(time)
     time.strftime("%^b %d %Y %H:%M")
   end
+
+  def social_image(name, link)
+    render partial: 'social/logo', locals: {name: name, link: link}
+  end
 end
 

@@ -29,7 +29,7 @@ gem 'acts-as-taggable-on', '>= 2.4.1'
 
 # Gem groups
 group :assets do
-  gem 'sass-rails', '~> 4.0'
+  gem 'sass-rails', '~> 4.0', require: 'sass'
   gem 'uglifier', '~> 1.3'
 end
 

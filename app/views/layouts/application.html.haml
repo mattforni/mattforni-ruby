@@ -2,8 +2,8 @@
   %head
     %title
       mattforni
-    = favicon_link_tag 'favicon.ico'
     = include_gon
+    = favicon_link_tag 'favicon.ico'
     = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
     = javascript_include_tag "application", "data-turbolinks-track" => true
     = csrf_meta_tags
@@ -16,19 +16,6 @@
             %li=e
         - else
           = notice
-
-    #header
-      #logo-wrapper
-        = link_to image_tag('logo.png', id: 'logo', alt: 'MF Logo'), root_path
-      #caption='mattforni.com'
-      #login-wrapper
-        - if !user_signed_in?
-          = form_tag user_session_path do
-            = email_field_tag 'user[email]', nil, placeholder: 'email...'
-            = password_field_tag 'user[password]', nil, placeholder: 'password...'
-            = submit_tag 'login'
-        - else
-          = link_to 'logout', destroy_user_session_path, method: 'delete'
 
     #content-wrapper
       #content
