@@ -7,38 +7,18 @@ div#background {
   z-index: 0; 
   width: 100%;
   height: 100%;
-  background-size: cover; 
-  background-position: center center;
-  background-image: url('/images/background.jpg');
   background-attachment: fixed;
-}
-
-div#intro {
-  //background-color: rgba(255, 255, 255, 0.5);
-  display: block;
-  font-size: 22px;
-  font-weight: bold;
-  left: 50px;
-  padding: 15px;
-  position: absolute;
-  top: 300px;
-  z-index: 1;
-  //@include box-shadow(0, 0, 25px, white);
-  //@include rounded-corners(15px);
-  div#later {
-    color: white;
-    font-size: 16px;
-    font-weight: normal;
-  }
+  background-image: url('/images/background.jpg');
+  background-position: left top;
+  background-size: cover;
 }
 
 div#social {
-  bottom: 0;
-  color: white;
-  left: 0;
-  padding: 15px 0;
+  right: 0;
+  padding: 10px 10px 0 0;
   position: absolute;
-  text-align: center;
+  text-align: right;
+  top: 0;
   width: 100%;
   z-index: 1;
   div.social-logo {
@@ -50,7 +30,7 @@ div#social {
       width: 100%;
       @include rounded-corners(10px);
       &.hover {
-        @include box-shadow(0, 0, 10px, white);
+        @include box-shadow(0, 0, 10px, black);
       }
     }
   }
