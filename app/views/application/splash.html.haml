@@ -1,8 +1,11 @@
 #background
 #authenticate
-  = link_to 'sign up', new_user_registration_path 
-  |
-  = link_to 'sign in', new_user_session_path
+  - if current_user
+    = link_to 'log out', destroy_user_session_path, method: :delete
+  - else
+    = link_to 'sign up', new_user_registration_path
+    |
+    = link_to 'sign in', new_user_session_path
 #social
   = social_image('github', 'https://github.com/mattforni')
   = social_image('stackoverflow', 'http://stackoverflow.com/users/2861181/mattforni')
