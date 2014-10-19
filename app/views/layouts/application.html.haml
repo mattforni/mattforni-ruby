@@ -8,6 +8,7 @@
     = javascript_include_tag "application", "data-turbolinks-track" => true
     = csrf_meta_tags
   %body
+    - devise_error_messages!
     #overlay{class: (alert or notice) ? '' : 'dismissed'}
       #message-wrapper{class: alert ? 'alert' : 'notice'}
         - if alert

@@ -2,7 +2,7 @@ module ApplicationHelper
   NA = "N/A"
 
   def add_link(path, conditions = true)
-    link_to '+', path, class: 'no-underline' if conditions
+    link_to '+', path if conditions
   end
 
   def alt_display(value, alternative = NA)

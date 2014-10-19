@@ -55,14 +55,16 @@ body {
 
 a {
   color: #000;
-  text-decoration: underline;
+  text-decoration: none;
   &:hover {
     font-weight: bold;
-    text-decoration: none;
   }
-  &.no-underline {
-    text-decoration: none;
-  }
+}
+
+input.authentication-button {
+  display: inline-block;
+  padding: 5px 10px;
+  @include rounded-corners(5px);
 }
 
 table {
@@ -90,9 +92,10 @@ td.number-cell {
 div#overlay {
   background-color: rgba(0, 0, 0, 0.75);
   height: 100%;
-  position: fixed;
+  position: absolute;
+  top: 0;
   width: 100%;
-  z-index: 1;
+  z-index: 99;
   &.dismissed {
     display: none;
     z-index: -1;
