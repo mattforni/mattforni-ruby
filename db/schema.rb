@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140427010053) do
+ActiveRecord::Schema.define(version: 20141026195008) do
 
   create_table "holdings", force: true do |t|
     t.string   "symbol",           limit: 10,                                        null: false
@@ -23,6 +23,10 @@ ActiveRecord::Schema.define(version: 20140427010053) do
     t.integer  "position_id",                                                        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "highest_price",               precision: 15, scale: 5,               null: false
+    t.datetime "highest_time",                                                       null: false
+    t.decimal  "lowest_price",                precision: 15, scale: 5,               null: false
+    t.datetime "lowest_time"
   end
 
   add_index "holdings", ["position_id"], name: "holding_by_position_index"
@@ -73,18 +77,18 @@ ActiveRecord::Schema.define(version: 20140427010053) do
   add_index "stocks", ["symbol"], name: "stock_by_symbol_index", unique: true
 
   create_table "stops", force: true do |t|
-    t.string   "symbol",        limit: 10,                          null: false
-    t.decimal  "percentage",               precision: 15, scale: 5, null: false
-    t.decimal  "stop_price",               precision: 15, scale: 5, null: false
+    t.string   "symbol",        limit: 10,                                                          null: false
+    t.decimal  "percentage",               precision: 15, scale: 5,                                 null: false
+    t.decimal  "stop_price",               precision: 15, scale: 5,                                 null: false
     t.decimal  "quantity",                 precision: 15, scale: 3
-    t.decimal  "highest_price",            precision: 15, scale: 5, null: false
-    t.datetime "highest_time",                                      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id",                                           null: false
-    t.integer  "position_id",                                       null: false
-    t.decimal  "lowest_price",             precision: 15, scale: 5, null: false
-    t.datetime "lowest_time",                                       null: false
+    t.integer  "user_id",                                                                           null: false
+    t.decimal  "highest_price",                                     default: 1.0,                   null: false
+    t.datetime "highest_time",                                      default: '2014-04-12 00:00:00', null: false
+    t.integer  "position_id",                                                                       null: false
+    t.decimal  "lowest_price",             precision: 15, scale: 5,                                 null: false
+    t.datetime "lowest_time",                                                                       null: false
   end
 
   add_index "stops", ["user_id"], name: "by_user"

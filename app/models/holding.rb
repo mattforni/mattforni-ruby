@@ -11,6 +11,7 @@ class Holding < ActiveRecord::Base
   belongs_to :user
 
   delegate :stock, to: :position, allow_nil: false
+  delegate :last_trade, to: :stock, allow_nil: false
 
   def create!
     Holding.transaction do
@@ -51,6 +52,24 @@ class Holding < ActiveRecord::Base
         position.increment(:quantity, self.quantity)
       end
     end
+  end
+
+  def update?
+    update = false
+    # If delegated last_trade is less than the current lowest_price, update it
+    if self.lowest_price.nil? or self.last_trade < self.lowest_price
+      self.lowest_price = self.last_trade
+      self.lowest_time = Time.now.utc
+      update = true
+    end
+
+    # If delegated last_trade is greater than the current highest_price, update it
+    if self.highest_price.nil? or self.last_trade > self.highest_price
+      self.highest_price = self.last_trade
+      self.highest_time = Time.now.utc
+      update = true
+    end
+    update
   end
 end
 

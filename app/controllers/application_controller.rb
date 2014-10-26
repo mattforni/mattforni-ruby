@@ -2,6 +2,9 @@ class ApplicationController < ActionController::Base
   layout 'application'
   rescue_from CanCan::AccessDenied, with: :access_denied
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  rescue_from ActionController::UnknownFormat do
+    head 406
+  end
 
   def splash
     @posts = Post.all.order("created_at DESC") rescue []
