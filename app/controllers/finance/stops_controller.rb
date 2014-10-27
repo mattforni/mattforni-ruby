@@ -36,7 +36,7 @@ class Finance::StopsController < FinanceController
     @stop = Stop.new(stop_params)
     @stop.symbol.try(:upcase!)
     @stop.user = current_user
-    attempt_create!(@stop, finance_stops_path, new_finance_stop_path)
+    attempt_create!(@stop, positions_path, new_finance_stop_path)
   end
 
   def destroy

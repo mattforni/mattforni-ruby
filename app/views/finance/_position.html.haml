@@ -26,4 +26,6 @@
                     = link_to 'S', finance_stop_path(stop.id)
                 - else
                     = add_link new_finance_stop_path(symbol: holding.symbol), can?(:create, Stop)
+        %td
+            = link_to 'X', finance_holding_path(holding.id), data: {confirm: 'You sure?'}, method: :delete if can?(:destroy, holding)
 

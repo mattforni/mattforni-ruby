@@ -40,9 +40,17 @@ class Holding < ActiveRecord::Base
         position.user = self.user
         position.save!
       end
+      self.position = position
+
+      # Update tracking data to defaults
+      last_trade = position.last_trade
+      updated_at = position.updated_at
+      self.highest_price = last_trade
+      self.highest_time = updated_at
+      self.lowest_price = last_trade
+      self.lowest_time = updated_at
 
       # Attempt to save the new holding model
-      self.position = position
       self.save!
 
       # Update the existing position if necessary

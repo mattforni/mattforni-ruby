@@ -10,10 +10,20 @@ class Finance::HoldingsController < FinanceController
     @holding = Holding.new(holding_params)
     @holding.symbol.try(:upcase!)
     @holding.user = current_user
-    attempt_create!(@holding, finance_holdings_path, new_finance_holding_path)
+    attempt_create!(@holding, positions_path, new_finance_holding_path)
   end
 
+  # TODO test
   def destroy
+    position = @holding.position
+    @holding.destroy!
+    if position.holdings.empty?
+      # TODO should probably cascade
+      # TODO should probably use attempt_destroy with block yielded
+      position.stops.each {|stop| stop.destroy!}
+      position.destroy!
+    end
+    redirect_to positions_path
   end
 
   def edit

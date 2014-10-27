@@ -23,6 +23,7 @@
                 Commission Price
             %th
                 Stops
+            %th
         - @positions.each_with_index do |position, i|
             - if !position.holdings.empty?
                 = render partial: 'position', locals: {position: position, index: i} 

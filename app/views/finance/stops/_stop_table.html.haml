@@ -22,7 +22,6 @@
             Lowest Price
         %th
             Lowest Time
-        %th
     - stops.each_with_index do |stop, i|
         %tr{class: (i+1)%2 == 1 ? 'odd' : 'even'}
             %td
@@ -50,5 +49,4 @@
                 = time_display stop.lowest_time
             %td
                 = link_to 'X', finance_stop_path(stop.id), method: 'DELETE' if editable and can? :destroy, @stop
-
 
