@@ -1,0 +1,30 @@
+- if @positions.empty?
+    No positions yet.
+- else
+    %table
+        %tr
+            %th
+                Symbol
+            %th
+                Purchase Date
+            %th
+                Quantity
+            %th
+                Highest Price
+            %th
+                Highest Time
+            %th
+                Lowest Price
+            %th
+                Lowest Time
+            %th
+                Purchase Price
+            %th
+                Commission Price
+            %th
+                Stops
+        - @positions.each_with_index do |position, i|
+            - if !position.holdings.empty?
+                = render partial: 'position', locals: {position: position, index: i} 
+= add_link new_finance_holding_path, can?(:create, Holding)
+

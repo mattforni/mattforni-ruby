@@ -1,6 +1,0 @@
-- if @holdings.empty?
-    No holdings yet.
-- else
-    = render partial: 'holding_table', locals: {holdings: @holdings}
-= add_link new_finance_holding_path, can?(:create, Holding)
-

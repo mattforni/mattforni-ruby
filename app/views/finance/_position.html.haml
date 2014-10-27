@@ -1,0 +1,29 @@
+- position.holdings.each_with_index do |holding, i|
+    - stop = nil
+    - stop = position.stops.where(symbol: holding.symbol).first if i == 0
+    %tr{class: (index+1)%2 == 1 ? 'odd' : 'even'}
+        %td
+            = holding.symbol
+        %td
+            = date_display holding.purchase_date
+        %td.number-cell
+            = decimal_display holding.quantity
+        %td.number-cell
+            = currency_display holding.highest_price
+        %td
+            = time_display holding.highest_time
+        %td.number-cell
+            = currency_display holding.lowest_price
+        %td
+            = time_display holding.lowest_time
+        %td.number-cell
+            = currency_display holding.purchase_price
+        %td.number-cell
+            = currency_display holding.commission_price
+        %td
+            - if i == 0
+                - if stop
+                    = link_to 'S', finance_stop_path(stop.id)
+                - else
+                    = add_link new_finance_stop_path(symbol: holding.symbol), can?(:create, Stop)
+

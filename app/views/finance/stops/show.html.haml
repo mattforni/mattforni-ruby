@@ -1,0 +1,20 @@
+%table
+    %tr
+        %th
+            Symbol
+        %td
+            = @stop.symbol
+    %tr
+        %th
+            Stop Price
+        %td
+            = currency_display @stop.stop_price
+    %tr
+        %th
+            Percentage
+        %td
+            = @stop.percentage
+= link_to 'positions', positions_path
+|
+= link_to 'edit', edit_finance_stop_path(@stop.id)
+

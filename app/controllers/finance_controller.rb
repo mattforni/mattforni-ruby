@@ -5,6 +5,7 @@ include ApplicationController::Messages
 class FinanceController < ApplicationController
   include Stocks
 
+  before_action :authenticate_user!, only: [:positions]
   around_action :json_only, only: [:historical, :last_trade]
 
   def charts
@@ -34,12 +35,19 @@ class FinanceController < ApplicationController
     render json: historical_data if historical_data
   end
 
+  def index
+  end
+
   def last_trade
     begin
       render json: Stocks.last_trade(params[:symbol])
     rescue Stocks::RetrievalError
       head 400
     end
+  end
+
+  def positions
+    @positions = Position.where(user_id: current_user.id)
   end
 
   def sizing

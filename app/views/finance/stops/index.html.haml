@@ -1,6 +1,0 @@
-- if @stops.empty?
-    No stops yet.
-- else
-    = render partial: 'stop_table', locals: {stops: @stops, editable: true}
-= add_link new_finance_stop_path, can?(:create, Stop)
-

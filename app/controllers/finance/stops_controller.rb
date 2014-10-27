@@ -51,15 +51,16 @@ class Finance::StopsController < FinanceController
   end
 
   def new
+    @stop = Stop.new
+    @stop.symbol = params[:symbol]
   end
 
-  # TODO implement show?
   def show
   end
 
   def update
     @stop.update_percentage?(params[:stop][:percentage])
-    attempt_update!(@stop, finance_stops_path, edit_finance_stop_path(@stop.id))
+    attempt_update!(@stop, positions_path, edit_finance_stop_path(@stop.id))
   end
 
   private

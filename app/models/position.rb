@@ -16,6 +16,7 @@ class Position < ActiveRecord::Base
   belongs_to :user
 
   has_many :holdings
+  has_many :stops
 
   delegate :last_trade, to: :stock, allow_nil: false
 

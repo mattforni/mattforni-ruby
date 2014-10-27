@@ -1,6 +1,8 @@
 #background
 #authenticate
   - if current_user
+    = link_to 'finance', finance_path
+    |
     = link_to 'log out', destroy_user_session_path, method: :delete
   - else
     = link_to 'sign up', new_user_registration_path
