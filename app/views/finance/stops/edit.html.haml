@@ -7,9 +7,14 @@
                 = @stop.symbol
         %tr
             %th
+                Last Trade
+            %td
+                = currency_display @stop.last_trade
+        %tr
+            %th
                 Stop Price
             %td
-                = @stop.stop_price
+                = currency_display @stop.stop_price
         %tr
             %th
                 = f.label 'Percentage'

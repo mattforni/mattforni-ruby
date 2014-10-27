@@ -6,6 +6,11 @@
             = @stop.symbol
     %tr
         %th
+            Last Trade
+        %td
+            = currency_display @stop.last_trade
+    %tr
+        %th
             Stop Price
         %td
             = currency_display @stop.stop_price

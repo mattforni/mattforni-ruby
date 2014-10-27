@@ -10,7 +10,7 @@ module ApplicationHelper
   end
 
   def currency_display(currency)
-    number_to_currency(currency, delimiter: ',', precision: 3)
+    number_to_currency(currency, delimiter: ',', precision: 2)
   end
 
   def date_display(time)
