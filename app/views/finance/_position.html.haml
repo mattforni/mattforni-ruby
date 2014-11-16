@@ -1,4 +1,4 @@
-- position.holdings.each_with_index do |holding, i|
+- position.holdings.order(:purchase_date).each_with_index do |holding, i|
     - stop = nil
     - stop = position.stops.where(symbol: holding.symbol).first if i == 0
     %tr{class: (index+1)%2 == 1 ? 'odd' : 'even'}
