@@ -47,7 +47,7 @@ class FinanceController < ApplicationController
   end
 
   def positions
-    @positions = Position.where(user_id: current_user.id)
+    @positions = Position.where(user_id: current_user.id).order(:symbol)
   end
 
   def sizing
