@@ -14,47 +14,28 @@ class ApplicationController < ActionController::Base
   end
 
   module Messages
-    def error_on_create(record)
-      generate_message CREATE_ERROR_MESSAGE, record
+    CREATE = 'create'
+    DESTROY = 'destroy'
+    UPDATE = 'update'
+
+    def record_error(action, record)
+      generate_message ERROR_MESSAGE, action, record
     end
 
-    def error_on_destroy(record)
-      generate_message DESTROY_ERROR_MESSAGE, record
-    end
-
-    def error_on_update(record)
-      generate_message UPDATE_ERROR_MESSAGE, record
-    end
-
-    def success_on_create(record)
-      generate_message CREATE_SUCCESS_MESSAGE, record
-    end
-
-    def success_on_destroy(record)
-      generate_message DESTROY_SUCCESS_MESSAGE, record
-    end
-
-    def success_on_update(record)
-      generate_message UPDATE_SUCCESS_MESSAGE, record
+    def record_success(action, record)
+      generate_message SUCCESS_MESSAGE, action, record
     end
 
     private
 
-    def generate_message(template, record)
-      additional = ''
-      if (record.respond_to?(:symbol)
-        symbol = record.symbol
-        additional = " for #{record.symbol}" if !(record.symbol.nil? or record.symbol.empty?))
-      end
-      template % {record: record.class.to_s.downcase, additional: additional}
+    def generate_message(template, action, record)
+      # If the record has a non-null, non-empty 'symbol' as an attribute add it to the message
+      additional = record.respond_to?(:symbol) and record.symbol and !record.symbol.empty? ? " for #{record.symbol}" : ''
+      template % {action: action, record: record.class.to_s.downcase, additional: additional}
     end
 
-    CREATE_ERROR_MESSAGE = "Unable to create %{record}%{additional}."
-    CREATE_SUCCESS_MESSAGE = "Successfully created %{record}%{additional}."
-    DESTROY_ERROR_MESSAGE = "Unable to destroy %{record}%{additional}."
-    DESTROY_SUCCESS_MESSAGE = "Successfully destroyed %{record}%{additional}."
-    UPDATE_ERROR_MESSAGE = "Unable to update %{record}%{additional}."
-    UPDATE_SUCCESS_MESSAGE = "Successfully updated %{record}%{additional}."
+    ERROR_MESSAGE = "Unable to %{action} %{record}%{additional}."
+    SUCCESS_MESSAGE = "Successfully %{action} %{record}%{additional}."
   end
 
   protected

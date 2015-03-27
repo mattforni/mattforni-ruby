@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+include ApplicationController::Messages
+
 describe Finance::StopsController do
   login
   $symbol = 'ABC'
@@ -69,7 +71,7 @@ describe Finance::StopsController do
         post :create, {stop: {percentage: 0}}
 
         expect(flash[:alert]).to_not be_nil
-        expect(flash[:alert]).to eq(error_on_create(build(:stop, symbol: '')))
+        expect(flash[:alert]).to eq(record_error(CREATE, build(:stop, symbol: '')))
         expect(flash[:errors]).to_not be_empty
         expect(flash[:errors]).to include('Position could not be found')
         expect(response).to redirect_to new_finance_stop_path
@@ -82,7 +84,7 @@ describe Finance::StopsController do
         post :create, {stop: {symbol: $symbol}}
 
         expect(flash[:alert]).to_not be_nil
-        expect(flash[:alert]).to eq(error_on_create(Stop.new({symbol: $symbol})))
+        expect(flash[:alert]).to eq(record_error(CREATE, Stop.new({symbol: $symbol})))
         expect(flash[:errors]).to_not be_empty
         expect(flash[:errors]).to include('Percentage cannot be nil')
         expect(response).to redirect_to new_finance_stop_path
@@ -95,7 +97,7 @@ describe Finance::StopsController do
         post :create, {stop: {symbol: $symbol, percentage: 0}}
 
         expect(flash[:alert]).to_not be_nil
-        expect(flash[:alert]).to eq(error_on_create(Stop.new({symbol: $symbol})))
+        expect(flash[:alert]).to eq(record_error(CREATE, Stop.new({symbol: $symbol})))
         expect(flash[:errors]).to_not be_empty
         expect(flash[:errors]).to include('Percentage must be greater than 0')
         expect(response).to redirect_to new_finance_stop_path
@@ -108,7 +110,7 @@ describe Finance::StopsController do
         post :create, {stop: {symbol: $symbol, percentage: 100}}
 
         expect(flash[:alert]).to_not be_nil
-        expect(flash[:alert]).to eq(error_on_create(Stop.new({symbol: $symbol})))
+        expect(flash[:alert]).to eq(record_error(CREATE, Stop.new({symbol: $symbol})))
         expect(flash[:errors]).to_not be_empty
         expect(flash[:errors]).to include('Percentage must be less than 100')
         expect(response).to redirect_to new_finance_stop_path
@@ -120,7 +122,7 @@ describe Finance::StopsController do
         post :create, {stop: {symbol: $symbol, percentage: 25}}
 
         expect(flash[:alert]).to_not be_nil
-        expect(flash[:alert]).to eq(error_on_create(build(:stop, symbol: $symbol)))
+        expect(flash[:alert]).to eq(record_error(CREATE, build(:stop, symbol: $symbol)))
         expect(flash[:errors]).to_not be_empty
         expect(flash[:errors]).to include('Position could not be found')
         expect(response).to redirect_to new_finance_stop_path
@@ -138,7 +140,7 @@ describe Finance::StopsController do
       expect(stops.size).to eq(1)
       expect(flash[:alert]).to be_nil
       expect(flash[:notice]).to_not be_nil
-      expect(flash[:notice]).to eq(success_on_create(stops.first))
+      expect(flash[:notice]).to eq(record_success(CREATE, stops.first))
       expect(response).to redirect_to finance_stops_path
     end
   end
@@ -150,7 +152,7 @@ describe Finance::StopsController do
         post :update, {id: stop.id, stop: {percentage: 0}}
 
         expect(flash[:alert]).to_not be_nil
-        expect(flash[:alert]).to eq(error_on_update(stop))
+        expect(flash[:alert]).to eq(record_error(UPDATE, stop))
         expect(flash[:errors]).to_not be_empty
         expect(flash[:errors]).to include('Percentage must be greater than 0')
         expect(response).to redirect_to edit_finance_stop_path(stop.id)
@@ -163,7 +165,7 @@ describe Finance::StopsController do
         post :update, {id: stop.id, stop: {percentage: 100}}
 
         expect(flash[:alert]).to_not be_nil
-        expect(flash[:alert]).to eq(error_on_update(stop))
+        expect(flash[:alert]).to eq(record_error(UPDATE, stop))
         expect(flash[:errors]).to_not be_empty
         expect(flash[:errors]).to include('Percentage must be less than 100')
         expect(response).to redirect_to edit_finance_stop_path(stop.id)
@@ -176,7 +178,7 @@ describe Finance::StopsController do
 
       expect(flash[:alert]).to be_nil
       expect(flash[:notice]).to_not be_nil
-      expect(flash[:notice]).to eq(success_on_update(stop))
+      expect(flash[:notice]).to eq(record_success(UPDATE, stop))
       expect(response).to redirect_to finance_stops_path
     end
   end

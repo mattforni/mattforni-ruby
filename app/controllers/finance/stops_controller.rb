@@ -1,4 +1,6 @@
 class Finance::StopsController < FinanceController
+  include Messages
+
   before_action :authenticate_user!, except: [:analyze]
   # CanCan does not currently support StrongParameters
   authorize_resource only: [:create]
