@@ -1,3 +1,6 @@
+.link
+    .wrapper
+        = link_to 'Home', root_url
 - if @positions.empty?
     No positions yet.
 - else
@@ -5,27 +8,29 @@
         %tr
             %th
                 Symbol
-            %th
-                Purchase Date
-            %th
+            %th.number-cell
+                Last Price
+            %th.number-cell
                 Quantity
-            %th
-                Highest Price
-            %th
-                Highest Time
-            %th
+            %th.number-cell
+                Current Value
+            %th.number-cell
                 Lowest Price
-            %th
-                Lowest Time
-            %th
-                Purchase Price
-            %th
-                Commission Price
-            %th
-                Stops
-            %th
+            %th.number-cell
+                Highest Price
+            %th.number-cell
+                Stop
         - @positions.each_with_index do |position, i|
             - if !position.holdings.empty?
                 = render partial: 'position', locals: {position: position, index: i} 
-= add_link new_finance_holding_path, can?(:create, Holding)
+        %tr
+            %th
+                Total
+            %td{colspan: 2}
+            %td.number-cell
+                = currency_display @total_value
+            %td{colspan: 3}
+.link
+    .wrapper
+        = link_to 'Add', new_finance_holding_path if can?(:create, Holding)
 

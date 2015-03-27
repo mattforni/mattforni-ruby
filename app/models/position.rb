@@ -24,16 +24,48 @@ class Position < ActiveRecord::Base
     Position.where({user_id: user.id, symbol: symbol}).first
   end
 
+  def current_value
+    self.last_trade * self.quantity
+  end
+
+  def highest_price
+    return @high_price if !@high_price.nil?
+    high_price = self.holdings.reduce(nil) do |highest, holding|
+      highest = holding.highest_price if highest.nil? or holding.highest_price > highest
+      highest
+    end
+    @high_price = high_price
+  end
+
+  def lowest_price
+    return @low_price if !@low_price.nil?
+    low_price = self.holdings.reduce(nil) do |lowest, holding|
+      lowest = holding.lowest_price if lowest.nil? or holding.lowest_price < lowest
+      lowest
+    end
+    @low_price = low_price
+  end
+
+  def stop
+    self.stops.first
+  end
+
   def update_weighted_avg!(attribute)
     if !WEIGHTED_ATTRIBUTES.include?(attribute)
       raise ArgumentError.new("#{attribute} is not a valid weighted attribute")
     end
     shares = 0
+    # Discard the cached holdings and get the latest
     weighted = self.holdings(true).reduce(0) do |total, holding|
       shares += holding.quantity
       total += holding.quantity * holding.send(attribute)
     end
     self.send("#{attribute}=", weighted/shares)
   end
+
+  private
+
+  attr_writer :high_price
+  attr_writer :low_price
 end
 

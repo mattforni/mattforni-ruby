@@ -14,7 +14,7 @@ class Holding < ActiveRecord::Base
   delegate :last_trade, to: :stock, allow_nil: false
 
   def create!
-    Holding.transaction do
+    self.transaction do
       # Check if there is already a stock model for this symbol
       stock = Stock.by_symbol(symbol)
       # If there is not already a stock model then attempt to create one
@@ -58,6 +58,7 @@ class Holding < ActiveRecord::Base
         position.update_weighted_avg!(:commission_price)
         position.update_weighted_avg!(:purchase_price)
         position.increment(:quantity, self.quantity)
+        position.save!
       end
     end
   end

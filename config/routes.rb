@@ -6,8 +6,8 @@ Mattforni::Application.routes.draw do
   devise_for :users
 
   # Setup finance routes
-  get '/finance', as: :finance, to: 'finance#index'
   scope '/finance' do
+    get '/', as: :finance, to: 'finance#index'
     get '/charts/:symbol/(:period)',
       as: :charts,
       defaults: {

@@ -47,6 +47,9 @@ class FinanceController < ApplicationController
 
   def positions
     @positions = Position.where(user_id: current_user.id).order(:symbol)
+    @total_value = @positions.reduce(0) do |total, position|
+      total += position.current_value
+    end
   end
 
   def sizing
@@ -73,21 +76,6 @@ class FinanceController < ApplicationController
   end
 
   protected
-
-  def safe_record(record, options)
-    begin
-      record.create!
-      flash[:notice] = record_success(record)
-      redirect_to success_redirect and return
-    rescue ActiveRecord::RecordInvalid
-      # TODO put in action
-      error_message = record_error($!.record)
-      logger.error "#{error_message} - #{$!.record.errors.full_messages.join(', ')}"
-      flash[:alert] = error_message
-      flash[:errors] = $!.record.errors.full_messages
-      redirect_to failure_redirect and return
-    end
-  end
 
   def attempt_create!(record, success_redirect, failure_redirect)
     begin
