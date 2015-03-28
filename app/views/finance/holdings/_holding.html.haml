@@ -1,0 +1,14 @@
+-# Render the holding row
+%tr{class: "#{holding.symbol}-holding"}
+  %td{colspan: 2}
+  %td.number-cell
+    = decimal_display holding.quantity, 1
+  %td.number-cell
+    = currency_display holding.current_value
+  %td.number-cell
+    = currency_display holding.lowest_price
+  %td.number-cell
+    = currency_display holding.highest_price
+  %td.right
+    = link_to 'Delete', finance_holding_path(holding.id), data: {confirm: 'You sure?'}, method: :delete if can?(:destroy, holding)
+

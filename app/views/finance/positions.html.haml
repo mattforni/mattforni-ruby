@@ -4,8 +4,8 @@
 - if @positions.empty?
     No positions yet.
 - else
-    %table
-        %tr
+    %table#positions
+        %tr.visible
             %th
                 Symbol
             %th.number-cell
@@ -19,11 +19,10 @@
             %th.number-cell
                 Highest Price
             %th.number-cell
-                Stop
-        - @positions.each_with_index do |position, i|
-            - if !position.holdings.empty?
-                = render partial: 'position', locals: {position: position, index: i} 
-        %tr
+                Actions
+        - @positions.each_with_index do |position, index|
+            = position_partial position, index if !position.holdings.empty?
+        %tr.visible
             %th
                 Total
             %td{colspan: 2}

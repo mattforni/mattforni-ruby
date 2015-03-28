@@ -14,23 +14,23 @@ class ApplicationController < ActionController::Base
   end
 
   module Messages
-    CREATE = 'create'
-    DESTROY = 'destroy'
-    UPDATE = 'update'
+    CREATE = {error: 'create', success: 'created'}
+    DESTROY = {error: 'destroy', success: 'destroyed'}
+    UPDATE = {error: 'update', success: 'updated'}
 
     def record_error(action, record)
-      generate_message ERROR_MESSAGE, action, record
+      generate_message ERROR_MESSAGE, action[:error], record
     end
 
     def record_success(action, record)
-      generate_message SUCCESS_MESSAGE, action, record
+      generate_message SUCCESS_MESSAGE, action[:success], record
     end
 
     private
 
     def generate_message(template, action, record)
       # If the record has a non-null, non-empty 'symbol' as an attribute add it to the message
-      additional = record.respond_to?(:symbol) and record.symbol and !record.symbol.empty? ? " for #{record.symbol}" : ''
+      additional = (record.respond_to?(:symbol) and record.symbol and !record.symbol.empty?) ? " for #{record.symbol}" : ''
       template % {action: action, record: record.class.to_s.downcase, additional: additional}
     end
 

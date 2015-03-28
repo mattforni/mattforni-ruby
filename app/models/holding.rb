@@ -63,6 +63,29 @@ class Holding < ActiveRecord::Base
     end
   end
 
+  def current_value
+    self.last_trade * self.quantity
+  end
+
+  def destroy!
+    self.transaction do
+      self.destroy
+
+      # If there are no more holdings delete the position
+      if self.position.holdings.empty?
+        # TODO should probably cascade
+        # TODO should probably use attempt_destroy with block yielded
+        self.position.stops.each {|stop| stop.destroy!}
+        self.position.destroy!
+      else # Otherwise update the position
+        self.position.update_weighted_avg!(:commission_price)
+        self.position.update_weighted_avg!(:purchase_price)
+        self.position.decrement(:quantity, self.quantity)
+        self.position.save!
+      end
+    end
+  end
+
   def update?
     update = false
     # If delegated last_trade is less than the current lowest_price, update it

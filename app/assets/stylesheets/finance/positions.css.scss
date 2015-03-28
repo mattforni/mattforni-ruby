@@ -1,11 +1,22 @@
-table {
+table#positions {
   width: 100%;
-}
 
-td, th {
-  padding: 10px 5px;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  tr {
+    display: none;
+    &.position:hover td {
+      background-color: #BBB;
+      cursor: pointer;
+    }
+    &.visible {
+      display: table-row;
+    }
+  }
+
+  td, th {
+    padding: 10px 5px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
 }
 
 div.link {

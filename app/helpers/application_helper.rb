@@ -17,8 +17,8 @@ module ApplicationHelper
     time.strftime("%^b %d %Y")
   end
 
-  def decimal_display(decimal)
-    number_with_precision(decimal, delimiter: ',', precision: 3)
+  def decimal_display(decimal, precision = 3)
+    number_with_precision(decimal, delimiter: ',', precision: precision)
   end
 
   def price_class(value)

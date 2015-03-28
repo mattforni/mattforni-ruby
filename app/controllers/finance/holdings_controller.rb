@@ -15,15 +15,7 @@ class Finance::HoldingsController < FinanceController
 
   # TODO test
   def destroy
-    position = @holding.position
-    @holding.destroy!
-    if position.holdings.empty?
-      # TODO should probably cascade
-      # TODO should probably use attempt_destroy with block yielded
-      position.stops.each {|stop| stop.destroy!}
-      position.destroy!
-    end
-    redirect_to positions_path
+    attempt_destroy!(@holding, positions_path, finance_holding_path(@holding.id))
   end
 
   def edit
