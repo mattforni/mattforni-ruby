@@ -7,8 +7,9 @@ module FinanceHelper
     render partial: 'finance/positions/position', locals: {position: position, index: index}
   end
 
-  def spread_chart_partial(lowest, highest)
-    render partial: 'finance/charts/spread', locals: {lowest: lowest, highest: highest}
+  def spread_chart_partial(lowest, highest, current)
+    offset = (current - lowest) / (highest - lowest) * 100.0 rescue nil
+    render partial: 'finance/charts/spread', locals: {lowest: lowest, highest: highest, offset: offset}
   end
 end
 

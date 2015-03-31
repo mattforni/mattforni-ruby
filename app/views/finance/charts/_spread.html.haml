@@ -1,4 +1,16 @@
+- offset ||= 10
+
 .spread-chart
+  - if !offset.nil?
+    #indicator{style: "left: #{offset}%;"}
   #background
-    a
+    .quarter#first
+    .quarter#second
+    .quarter#third
+    .quarter#fourth
+  #labels
+    #lowest
+      = currency_display lowest
+    #highest
+      = currency_display highest
 

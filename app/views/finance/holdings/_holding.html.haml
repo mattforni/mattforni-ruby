@@ -5,10 +5,8 @@
     = decimal_display holding.quantity, 1
   %td.number-cell
     = currency_display holding.current_value
-  %td.number-cell
-    = currency_display holding.lowest_price
-  %td.number-cell
-    = currency_display holding.highest_price
-  %td.right
+  %td.spread
+    = spread_chart_partial holding.lowest_price, holding.highest_price, holding.last_trade
+  %td.actions
     = link_to 'Delete', finance_holding_path(holding.id), data: {confirm: 'You sure?'}, method: :delete if can?(:destroy, holding)
 

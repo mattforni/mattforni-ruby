@@ -3,7 +3,7 @@
 
 -# Render the position row
 %tr.position.visible{class: ((index+1)%2).odd? ? 'odd' : 'even', id: position.symbol}
-  %td
+  %td.symbol
     = position.symbol
   %td.number-cell
     = currency_display position.last_trade
@@ -11,9 +11,9 @@
     = decimal_display position.quantity, 1
   %td.number-cell
     = currency_display position.current_value
-  %td.number-cell{colspan: 2}
-    = spread_chart_partial position.lowest_price, position.highest_price
-  %td.right
+  %td.spread
+    = spread_chart_partial position.lowest_price, position.highest_price, position.last_trade
+  %td.actions
     - if !stop.nil?
       = link_to "#{currency_display stop.stop_price}", finance_stop_path(stop.id)
     - else
@@ -22,7 +22,4 @@
 -# Render the holdings associated with this position
 - position.holdings.each_with_index do |holding, index|
   = holding_partial holding, index
-
--# TODO use to delete holdings
-  = link_to 'X', finance_holding_path(holding.id), data: {confirm: 'You sure?'}, method: :delete if can?(:destroy, holding)
 

@@ -1,3 +1,7 @@
+@import 'application.css.scss';
+
+$spread_round: 10px;
+
 table#positions {
   width: 100%;
 
@@ -16,6 +20,16 @@ table#positions {
     padding: 10px 5px;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
+    &.symbol {
+      width: 100px;
+    }
+    &.spread {
+      width: 400px;
+    }
+    &.actions {
+      width: 100px;
+      text-align: right;
+    }
   }
 }
 
@@ -27,15 +41,47 @@ div.link {
   }
 }
 
+/* TODO add a wrapper around background to avoid the negative
+ * margins. Use position: absolution to stack divs */
 div.spread-chart {
+  height: 10px;
+  margin: -20px auto 0 auto;
+  max-width: 350px;
+  min-width: 200px;
   width: 100%;
   div#background {
-    position: relative;
-    left: 0;
-    top: 0;
+    background-color: #EEE;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
-
-    background-color: black;
+    @include box-shadow(0, 0, 2px, #000);
+    @include rounded-left-corners($spread_round);
+    @include rounded-right-corners($spread_round);
+    div.quarter {
+        background-color: #FFF;
+        height: 10px;
+        text-align: center;
+        width: 24.5%;
+        &#first {
+          @include rounded-left-corners($spread_round);
+        }
+        &#fourth {
+          @include rounded-right-corners($spread_round);
+        }
+    }
+  }
+  div#indicator {
+    background-color: #000;
+    height: 10px;
+    position: relative;
+    bottom: -10px;
+    width: 10px;
+    @include rounded-corners(5px);
+  }
+  div#labels {
+    display: flex;
+    font-size: 0.75rem;
+    justify-content: space-between;
   }
 }
 

@@ -6,7 +6,7 @@
 - else
     %table#positions
         %tr.visible
-            %th
+            %th.symbol
                 Symbol
             %th.number-cell
                 Last Price
@@ -14,11 +14,9 @@
                 Quantity
             %th.number-cell
                 Current Value
-            %th.number-cell
-                Lowest Price
-            %th.number-cell
-                Highest Price
-            %th.number-cell
+            %th.spread
+                Spread 
+            %th.actions
                 Actions
         - @positions.each_with_index do |position, index|
             = position_partial position, index if !position.holdings.empty?
