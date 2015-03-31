@@ -27,3 +27,15 @@ div.link {
   }
 }
 
+div.spread-chart {
+  width: 100%;
+  div#background {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+
+    background-color: black;
+  }
+}
+

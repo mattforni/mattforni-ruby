@@ -11,10 +11,8 @@
     = decimal_display position.quantity, 1
   %td.number-cell
     = currency_display position.current_value
-  %td.number-cell
-    = currency_display position.lowest_price
-  %td.number-cell
-    = currency_display position.highest_price
+  %td.number-cell{colspan: 2}
+    = spread_chart_partial position.lowest_price, position.highest_price
   %td.right
     - if !stop.nil?
       = link_to "#{currency_display stop.stop_price}", finance_stop_path(stop.id)
