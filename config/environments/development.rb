@@ -28,7 +28,7 @@ Mattforni::Application.configure do
   # ActiveRecord::Base.logger = Logger.new(STDOUT)
 
   # Added for devise.
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  config.action_mailer.default_url_options = { host: 'localhost:8080' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
@@ -37,7 +37,7 @@ Mattforni::Application.configure do
     authentication: 'plain',
     domain: 'gmail.com',
     enable_starttls_auto: true,
-    password: 'W3lc0m3!',
+    password: 'Cantf33lth3h3at!',
     port: 587,
     user_name: 'matthew.fornaciari@gmail.com'
   }
