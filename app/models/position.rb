@@ -50,6 +50,16 @@ class Position < ActiveRecord::Base
     self.stops.first
   end
 
+  def update!
+    self.update_weighted_avg!(:commission_price)
+    self.update_weighted_avg!(:purchase_price)
+    self.quantity = self.holdings(true).reduce(0) do |total, holding|
+      total += holding.quantity
+      total
+    end
+    self.save!
+  end
+
   def update_weighted_avg!(attribute)
     if !WEIGHTED_ATTRIBUTES.include?(attribute)
       raise ArgumentError.new("#{attribute} is not a valid weighted attribute")
