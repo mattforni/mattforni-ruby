@@ -2,7 +2,7 @@
 %tr{class: "#{holding.symbol}-holding"}
   %td{colspan: 2}
   %td.number
-    = decimal_display holding.quantity, 1
+    = decimal_display holding.quantity
   %td.number
     = currency_display holding.current_value
   %td.spread
