@@ -17,7 +17,7 @@ table#positions {
   }
 
   td, th {
-    padding: 10px 5px;
+    padding: 10px;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     &.symbol {
@@ -37,7 +37,7 @@ div.link {
   padding: 10px 0;
   width: 100%;
   div.wrapper {
-    padding: 0 15px;
+    padding: 0 10px;
   }
 }
 
@@ -80,8 +80,11 @@ div.spread-chart {
   }
   div#labels {
     display: flex;
-    font-size: 0.75rem;
+    margin-top: 5px;
     justify-content: space-between;
+    div {
+      font-size: 0.75rem;
+    }
   }
 }
 

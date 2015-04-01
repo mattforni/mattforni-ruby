@@ -5,11 +5,11 @@
 %tr.position.visible{class: ((index+1)%2).odd? ? 'odd' : 'even', id: position.symbol}
   %td.symbol
     = position.symbol
-  %td.number-cell
+  %td.number
     = currency_display position.last_trade
-  %td.number-cell
+  %td.number
     = decimal_display position.quantity, 1
-  %td.number-cell
+  %td.number
     = currency_display position.current_value
   %td.spread
     = spread_chart_partial position.lowest_price, position.highest_price, position.last_trade

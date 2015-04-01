@@ -6,13 +6,13 @@
 - else
     %table#positions
         %tr.visible
-            %th.symbol
+            %th.symbol.left
                 Symbol
-            %th.number-cell
+            %th.right
                 Last Price
-            %th.number-cell
+            %th.right
                 Quantity
-            %th.number-cell
+            %th.right
                 Current Value
             %th.spread
                 Spread 
@@ -21,10 +21,10 @@
         - @positions.each_with_index do |position, index|
             = position_partial position, index if !position.holdings.empty?
         %tr.visible
-            %th
+            %th.left
                 Total
             %td{colspan: 2}
-            %td.number-cell
+            %td.number
                 = currency_display @total_value
             %td{colspan: 3}
 .link

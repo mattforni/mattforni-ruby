@@ -1,3 +1,15 @@
+// Fonts
+@font-face {
+  font-family: 'Cousine';
+  src: url(/fonts/Cousine.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Neris';
+  src: url(/fonts/Neris.otf) format('opentype');
+}
+
+// SASS Mixins
 @mixin rounded-corners($radius) {
   border-radius: $radius;
   -moz-border-radius: $radius;
@@ -57,10 +69,15 @@
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$top, endColorstr=$bottom,GradientType=0 );
 }
 
+// Generic Styling
 * {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Neris';
   margin: 0;
   padding: 0;
+  &.number {
+    font-family: 'Cousine';
+    font-size: 0.9rem;
+  }
 }
 
 body {
