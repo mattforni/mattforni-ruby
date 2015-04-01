@@ -1,9 +1,9 @@
 -# Render the holding row
 %tr{class: "#{holding.symbol}-holding"}
   %td{colspan: 2}
-  %td.number-cell
+  %td.number
     = decimal_display holding.quantity, 1
-  %td.number-cell
+  %td.number
     = currency_display holding.current_value
   %td.spread
     = spread_chart_partial holding.lowest_price, holding.highest_price, holding.last_trade
