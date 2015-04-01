@@ -1,10 +1,11 @@
 -# Initialize other variables
 - stop = position.stop
+- period ||= 'one_month'
 
 -# Render the position row
 %tr.position.visible{class: ((index+1)%2).odd? ? 'odd' : 'even', id: position.symbol}
   %td.symbol
-    = position.symbol
+    = link_to position.symbol, charts_url(position.symbol, period), class: 'chart-link'
   %td.number
     = currency_display position.last_trade
   %td.number
@@ -15,9 +16,9 @@
     = spread_chart_partial position.lowest_price, position.highest_price, position.last_trade
   %td.actions
     - if !stop.nil?
-      = link_to "#{currency_display stop.stop_price}", finance_stop_path(stop.id)
+      = link_to "#{currency_display stop.stop_price}", finance_stop_path(stop.id), class: 'action-link'
     - else
-      = link_to 'Stop', new_finance_stop_path(symbol: position.symbol) if can?(:create, Stop)
+      = link_to 'Stop', new_finance_stop_path(symbol: position.symbol), class: 'action-link' if can?(:create, Stop)
 
 -# Render the holdings associated with this position
 - position.holdings.each_with_index do |holding, index|

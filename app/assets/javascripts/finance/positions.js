@@ -73,9 +73,12 @@ function spreadGraph(container) {
 }
 
 $( document ).ready(function() {
+  $('a.chart-link, a.action-link').click(function(event) {
+    event.stopPropagation();
+  });
+
   $('tr.position').click(function() {
     $('tr.'+$(this).attr('id')+'-holding').toggleClass('visible');
   });
 });
-
 
