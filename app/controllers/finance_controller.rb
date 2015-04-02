@@ -58,19 +58,14 @@ class FinanceController < ApplicationController
   def update_stocks
     json_only do
       # Render a 401 and return if an invalid token is provided
-      render json: {}, status: 401 and return if params[:token].nil? or params[:token] != 'f0rnac0pia'
+      render json: {}, status: 401 and return if Rails.env.production? && params[:token] != 'f0rnac0pia'
       # Else attempt to update last trade if necessary
       updated = []
       stocks = Stock.all
-      stocks.each do |stock|
-        if stock.update?
-          stock.save!
-          updated << stock
-        end
-      end
+      stocks.each { |stock| updated << stock if stock.update! }
       render json: {
         evaluated: stocks.size,
-        updated: {number: updated.size, records: updated}
+        updated: { number: updated.size, records: updated.collect { |u| {symbol: u.symbol, last_trade: u.last_trade} } }
       }
     end
   end

@@ -20,8 +20,7 @@ class Holding < ActiveRecord::Base
       # If there is not already a stock model then attempt to create one
       if stock.nil?
         stock = Stock.new({symbol: self.symbol})
-        stock.update?
-        stock.save!
+        stock.update!
       end
 
       # Check if there is already a position model for this user and symbol

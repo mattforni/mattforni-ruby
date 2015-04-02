@@ -81,7 +81,7 @@ class Stop < ActiveRecord::Base
   private
 
   def calc_stop_price
-    self.stock.update? if self.last_trade.nil?
+    self.stock.update! if self.last_trade.nil?
     self.last_trade * rate(true)
   end
 
