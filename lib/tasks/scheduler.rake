@@ -22,7 +22,7 @@ task :update_stops => :environment do
   puts "Evaluating #{stops.size} stop(s)"
   stops.each do |stop|
     stop.save! if stop.update?
-    if !stop.stopped_out?
+    if stop.stopped_out?
       stopped_out[stop.user_id] = [] if stopped_out[stop.user_id].nil?
       stopped_out[stop.user_id] << stop
     end
