@@ -55,21 +55,6 @@ class FinanceController < ApplicationController
   def sizing
   end
 
-  def update_stocks
-    json_only do
-      # Render a 401 and return if an invalid token is provided
-      render json: {}, status: 401 and return if Rails.env.production? && params[:token] != 'f0rnac0pia'
-      # Else attempt to update last trade if necessary
-      updated = []
-      stocks = Stock.all
-      stocks.each { |stock| updated << stock if stock.update! }
-      render json: {
-        evaluated: stocks.size,
-        updated: { number: updated.size, records: updated.collect { |u| {symbol: u.symbol, last_trade: u.last_trade} } }
-      }
-    end
-  end
-
   protected
 
   def attempt_create!(record, success_redirect, failure_redirect)

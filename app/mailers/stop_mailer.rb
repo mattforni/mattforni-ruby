@@ -4,9 +4,9 @@ class StopMailer < ActionMailer::Base
 
   STOPPED_OUT_SUBJECT = 'Some of your positions have stopped out'
 
-  def stopped_out(stops)
+  def stopped_out(email, stops)
     @stops = stops
-    mail(to: 'mattforni@gmail.com', subject: STOPPED_OUT_SUBJECT)
+    mail(to: email, subject: STOPPED_OUT_SUBJECT)
   end
 end
 
