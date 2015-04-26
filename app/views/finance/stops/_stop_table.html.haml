@@ -1,6 +1,4 @@
-- editable ||= false
-
-%table
+%table{style: 'width: 100%;'}
     %tr
         %th
             Symbol
@@ -11,42 +9,21 @@
         %th
             Stop Price
         %th
-            Price Diff
-        %th
-            Quantity
-        %th
             Highest Price
         %th
-            Highest Time
-        %th
             Lowest Price
-        %th
-            Lowest Time
     - stops.each_with_index do |stop, i|
         %tr{class: (i+1)%2 == 1 ? 'odd' : 'even'}
             %td
-                - if editable and can? :update, @stop
-                    = link_to stop.symbol, edit_finance_stop_path(stop.id)
-                - else
-                    = stop.symbol
-            %td
+                = stop.symbol
+            %td{style: 'text-align: right;'}
                 = stop.percentage
-            %td.number-cell
+            %td{style: 'text-align: right;'}
                 = decimal_display stop.last_trade
-            %td.number-cell
+            %td{style: 'text-align: right;'}
                 = decimal_display stop.stop_price
-            %td{class: "number-cell #{price_class(stop.price_diff)}"}
-                = currency_display stop.price_diff
-            %td
-                = alt_display stop.quantity
-            %td.number-cell
+            %td{style: 'text-align: right;'}
                 = currency_display stop.highest_price
-            %td
-                = time_display stop.highest_time
-            %td.number-cell
+            %td{style: 'text-align: right;'}
                 = currency_display stop.lowest_price
-            %td
-                = time_display stop.lowest_time
-            %td
-                = link_to 'X', finance_stop_path(stop.id), method: 'DELETE' if editable and can? :destroy, @stop
 
