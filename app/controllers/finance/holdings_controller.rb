@@ -10,12 +10,12 @@ class Finance::HoldingsController < FinanceController
     @holding = Holding.new(holding_params)
     @holding.symbol.try(:upcase!)
     @holding.user = current_user
-    attempt_create!(@holding, positions_path, new_finance_holding_path)
+    attempt_create!(@holding, finance_positions_path, new_finance_holding_path)
   end
 
   # TODO test
   def destroy
-    attempt_destroy!(@holding, positions_path, finance_holding_path(@holding.id))
+    attempt_destroy!(@holding, finance_positions_path, finance_holding_path(@holding.id))
   end
 
   def edit
