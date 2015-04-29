@@ -8,7 +8,7 @@ task :update_stocks => :environment do
   stocks.each do |stock|
     previous = stock.last_trade
     if stock.update!
-      puts "#{stock.symbol}\t#{previous} -> #{stock.last_trade}"
+      puts "#{stock.symbol}\t#{(previous > stock.last_trade) ? 'v' : '^'}\t#{previous} -> #{stock.last_trade}"
       updated += 1
     end
   end
@@ -28,7 +28,7 @@ task :update_stops => :environment do
     end
   end
 
-  num_stopped_out = 0 
+  num_stopped_out = 0
   stopped_out.each do |user_id, stops|
     num_stopped_out += stops.size
     user = User.find(user_id) rescue nil
