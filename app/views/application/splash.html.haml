@@ -1,4 +1,9 @@
 #background
+#external
+  = external_image('github', 'https://github.com/mattforni')
+  = external_image('rubygems', 'https://rubygems.org/profiles/mattforni')
+  = external_image('stackoverflow', 'http://stackoverflow.com/users/2861181/mattforni')
+  = external_image('linked', 'https://www.linkedin.com/in/mattforni/')
 #authenticate
   - if current_user
     = link_to 'finance', finance_path
@@ -8,8 +13,5 @@
     = link_to 'sign up', new_user_registration_path
     |
     = link_to 'sign in', new_user_session_path
-#social
-  = social_image('github', 'https://github.com/mattforni')
-  = social_image('stackoverflow', 'http://stackoverflow.com/users/2861181/mattforni')
-  = social_image('linkedin', 'https://www.linkedin.com/in/mattforni/')
+
 

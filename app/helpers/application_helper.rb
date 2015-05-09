@@ -29,8 +29,8 @@ module ApplicationHelper
     time.strftime("%^b %d %Y %H:%M")
   end
 
-  def social_image(name, link)
-    render partial: 'social/logo', locals: {name: name, link: link}
+  def external_image(name, link)
+    render partial: 'external/logo', locals: {name: name, link: link}
   end
 end
 

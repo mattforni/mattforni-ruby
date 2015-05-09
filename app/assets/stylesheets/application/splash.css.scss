@@ -16,21 +16,21 @@ div#background {
 div#authenticate {
   display: inline-block;
   right: 0;
-  padding: 10px 15px 0 0;
+  padding: 10px 10px 0 0;
   position: absolute;
   top: 0;
   z-index: 1;
 }
 
-div#social {
+div#external {
   display: inline-block;
-  right: 0;
-  margin: 35px 10px 0 0;
+  left: 0;
+  margin: 10px 0 0 10px;
   position: absolute;
   text-align: right;
   top: 0;
   z-index: 1;
-  div.social-logo {
+  div.external-logo {
     display: inline-block;
     font-size: 0.75rem;
     height: 50px;
