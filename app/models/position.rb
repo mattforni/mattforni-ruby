@@ -1,5 +1,7 @@
+require 'ranges'
 require 'stocks'
 
+include Ranges
 include Stocks
 
 class Position < ActiveRecord::Base

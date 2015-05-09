@@ -6,33 +6,6 @@ describe Finance::StopsController do
   login
   $symbol = 'ABC'
 
-  describe 'GET index' do
-    context 'when there are no stops' do
-      it 'renders no stops' do
-        get :index
-
-        expect(response.status).to eq(200)
-        expect(assigns(:stops)).to be_empty
-        expect(response).to render_template('layouts/application')
-        expect(response).to render_template(:index)
-      end
-    end
-
-    context 'when there is at least one stop' do
-      it 'renders stops' do
-        create(:stop, user: @user)
-        get :index
-
-        expect(response.status).to eq(200)
-        stops = assigns(:stops)
-        expect(stops).to_not be_empty
-        expect(stops.size).to eq(1)
-        expect(response).to render_template('layouts/application')
-        expect(response).to render_template(:index)
-      end
-    end
-  end
-
   describe 'GET edit' do
     context 'when id does not exist' do
       it 'redirects to root_url' do
@@ -131,7 +104,7 @@ describe Finance::StopsController do
 
     it 'creates a stop and redirects to finance stops path' do
       create(:position, {symbol: $symbol, user: @user})
-      Stop.by_user_and_symbol(@user, $symbol).should be_empty
+      expect(Stop.by_user_and_symbol(@user, $symbol)).to be_empty
 
       post :create, {stop: {symbol: $symbol, percentage: 25}}
       stops = Stop.by_user_and_symbol(@user, $symbol)
@@ -141,7 +114,7 @@ describe Finance::StopsController do
       expect(flash[:alert]).to be_nil
       expect(flash[:notice]).to_not be_nil
       expect(flash[:notice]).to eq(record_success(CREATE, stops.first))
-      expect(response).to redirect_to finance_stops_path
+      expect(response).to redirect_to finance_positions_path
     end
   end
 
@@ -179,7 +152,7 @@ describe Finance::StopsController do
       expect(flash[:alert]).to be_nil
       expect(flash[:notice]).to_not be_nil
       expect(flash[:notice]).to eq(record_success(UPDATE, stop))
-      expect(response).to redirect_to finance_stops_path
+      expect(response).to redirect_to finance_positions_path
     end
   end
 end

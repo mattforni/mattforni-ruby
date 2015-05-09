@@ -7,7 +7,7 @@ gem 'rails', '~> 4.1'
 gem 'unicorn', '~> 4.8'
 
 # Finance gems
-gem 'yahoofinance', '~> 1.2'
+gem 'stocks', '~> 0.0'
 
 # Rendering and markup gems
 gem 'haml-rails', '~> 0.4'
@@ -49,9 +49,8 @@ end
 
 group :test do
   gem 'factory_girl_rails', '~> 4.4'
-  gem 'rspec-rails', '~> 2.14'
+  gem 'rspec-rails', '~> 3'
   gem 'minitest', '~> 5.3'
-  gem 'mocha', '~> 1.0'
   gem 'validity', '~> 0.0'
 end
 

@@ -11,52 +11,39 @@ describe FinanceController do
 
     context 'when symbol is invalid' do
       it 'responds with 400' do
-        get :last_trade, {format: 'json', symbol: 'Invalid'}
+        # Arrange
+        allow(Stocks).to receive(:quote).and_return({lastTrade: nil})
+
+        # Act
+        get :last_trade, {format: 'json', symbol: 'invalid'}
+
+        # Assert
         expect(response.status).to eq(400)
       end
     end
 
     it 'gets the last trade' do
-      get :last_trade, {format: 'json', symbol: 'ABC'}
+      # Arrange
+      last_trade = 1.234
+      allow(Stocks).to receive(:quote).and_return({lastTrade: last_trade})
+
+      # Act
+      get :last_trade, {format: 'json', symbol: 'abc'}
+
+      # Assert
       expect(response.status).to eq(200)
-      expect(response.body).to match(/\d+\.\d*/)
+      expect(response.body).to eq(last_trade.to_s)
       expect(response.content_type).to eq(Mime::Type.lookup_by_extension(:json))
     end
   end
 
   describe 'GET sizing' do
     it 'renders position sizing' do
+      # Arrange / Act
       get :sizing
+
+      # Assert
       expect(response.status).to eq(200)
-    end
-  end
-
-  describe 'GET update_stocks' do
-    context 'when format is not json' do
-      it 'responds with 400' do
-        get :update_stocks, {token: 'f0rnac0pia'}
-        expect(response.status).to eq(400)
-      end
-    end
-
-    context 'when token is not provided' do
-      it 'responds with 401' do
-        get :update_stocks, {format: 'json'}
-        expect(response.status).to eq(401)
-      end
-    end
-
-    context 'when token is invalid' do
-      it 'responds with 401' do
-        get :update_stocks, {format: 'json', token: 'invalid'}
-        expect(response.status).to eq(401)
-      end
-    end
-
-    it 'updates stocks' do
-      get :update_stocks, {format: 'json', token: 'f0rnac0pia'}
-      expect(response.status).to eq(200)
-      expect(response.content_type).to eq(Mime::Type.lookup_by_extension(:json))
     end
   end
 end

@@ -1,8 +1,8 @@
-require 'stocks'
-require 'validators/stock_validator'
+require 'ranges'
+require 'stocks/validators/exists'
 
+include Ranges
 include Stocks
-include Validators
 
 class Stock < ActiveRecord::Base
   validates :highest_price, presence: true, numericality: PRICE_RANGE
@@ -11,7 +11,7 @@ class Stock < ActiveRecord::Base
   validates :lowest_price, presence: true, numericality: PRICE_RANGE
   validates :lowest_time, presence: true
   validates :symbol, presence: true, uniqueness: true
-  validates_with StockValidator
+  validates_with Validators::Exists
 
   # TODO test these associations
   has_many :positions
@@ -24,9 +24,9 @@ class Stock < ActiveRecord::Base
   def update!
     begin
       self.transaction do
-        last_trade = get_last_trade
+        last_trade = Stocks.last_trade(self.symbol)
         # If last_trade has not been set or has changed, update it
-        if self.last_trade.nil? or !Stocks.equal?(self.last_trade, last_trade)
+        if self.last_trade.nil? or !close?(self.last_trade)
           self.last_trade = last_trade
           # If last_trade is less than the current lowest_price, update it
           # TODO change >/< to use a signif digit comparisson operator
@@ -59,8 +59,10 @@ class Stock < ActiveRecord::Base
 
   private
 
-  def get_last_trade
-    Stocks.last_trade(self.symbol)
+  EPSILON = 0.00001
+
+  def close?(price)
+    (self.last_trade - price).abs < EPSILON
   end
 end
 
