@@ -24,10 +24,10 @@ class Stock < ActiveRecord::Base
   def update!
     begin
       self.transaction do
-        last_trade = Stocks.last_trade(self.symbol)
-        # If last_trade has not been set or has changed, update it
-        if self.last_trade.nil? or !close?(self.last_trade)
-          self.last_trade = last_trade
+        current = Stocks.last_trade(self.symbol)
+        # If self.last_trade has not been set or has changed, update it
+        if self.last_trade.nil? or !close?(current)
+          self.last_trade = current
           # If last_trade is less than the current lowest_price, update it
           # TODO change >/< to use a signif digit comparisson operator
           # TODO test that these are updated in different cases
