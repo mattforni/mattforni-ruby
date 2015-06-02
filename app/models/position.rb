@@ -27,7 +27,7 @@ class Position < ActiveRecord::Base
   end
 
   def current_value
-    self.last_trade * self.quantity
+    self.last_trade * self.quantity - self.commission_price
   end
 
   def highest_price
@@ -49,7 +49,7 @@ class Position < ActiveRecord::Base
   end
 
   def overall_change
-    self.last_trade * self.quantity - self.purchase_price * self.quantity
+    self.current_value - self.purchase_price * self.quantity
   end
 
   def stop
