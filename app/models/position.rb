@@ -57,12 +57,15 @@ class Position < ActiveRecord::Base
   end
 
   def update!
-    self.update_weighted_avg!(:commission_price)
     self.update_weighted_avg!(:purchase_price)
-    self.quantity = self.holdings(true).reduce(0) do |total, holding|
-      total += holding.quantity
-      total
+    total_commission_price = 0
+    total_quantity = 0
+    self.holdings(true).each do |holding|
+      total_commission_price += holding.commission_price
+      total_quantity += holding.quantity
     end
+    self.commission_price = total_commission_price
+    self.quantity = total_quantity
     self.save!
   end
 
