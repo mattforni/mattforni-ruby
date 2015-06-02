@@ -51,7 +51,7 @@ class FinanceController < ApplicationController
     @total_value = 0
     @positions.each do |position|
       @total_value += position.current_value
-      @total_change += position.overall_change
+      @total_change += position.total_change
     end
   end
 

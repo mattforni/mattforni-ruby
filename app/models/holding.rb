@@ -63,7 +63,7 @@ class Holding < ActiveRecord::Base
   end
 
   def current_value
-    self.last_trade * self.quantity
+    self.last_trade * self.quantity - self.commission_price
   end
 
   def destroy!
@@ -77,12 +77,16 @@ class Holding < ActiveRecord::Base
         self.position.stops.each {|stop| stop.destroy!}
         self.position.destroy!
       else # Otherwise update the position
-        self.position.update_weighted_avg!(:commission_price)
         self.position.update_weighted_avg!(:purchase_price)
+        self.position.decrement(:commission_price, self.commission_price)
         self.position.decrement(:quantity, self.quantity)
         self.position.save!
       end
     end
+  end
+
+  def total_change
+    self.current_value - self.purchase_price * self.quantity
   end
 
   def update?

@@ -1,10 +1,18 @@
+-# Initialize other variables
+- total_change = holding.total_change
+
 -# Render the holding row
 %tr{class: "#{holding.symbol}-holding"}
-  %td{colspan: 2}
+  %td
   %td.number
     = decimal_display holding.quantity
+  %td
   %td.number
     = currency_display holding.current_value
+  %td.number
+    = currency_display holding.purchase_price
+  %td.number{class: positivity_class(total_change)}
+    = currency_display total_change
   %td.spread
     = spread_chart_partial holding.lowest_price, holding.highest_price, holding.last_trade
   %td.actions

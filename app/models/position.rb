@@ -48,12 +48,12 @@ class Position < ActiveRecord::Base
     @low_price = low_price
   end
 
-  def overall_change
-    self.current_value - self.purchase_price * self.quantity
-  end
-
   def stop
     self.stops.first
+  end
+
+  def total_change
+    self.current_value - self.purchase_price * self.quantity
   end
 
   def update!

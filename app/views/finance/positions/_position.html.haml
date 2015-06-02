@@ -1,5 +1,5 @@
 -# Initialize other variables
-- overall_change = position.overall_change
+- total_change = position.total_change
 - stop = position.stop
 - period ||= 'one_month'
 
@@ -15,8 +15,8 @@
     = currency_display position.current_value
   %td.number
     = currency_display position.purchase_price
-  %td.number{class: positivity_class(overall_change)}
-    = currency_display overall_change
+  %td.number{class: positivity_class(total_change)}
+    = currency_display total_change
   %td.spread
     = spread_chart_partial position.lowest_price, position.highest_price, position.last_trade
   %td.actions
