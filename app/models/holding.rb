@@ -54,8 +54,8 @@ class Holding < ActiveRecord::Base
 
       # Update the existing position if necessary
       if position_existed
-        position.update_weighted_avg!(:commission_price)
         position.update_weighted_avg!(:purchase_price)
+        position.increment(:commission_price, self.commission_price)
         position.increment(:quantity, self.quantity)
         position.save!
       end
