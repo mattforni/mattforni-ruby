@@ -7,6 +7,10 @@ module FinanceHelper
     render partial: 'finance/positions/position', locals: {position: position, index: index}
   end
 
+  def positivity_class(value)
+    value < 0 ? 'negative' : 'positive'
+  end
+
   def spread_chart_partial(lowest, highest, current)
     offset = (current - lowest) / (highest - lowest) * 100.0 rescue nil
     render partial: 'finance/charts/spread', locals: {lowest: lowest, highest: highest, offset: offset}

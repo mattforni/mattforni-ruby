@@ -9,11 +9,15 @@
             %th.symbol.left
                 Symbol
             %th.right
-                Last Price
-            %th.right
                 Quantity
             %th.right
+                Last Price
+            %th.right
                 Current Value
+            %th.right
+                Purchase Price
+            %th.right
+                Overall Change
             %th.spread
                 Spread 
             %th.actions
@@ -26,7 +30,10 @@
             %td{colspan: 2}
             %td.number
                 = currency_display @total_value
-            %td{colspan: 3}
+            %td
+            %td.number{class: positivity_class(@total_change)}
+                = currency_display @total_change
+            %td{colspan: 2}
 .link
     .wrapper
         = link_to 'Add', new_finance_holding_path if can?(:create, Holding)

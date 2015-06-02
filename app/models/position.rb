@@ -48,6 +48,10 @@ class Position < ActiveRecord::Base
     @low_price = low_price
   end
 
+  def overall_change
+    self.last_trade * self.quantity - self.purchase_price * self.quantity
+  end
+
   def stop
     self.stops.first
   end

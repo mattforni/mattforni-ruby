@@ -47,8 +47,11 @@ class FinanceController < ApplicationController
 
   def positions
     @positions = Position.where(user_id: current_user.id).order(:symbol)
-    @total_value = @positions.reduce(0) do |total, position|
-      total += position.current_value
+    @total_change = 0
+    @total_value = 0
+    @positions.each do |position|
+      @total_value += position.current_value
+      @total_change += position.overall_change
     end
   end
 

@@ -1,4 +1,5 @@
 -# Initialize other variables
+- overall_change = position.overall_change
 - stop = position.stop
 - period ||= 'one_month'
 
@@ -7,11 +8,15 @@
   %td.symbol
     = link_to position.symbol, charts_url(position.symbol, period), class: 'chart-link'
   %td.number
-    = currency_display position.last_trade
-  %td.number
     = decimal_display position.quantity
   %td.number
+    = currency_display position.last_trade
+  %td.number
     = currency_display position.current_value
+  %td.number
+    = currency_display position.purchase_price
+  %td.number{class: positivity_class(overall_change)}
+    = currency_display overall_change
   %td.spread
     = spread_chart_partial position.lowest_price, position.highest_price, position.last_trade
   %td.actions
