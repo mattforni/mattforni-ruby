@@ -1,0 +1,33 @@
+.name
+  = portfolio.name
+%table.portfolio
+  %tr.visible
+    %th.symbol.left
+      Symbol
+    %th.right
+      Quantity
+    %th.right
+      Last Price
+    %th.right
+      Current Value
+    %th.right
+      Purchase Price
+    %th.right
+      Total Change
+    %th.spread
+      Spread
+    %th.actions
+      Actions
+  - portfolio.positions.each_with_index do |position, index|
+    = position_partial position, index if !position.holdings.empty?
+  %tr.visible
+    %th.left
+      Total
+    %td{colspan: 2}
+    %td.number
+      = currency_display portfolio.current_value
+    %td
+    %td.number{class: positivity_class(portfolio.total_change)}
+      = currency_display portfolio.total_change
+    %td{colspan: 2}
+

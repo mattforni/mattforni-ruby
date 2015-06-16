@@ -8,12 +8,14 @@ class Position < ActiveRecord::Base
   WEIGHTED_ATTRIBUTES = [:commission_price, :purchase_price]
 
   validates :commission_price, presence: true, numericality: COMMISSION_RANGE
+  validates :portfolio_id, presence: true
   validates :purchase_price, presence: true, numericality: PRICE_RANGE
   validates :quantity, presence: true, numericality: QUANTITY_RANGE
   validates :stock_id, presence: true
   validates :symbol, presence: true
   validates :user_id, presence: true
 
+  belongs_to :portfolio
   belongs_to :stock
   belongs_to :user
 

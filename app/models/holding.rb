@@ -23,6 +23,7 @@ class Holding < ActiveRecord::Base
         stock.update!
       end
 
+      # TODO eventually integrate portfolio into this creation flow
       # Check if there is already a position model for this user and symbol
       position = Position.by_user_and_symbol(self.user, symbol)
       position_existed = true
@@ -35,6 +36,9 @@ class Holding < ActiveRecord::Base
           quantity: self.quantity,
           symbol: self.symbol
         })
+        puts self.user.inspect
+        puts self.user.default_portfolio.inspect
+        position.portfolio = self.user.default_portfolio
         position.stock = stock
         position.user = self.user
         position.save!

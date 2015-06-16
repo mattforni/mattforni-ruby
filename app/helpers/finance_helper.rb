@@ -3,6 +3,10 @@ module FinanceHelper
     render partial: 'finance/holdings/holding', locals: {holding: holding, index: index}
   end
 
+  def portfolio_partial(portfolio)
+    render partial: 'finance/portfolios/portfolio', locals: {portfolio: portfolio}
+  end
+
   def position_partial(position, index)
     render partial: 'finance/positions/position', locals: {position: position, index: index}
   end

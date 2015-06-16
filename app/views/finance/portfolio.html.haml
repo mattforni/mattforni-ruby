@@ -1,0 +1,12 @@
+.link
+  .wrapper
+    = link_to 'Home', root_url
+- if @portfolios.empty?
+  No positions yet.
+- else
+  - @portfolios.each do |portfolio|
+    = portfolio_partial portfolio if !portfolio.positions.empty?
+.link
+  .wrapper
+    = link_to 'Add', new_finance_holding_path if can?(:create, Holding)
+

@@ -2,7 +2,13 @@
 
 $spread_round: 10px;
 
-table#positions {
+div.name {
+  font-size: 1.15rem;
+  font-weight: bold;
+  margin: 0 0 10px 10px;
+}
+
+table.portfolio {
   width: 100%;
 
   tr {

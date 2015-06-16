@@ -3,7 +3,7 @@ class AddUsersToStops < ActiveRecord::Migration
     add_column :stops, :user_id, :integer
     if Rails.env.production?
       execute <<-SQL
-        ALTER TABLE stops 
+        ALTER TABLE stops
           ADD CONSTRAINT fk_stops_users
           FOREIGN KEY (user_id)
           REFERENCES users(id)

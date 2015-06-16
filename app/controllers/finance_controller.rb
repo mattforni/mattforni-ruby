@@ -45,14 +45,12 @@ class FinanceController < ApplicationController
     end
   end
 
+  def portfolio
+    @portfolios = Portfolio.where(user_id: current_user.id).order(:name)
+  end
+
   def positions
-    @positions = Position.where(user_id: current_user.id).order(:symbol)
-    @total_change = 0
-    @total_value = 0
-    @positions.each do |position|
-      @total_value += position.current_value
-      @total_change += position.total_change
-    end
+    redirect_to finance_portfolio_path
   end
 
   def sizing
