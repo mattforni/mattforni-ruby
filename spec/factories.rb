@@ -5,16 +5,22 @@ FactoryGirl.define do
     purchase_date Date.today
     purchase_price 15
     quantity 100
-    symbol { position.stock.symbol } 
+    symbol { position.stock.symbol }
+    user
+  end
+
+  factory :portfolio do
+    sequence(:name) { |n| "#{Portfolio::DEFAULT_NAME}-#{n}" }
     user
   end
 
   factory :position do
     commission_price 5
+    portfolio
     purchase_price 15
     quantity 100
     stock
-    symbol { stock.symbol } 
+    symbol { stock.symbol }
     user
   end
 
@@ -22,18 +28,18 @@ FactoryGirl.define do
     highest_price 25
     highest_time Time.now.utc
     last_trade 10
-    symbol 'ABC'
+    sequence(:symbol) { |n| "SYM#{n}" }
     lowest_price 5
     lowest_time Time.now.utc
   end
-  
+
   factory :stop do
     highest_price 40
     highest_time Time.now.utc
     percentage 5
     position
     stop_price 20
-    symbol { position.stock.symbol } 
+    symbol { position.stock.symbol }
     lowest_price 5
     lowest_time Time.now.utc
   end
@@ -44,4 +50,5 @@ FactoryGirl.define do
     encrypted_password { password }
   end
 end
+
 

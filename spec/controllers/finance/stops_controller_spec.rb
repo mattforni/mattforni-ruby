@@ -6,6 +6,10 @@ describe Finance::StopsController do
   login
   $symbol = 'ABC'
 
+  before(:each) do
+    allow(Stocks).to receive(:exists?).and_return(true)
+  end
+
   describe 'GET edit' do
     context 'when id does not exist' do
       it 'redirects to root_url' do

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-ruby '2.2.1'
+ruby '2.2.2'
 
 # Core gems
 gem 'rails', '~> 4.1'
@@ -51,6 +51,6 @@ group :test do
   gem 'factory_girl_rails', '~> 4.4'
   gem 'rspec-rails', '~> 3'
   gem 'minitest', '~> 5.3'
-  gem 'validity', '~> 0.0'
+  gem 'validity', '~> 1.0'
 end
 
