@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-include Validity
-
 describe Portfolio do
   before(:each) do
     allow(Stocks).to receive(:exists?).and_return(true)
@@ -15,15 +13,15 @@ describe Portfolio do
   end
 
   describe 'validations' do
-    it 'has :name' do
+    it 'has :name field' do
       @portfolio.field_presence :name
     end
 
-    it 'has :user_id' do
+    it 'has :user_id field' do
       @portfolio.field_presence :user_id
     end
 
-    it 'is unique on :name' do
+    it 'is unique on :name field' do
       @portfolio.field_uniqueness :name
     end
 

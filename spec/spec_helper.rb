@@ -54,5 +54,6 @@ RSpec.configure do |config|
 
   # Configure Validity
   Validity.configure(Validity::TestUnit)
+  config.include Validity
 end
 

@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   validates :encrypted_password, presence: true
 
   has_many :holdings, dependent: :destroy
+  has_many :portfolios, dependent: :destroy
   has_many :positions, dependent: :destroy
   has_many :stops, dependent: :destroy
 

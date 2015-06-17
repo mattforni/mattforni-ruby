@@ -1,6 +1,10 @@
 FactoryGirl.define do
   factory :holding do
     commission_price 5
+    highest_price 20
+    highest_time Time.now
+    lowest_price 10
+    lowest_time Time.now
     position
     purchase_date Date.today
     purchase_price 15
