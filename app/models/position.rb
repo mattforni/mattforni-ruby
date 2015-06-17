@@ -24,6 +24,10 @@ class Position < ActiveRecord::Base
 
   delegate :last_trade, to: :stock, allow_nil: false
 
+  def self.by_portfolio_and_symbol(portfolio, symbol)
+    Position.where(portfolio: portfolio, symbol: symbol).first
+  end
+
   def self.by_user_and_symbol(user, symbol)
     Position.where({user_id: user.id, symbol: symbol}).first
   end

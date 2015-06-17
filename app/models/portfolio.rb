@@ -1,5 +1,6 @@
 class Portfolio < ActiveRecord::Base
   DEFAULT_NAME = 'cash-money'
+  DOES_NOT_EXIST = "Portfolio does not exist for user '%s'"
   UNIQUENESS_ERROR = 'must be unique for a given user'
 
   validates :name, presence: true, uniqueness: {
@@ -12,11 +13,22 @@ class Portfolio < ActiveRecord::Base
 
   has_many :positions
 
+  def self.by_user_and_id(user, id)
+    raise 'Must provide a user to query for a portfolio' if user.nil?
+    portfolio = Portfolio.where(user: user, id: id).first
+    raise DOES_NOT_EXIST % user.email if portfolio.nil?
+    portfolio
+  end
+
   def self.default(user)
-    raise 'Must provider a user to the default portfolio query' if user.nil?
-    default_portfolio = Portfolio.where(user: user).first
-    raise "Unable to retrieve default portfolio for '#{user.email}'" if default_portfolio.nil?
-    default_portfolio
+    raise 'Must provide a user to query for a portfolio' if user.nil?
+    portfolio = Portfolio.where(user: user).first
+    raise DOES_NOT_EXIST % user.email if portfolio.nil?
+    portfolio
+  end
+
+  def create!
+    save!
   end
 
   def current_value
@@ -38,6 +50,12 @@ class Portfolio < ActiveRecord::Base
   end
 
   private
+
+  MISSING_USER = 'Must provide a user to query for a portfolio'
+
+  def require_user(user)
+    raise ArgumentError.new(MISSING_USER) if user.nil?
+  end
 
   attr_writer :curr_value
   attr_writer :tot_change

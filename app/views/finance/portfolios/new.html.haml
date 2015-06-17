@@ -1,0 +1,11 @@
+= form_for [:finance, @portfolio] do |f|
+  %table
+    %tr
+      %th
+        = f.label :name, 'Name'
+      %td
+        = f.text_field :name, step: 0.001
+    %tr
+      %td{colspan: 2}
+        = f.submit
+

@@ -18,7 +18,7 @@
       Spread
     %th.actions
       Actions
-  - portfolio.positions.each_with_index do |position, index|
+  - portfolio.positions.order(:symbol).each_with_index do |position, index|
     = position_partial position, index if !position.holdings.empty?
   %tr.visible
     %th.left

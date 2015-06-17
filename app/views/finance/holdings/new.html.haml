@@ -1,31 +1,40 @@
+- @portfolios.each do |portfolio|
+  = portfolio.name
+  %br
+
 = form_for [:finance, @holding] do |f|
-    %table
-        %tr
-            %th
-                = f.label :commission_price, 'Commission Price'
-            %td
-                = f.number_field :commission_price, step: 0.001
-        %tr
-            %th
-                = f.label :purchase_date, 'Purchase Date'
-            %td
-                = f.date_field :purchase_date
-        %tr
-            %th
-                = f.label :purchase_price, 'Purchase Price'
-            %td
-                = f.number_field :purchase_price, step: 0.001
-        %tr
-            %th
-                = f.label :quantity, 'Quantity'
-            %td
-                = f.number_field :quantity, step: 0.001
-        %tr
-            %th
-                = f.label :symbol, 'Symbol'
-            %td
-                = f.text_field :symbol
-        %tr
-            %td{colspan: 2}
-                = f.submit
+  %table
+    %tr
+      %th
+        = f.label :commission_price, 'Commission Price'
+      %td
+        = f.number_field :commission_price, step: 0.001
+    %tr
+      %th
+        = f.label :purchase_date, 'Purchase Date'
+      %td
+        = f.date_field :purchase_date
+    %tr
+      %th
+        = f.label :purchase_price, 'Purchase Price'
+      %td
+        = f.number_field :purchase_price, step: 0.001
+    %tr
+      %th
+        = f.label :quantity, 'Quantity'
+      %td
+        = f.number_field :quantity, step: 0.001
+    %tr
+      %th
+        = f.label :symbol, 'Symbol'
+      %td
+        = f.text_field :symbol
+    %tr
+      %th
+        = f.label :portfolio_id, 'Portfolio'
+      %td
+        = select_tag :portfolio_id, options_from_collection_for_select(@portfolios, 'id', 'name')
+    %tr
+      %td{colspan: 2}
+        = f.submit
 

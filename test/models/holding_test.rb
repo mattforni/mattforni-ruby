@@ -1,5 +1,6 @@
 require 'test_helper'
 
+# TODO migrate to rspec
 class HoldingsTest < ActiveSupport::TestCase
   def setup
     @user = create(:user)

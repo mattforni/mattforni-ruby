@@ -27,6 +27,7 @@ Mattforni::Application.routes.draw do
     get '/sizing', as: 'finance_sizing', to: 'finance#sizing'
   end
   namespace 'finance' do
+    resources :portfolios, only: [:new, :create]
     resources :holdings, except: :index
     resources :stops, except: :index
   end

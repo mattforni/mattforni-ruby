@@ -13,6 +13,9 @@ class Holding < ActiveRecord::Base
   delegate :stock, to: :position, allow_nil: false
   delegate :last_trade, to: :stock, allow_nil: false
 
+  attr_accessor :portfolio
+
+  # TODO this needs to be tested more thoroughly
   def create!
     self.transaction do
       # Check if there is already a stock model for this symbol
@@ -23,9 +26,8 @@ class Holding < ActiveRecord::Base
         stock.update!
       end
 
-      # TODO eventually integrate portfolio into this creation flow
       # Check if there is already a position model for this user and symbol
-      position = Position.by_user_and_symbol(self.user, symbol)
+      position = Position.by_portfolio_and_symbol(self.portfolio, symbol)
       position_existed = true
       # If there is not already a position then attempt to create one
       if position.nil?
@@ -36,9 +38,7 @@ class Holding < ActiveRecord::Base
           quantity: self.quantity,
           symbol: self.symbol
         })
-        puts self.user.inspect
-        puts self.user.default_portfolio.inspect
-        position.portfolio = self.user.default_portfolio
+        position.portfolio = self.portfolio
         position.stock = stock
         position.user = self.user
         position.save!

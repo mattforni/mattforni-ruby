@@ -35,5 +35,49 @@ describe Portfolio do
       @portfolio.has_many :positions, @positions
     end
   end
+
+  describe '::by_user_and_id' do
+    context 'when user not provided' do
+      it 'should raise an ArugmentError' do
+        expect { Portfolio.by_user_and_id }.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'when portfolio with provided id does not exist' do
+      it 'should raise a RuntimeError' do
+        expect { Portfolio.by_user_and_id(@user, -1) }.to raise_error(RuntimeError)
+      end
+    end
+
+    it 'should return the specified portfolio' do
+      portfolio = Portfolio.by_user_and_id(@user, @portfolio.record.id)
+      expect(portfolio).to_not be_nil
+      expect(portfolio.name).to eq(@portfolio.record.name)
+      expect(portfolio.user).to eq(@user)
+    end
+  end
+
+  describe '::default' do
+    context 'when user not provided' do
+      it 'should raise an ArugmentError' do
+        expect { Portfolio.default }.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'when default portfolio does not exist' do
+      it 'should raise a RuntimeError' do
+        @portfolio.record.destroy!
+
+        expect { Portfolio.default(@user) }.to raise_error(RuntimeError)
+      end
+    end
+
+    it 'should return the default portfolio' do
+      portfolio = Portfolio.default(@user)
+      expect(portfolio).to_not be_nil
+      expect(portfolio.name).to eq(@portfolio.record.name)
+      expect(portfolio.user).to eq(@user)
+    end
+  end
 end
 

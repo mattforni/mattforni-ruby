@@ -1,6 +1,8 @@
 .link
   .wrapper
-    = link_to 'Home', root_url
+    = link_to 'Home', root_path
+    |
+    = link_to 'New Portfolio', new_finance_portfolio_path
 - if @portfolios.empty?
   No positions yet.
 - else
