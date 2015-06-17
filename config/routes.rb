@@ -28,6 +28,7 @@ Mattforni::Application.routes.draw do
   end
   namespace 'finance' do
     resources :portfolios, only: [:new, :create]
+    resources :positions, only: [:edit, :update]
     resources :holdings, except: :index
     resources :stops, except: :index
   end

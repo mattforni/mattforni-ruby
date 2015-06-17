@@ -6,7 +6,8 @@
 -# Render the position row
 %tr.position.visible{class: ((index+1)%2).odd? ? 'odd' : 'even', id: position.symbol}
   %td.symbol
-    = link_to position.symbol, charts_url(position.symbol, period), class: 'chart-link'
+    -# link_to position.symbol, charts_url(position.symbol, period), class: 'chart-link'
+    = link_to position.symbol, edit_finance_position_path(position.id)
   %td.number
     = decimal_display position.quantity
   %td.number

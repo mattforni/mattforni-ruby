@@ -1,0 +1,11 @@
+= form_for [:finance, @position] do |f|
+  %table
+    %tr
+      %th
+        = f.label :portfolio_id, 'Portfolio'
+      %td
+        = select_tag :portfolio_id, options_from_collection_for_select(@portfolios, 'id', 'name')
+    %tr
+      %td{colspan: 2}
+        = f.submit
+
