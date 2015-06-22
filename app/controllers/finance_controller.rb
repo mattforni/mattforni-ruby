@@ -24,6 +24,16 @@ class FinanceController < ApplicationController
     gon.period = @period
   end
 
+  def details
+    @symbol = params[:symbol].upcase
+    @quote = YahooFinance::get_extended_quotes(@symbol)[@symbol]
+    redirect_to :back if !@quote
+
+    @balance_sheet_url = "https://finance.yahoo.com/q/bs?s=#{@symbol}+Balance+Sheet&annual"
+    @cash_flow_url = "https://finance.yahoo.com/q/cf?s=#{@symbol}+Cash+Flow&annual"
+    @income_statement_url = "https://finance.yahoo.com/q/is?s=#{@symbol}+Income+Statement&annual"
+  end
+
   def historical
     period = params[:period] || DEFAULT_PERIOD
     symbol = params[:symbol].upcase

@@ -1,0 +1,39 @@
+#basics
+  #symbol
+    = @quote.symbol
+  = '-'
+  #name
+    = @quote.name
+
+%table#stats
+  %tr#eps
+    %th
+      EPS
+    %td
+      = @quote.earningsPerShare
+  %tr#pe
+    %th
+      P/E
+    %td
+      = @quote.peRatio
+  %tr#dividend-yield
+    %th
+      Dividend
+    %td
+      = "#{@quote.dividendPerShare} (#{@quote.dividendYield}%)"
+  %tr#dividend-date
+    %th
+      Ex Dividend Date
+    %td
+      = @quote.exDividendDate
+
+#links
+  = link_to 'Balance Sheet', @balance_sheet_url, target: '_blank'
+  |
+  = link_to 'Cash Flow', @cash_flow_url, target: '_blank'
+  |
+  = link_to 'Income Statement', @income_statement_url, target: '_blank'
+
+-# Cash Operating Profit Margin > 20% ?
+-# Capital Expenditures < (Dividends Paid + Sale Purchase of Stock) ?
+

@@ -14,6 +14,7 @@ Mattforni::Application.routes.draw do
         period: 'six_months'
       },
       to: 'finance#charts'
+    get '/details/:symbol', as: :details, to: 'finance#details'
     get '/historical/:symbol/(:period)',
       as: :historical,
       defaults: {

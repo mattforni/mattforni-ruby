@@ -1,0 +1,27 @@
+@import 'application.css.scss';
+
+div#content {
+  padding: 15px;
+}
+
+div#symbol {
+  display: inline;
+  font-size: 1.25rem;
+}
+
+div#name {
+  display: inline;
+  font-weight: bold;
+}
+
+table#stats {
+  margin: 10px 0;
+  th {
+    font-size: 1.15rem;
+    text-align: left;
+  }
+  td {
+    padding-left: 10px;
+  }
+}
+
