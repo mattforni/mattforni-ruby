@@ -9,6 +9,11 @@
   src: url(/fonts/Neris.otf) format('opentype');
 }
 
+@font-face {
+  font-family: 'SaxMono';
+  src: url(/fonts/SaxMono.ttf) format('truetype');
+}
+
 // SASS Mixins
 @mixin rounded-corners($radius) {
   border-radius: $radius;
@@ -71,11 +76,11 @@
 
 // Generic Styling
 * {
-  font-family: 'Neris';
+  font-family: 'SaxMono';
   margin: 0;
   padding: 0;
   &.number {
-    font-family: 'Cousine';
+    font-family: 'SaxMono';
     font-size: 0.9rem;
   }
 }
