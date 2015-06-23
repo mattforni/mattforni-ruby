@@ -1,0 +1,43 @@
+%html{'ng-app' => 'finance'}
+  %head
+    %title
+      financials
+    = include_gon
+    = favicon_link_tag 'favicon.ico'
+    = stylesheet_link_tag params[:controller], media: "all", "data-turbolinks-track" => true
+    = stylesheet_link_tag File.join(params[:controller], params[:action]), media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+  %body
+    - devise_error_messages!
+    #overlay{class: (alert or notice) ? '' : 'dismissed'}
+      #message-wrapper{class: alert ? 'alert' : 'notice'}
+        - if alert
+          = alert
+          - (flash[:errors] || []).each do |e|
+            %li=e
+        - else
+          = notice
+
+    #content-wrapper
+      #content
+        = yield
+
+    #quick-quote-wrapper{'ng-controller' => 'QuickQuoteController'}
+      #quick-quote-field
+        %input{id: 'quick-quote-field', type: 'text', placeholder: 'Symbol', 'ng-model' => 'symbol', 'ng-blur' => 'getQuote()'}
+      #quick-quote-info
+        #empty-quote{'ng-show': 'quote == null'}
+          Enter a symbol for a quick quote
+        #quick-quote{'ng-hide': 'quote == null'}
+          #basics
+            #symbol
+              {{ quote.symbol }}
+            #name
+              ( {{ quote.name }} )
+          #trade
+            #last-trade
+              {{ quote.lastTrade | currency }}
+            #change{'ng-class': 'positivityClass(quote.changePoints)'}
+              {{ quote.changePoints }} ( {{ quote.changePercent }}% )
+

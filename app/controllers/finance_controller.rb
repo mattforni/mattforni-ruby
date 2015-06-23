@@ -1,11 +1,13 @@
 require 'stocks'
 
 class FinanceController < ApplicationController
+  layout 'finance'
+
   include Messages
   include Stocks
 
   before_action :authenticate_user!, only: [:positions]
-  around_action :json_only, only: [:historical, :last_trade]
+  around_action :json_only, only: [:historical, :quote]
 
   def charts
     @period = params[:period] || DEFAULT_PERIOD
@@ -47,20 +49,20 @@ class FinanceController < ApplicationController
   def index
   end
 
-  def last_trade
-    begin
-      render json: Stocks.last_trade(params[:symbol])
-    rescue Stocks::RetrievalError
-      head 400
-    end
-  end
-
   def portfolio
     @portfolios = Portfolio.where(user_id: current_user.id).order(:name)
   end
 
   def positions
     redirect_to finance_portfolio_path
+  end
+
+  def quote
+    begin
+      render json: Stocks.quote(params[:symbol])
+    rescue Stocks::RetrievalError => e
+      render status: 400, json: e.message
+    end
   end
 
   def sizing

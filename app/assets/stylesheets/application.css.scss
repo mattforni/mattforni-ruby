@@ -15,6 +15,12 @@
 }
 
 // SASS Mixins
+@mixin flex {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
 @mixin rounded-corners($radius) {
   border-radius: $radius;
   -moz-border-radius: $radius;

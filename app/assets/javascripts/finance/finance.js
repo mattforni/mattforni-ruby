@@ -4,7 +4,20 @@
  * @author Matt Fornaciari (mattforni@gmail.com)
  */
 
-var LAST_TRADE_URL = '/finance/last_trade';
+var QUOTE_URL = '/finance/quote';
+
+var requestQuote = function(symbol, success, error) {
+    var request = $.ajax({
+        accepts: 'json',
+        dataType: 'json',
+        type: 'GET',
+        url: QUOTE_URL + '/' + symbol
+    });
+
+    // Bind the success and error handlers to the ajax request object if defined
+    if (typeof error === 'function') { request.error(error); }
+    if (typeof success === 'function') { request.success(success); }
+};
 
 /**
  * Creates, scopes and binds the FinanceController to the angular module
@@ -12,7 +25,7 @@ var LAST_TRADE_URL = '/finance/last_trade';
  * '$scopes' declaration is necessary for clarification to the angular injector
  * due to the minfication process.
  */
-mattforni.controller('FinanceController', ['$scope',
+finance.controller('SizingController', ['$scope',
     function($scope) {
         $scope.accountSize = 0;
         $scope.lastTrade = 0;
@@ -34,25 +47,11 @@ mattforni.controller('FinanceController', ['$scope',
         $scope.last_trade = function() {
             // Makes symbol upper case for compliance
             $scope.symbol = $scope.symbol.toUpperCase();
-                $.ajax({
-                accepts: 'json',
-                data: {
-                    symbol: $scope.symbol
-                },
-                dataType: 'json',
-                type: 'GET',
-                success: function(data, code, jqXHR) {
-                    $scope.lastTrade = data
-                    $scope.update(true);
-                },
-                url: LAST_TRADE_URL
-            });
-
-            // Bind the success handler to the ajax request object
-            request.done(function(data, code, jqXHR) {
-                $scope.lastTrade = data['lastTrade'];
+            var success = function(data, code, jqXHR) {
+                $scope.lastTrade = data.lastTrade;
                 $scope.update(true);
-            });
+            };
+            requestQuote($scope.symbol, success);
         } // End $scope.last_trade
 
         /**
@@ -78,5 +77,42 @@ mattforni.controller('FinanceController', ['$scope',
             if (digest) { $scope.$digest(); }
         } // End $scope.update
     } // End anonymous FunctionController function
+]);
+
+finance.controller('QuickQuoteController', ['$scope',
+    function($scope) {
+        $scope.quote = null;
+        $scope.symbol = null;
+
+        /**
+         * Formats the stock symbol and then attempts to retrieves a quote
+         */
+        $scope.getQuote = function() {
+            // If there is no symbol, nullify the quote and return
+            if (!$scope.symbol || $scope.symbol.length === 0) {
+                $scope.quote = null;
+                return;
+            }
+
+            // If the quote has already been loaded, do not re-request
+            if ($scope.quote && $scope.quote.symbol === $scope.symbol) { return; }
+
+            // Makes symbol upper case for compliance
+            $scope.symbol = $scope.symbol.toUpperCase();
+            var error = function(data, code, jqXHR) {
+                $scope.symbol = $scope.quote === null ? '' : $scope.quote.symbol
+                $scope.$digest();
+            };
+            var success = function(data, code, jqXHR) {
+                $scope.quote = data;
+                $scope.$digest();
+            };
+            requestQuote($scope.symbol, success, error);
+        }; // End $scope.getQuote
+
+        $scope.positivityClass = function(value) {
+            return value < 0 ? 'negative' : 'positive';
+        }; // End $scope.positivityClass
+    } // End anonymous QuickQuoteController function
 ]);
 

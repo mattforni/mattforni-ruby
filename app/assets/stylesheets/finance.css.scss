@@ -1,4 +1,10 @@
-//= require application
+@import 'application.css.scss';
+
+$quick_quote_height: 40px;
+
+div#content-wrapper {
+  padding-bottom: $quick_quote_height;
+}
 
 td.number,th.number {
   text-align: right;
@@ -10,5 +16,56 @@ td.number,th.number {
 
 .negative {
   color: red;
+}
+
+div#quick-quote-wrapper {
+  align-items: center;
+  background-color: #fff;
+  border-top: 1px black solid;
+  @include box-shadow(0, 1px, 3px, #000);
+  bottom: 0;
+  @include flex;
+  left: 0;
+  min-height: $quick_quote_height;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  div#quick-quote-field {
+    border-right: 1px solid #999;
+    max-width: 100px;
+    min-width: 100px;
+    padding: 0 10px;
+    input#quick-quote-field {
+      border: 1px solid #999;
+      @include rounded-corners(5px);
+      padding: 5px;
+      width: 100%;
+    }
+  }
+  div#quick-quote-info {
+    font-size: 0.8rem;
+    padding: 10px;
+    div#quick-quote {
+      align-items: center;
+      @include flex;
+      div#basics {
+        align-items: center;
+        @include flex;
+        div#symbol {
+          font-size: 1.15rem;
+        }
+        div#name {
+          margin: 0 5px;
+        }
+      }
+      div#trade {
+        @include flex;
+        margin: 0 5px;
+        div#change {
+          margin: 0 10px;
+        }
+      }
+    }
+  }
 }
 
