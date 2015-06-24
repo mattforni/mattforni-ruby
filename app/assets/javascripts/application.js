@@ -4,8 +4,6 @@
 //= require_self
 //= require_tree .
 
-// TODO probably move mattforni to separate modules
-var mattforni = angular.module('mattforni', []);
 var finance = angular.module('finance', []);
 
 function dismissOverlay() {
