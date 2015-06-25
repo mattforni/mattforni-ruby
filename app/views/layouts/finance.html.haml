@@ -27,9 +27,11 @@
       #quick-quote-field
         %input{id: 'quick-quote-field', type: 'text', placeholder: 'Symbol', 'ng-model' => 'symbol', 'ng-blur' => 'getQuote()'}
       #quick-quote-info
-        #empty-quote{'ng-show': 'quote == null'}
+        #empty-quote{'ng-show': '!fetching && quote == null'}
           Enter a symbol for a quick quote
-        #quick-quote{'ng-hide': 'quote == null'}
+        #fetching{'ng-hide': '!fetching', 'ng-show': 'fetching'}
+          = image_tag 'spinner.gif'
+        #quick-quote{'ng-show': '!fetching && quote != null'}
           #basics
             #symbol
               {{ quote.symbol }}

@@ -7,7 +7,7 @@ gem 'rails', '~> 4.1'
 gem 'unicorn', '~> 4.8'
 
 # Finance gems
-gem 'stocks', '~> 0.0'
+gem 'stocks', '~> 1.0'
 
 # Rendering and markup gems
 gem 'haml-rails', '~> 0.4'

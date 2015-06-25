@@ -30,6 +30,9 @@ div#quick-quote-wrapper {
   position: fixed;
   width: 100%;
   z-index: 1;
+  img {
+    height: $quick_quote_height / 2;
+  }
   div#quick-quote-field {
     border-right: 1px solid #999;
     max-width: 100px;
@@ -45,6 +48,11 @@ div#quick-quote-wrapper {
   div#quick-quote-info {
     font-size: 0.8rem;
     padding: 10px;
+    div#fetching {
+      position: relative;
+      width: 100%;
+      z-index: 2;
+    }
     div#quick-quote {
       align-items: center;
       @include flex;

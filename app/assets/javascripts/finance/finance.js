@@ -17,6 +17,8 @@ var requestQuote = function(symbol, success, error) {
     // Bind the success and error handlers to the ajax request object if defined
     if (typeof error === 'function') { request.error(error); }
     if (typeof success === 'function') { request.success(success); }
+
+    return request;
 };
 
 /**
@@ -81,6 +83,7 @@ finance.controller('SizingController', ['$scope',
 
 finance.controller('QuickQuoteController', ['$scope',
     function($scope) {
+        $scope.fetching = false;
         $scope.quote = null;
         $scope.symbol = null;
 
@@ -107,7 +110,13 @@ finance.controller('QuickQuoteController', ['$scope',
                 $scope.quote = data;
                 $scope.$digest();
             };
-            requestQuote($scope.symbol, success, error);
+
+            $scope.fetching = true;
+            var request = requestQuote($scope.symbol, success, error);
+            request.complete(function(jqXHR, code) {
+                $scope.fetching = false;
+                $scope.$digest();
+            });
         }; // End $scope.getQuote
 
         $scope.positivityClass = function(value) {

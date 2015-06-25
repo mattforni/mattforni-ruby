@@ -58,11 +58,10 @@ class FinanceController < ApplicationController
   end
 
   def quote
-    begin
-      render json: Stocks.quote(params[:symbol])
-    rescue Stocks::RetrievalError => e
-      render status: 400, json: e.message
-    end
+    symbol = params[:symbol].upcase
+    quote = Quote.get(symbol)[symbol]
+    render status: 400 and return if !quote.valid?
+    render json: quote
   end
 
   def sizing
