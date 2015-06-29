@@ -1,6 +1,10 @@
 %html
-    %body
-        = render partial: 'finance/stops/stop_table', locals: {stops: @stops}
-        %br
-        = "Please visit #{finance_positions_url} to further assess."
+  %head
+    = stylesheet_link_tag 'mailer', media: "all"
+  %body
+    = render partial: 'finance/stops/stop_table', locals: {stops: @stops}
+    %br
+    Please visit
+    = link_to ' your portfolio ', finance_portfolio_url
+    for more details.
 

@@ -6,7 +6,7 @@ class FinanceController < ApplicationController
   include Messages
   include Stocks
 
-  before_action :authenticate_user!, only: [:positions]
+  before_action :authenticate_user!, only: [:portfolio]
   around_action :json_only, only: [:historical, :quote]
 
   def charts
@@ -51,10 +51,6 @@ class FinanceController < ApplicationController
 
   def portfolio
     @portfolios = Portfolio.where(user_id: current_user.id).order(:name)
-  end
-
-  def positions
-    redirect_to finance_portfolio_path
   end
 
   def quote

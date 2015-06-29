@@ -34,7 +34,7 @@ task :update_stops => :environment do
     user = User.find(user_id) rescue nil
     return if user.nil?
     puts "#{stops.size} position(s) stopped out for user '#{user.email}'"
-    StopMailer.stopped_out(user.email, stops).deliver
+    StopMailer.stopped_out(user.email, stops).deliver_now
   end
 
   puts "#{num_stopped_out} position(s) stopped out in total"

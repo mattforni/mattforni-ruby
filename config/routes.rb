@@ -22,8 +22,6 @@ Mattforni::Application.routes.draw do
       },
       to: 'finance#historical'
     get '/portfolio', as: 'finance_portfolio', to: 'finance#portfolio'
-    # TODO This is just a redirect now to portfolio, it should be removed later
-    get '/positions', as: 'finance_positions', to: 'finance#positions'
     get '/quote/:symbol', as: 'finance_quote', to: 'finance#quote'
     get '/sizing', as: 'finance_sizing', to: 'finance#sizing'
   end

@@ -11,6 +11,8 @@ gem 'stocks', '~> 1.0'
 
 # Rendering and markup gems
 gem 'haml-rails', '~> 0.4'
+gem 'nokogiri', '~> 1.6'
+gem 'premailer-rails', '~> 1.8'
 # gem 'RedCloth', '>= 4.2.9'
 
 # The JavaScript libraries
