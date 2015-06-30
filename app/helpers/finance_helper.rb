@@ -1,14 +1,14 @@
 module FinanceHelper
-  def holding_partial(holding, index)
-    render partial: 'finance/holdings/holding', locals: {holding: holding, index: index}
+  def holding_partial(index, holding, quote)
+    render partial: 'finance/holdings/holding', locals: {index: index, holding: holding, quote: quote}
   end
 
-  def portfolio_partial(portfolio)
-    render partial: 'finance/portfolios/portfolio', locals: {portfolio: portfolio}
+  def portfolio_partial(portfolio, quotes)
+    render partial: 'finance/portfolios/portfolio', locals: {portfolio: portfolio, quotes: quotes}
   end
 
-  def position_partial(position, index)
-    render partial: 'finance/positions/position', locals: {position: position, index: index}
+  def position_partial(index, position, quote)
+    render partial: 'finance/positions/position', locals: {index: index, position: position, quote: quote}
   end
 
   def positivity_class(value)

@@ -1,21 +1,24 @@
 -# Initialize other variables
+- change_today = position.quantity * quote[:changePoints]
 - total_change = position.total_change
 - stop = position.stop
 - period ||= 'one_month'
 
 -# Render the position row
-%tr.position.visible{class: ((index+1)%2).odd? ? 'odd' : 'even', id: position.symbol}
+%tr.position.visible{class: ((index+1)%2).odd? ? 'odd' : 'even', id: "#{position.portfolio.name}-#{position.symbol}"}
   %td.symbol
     -# link_to position.symbol, charts_url(position.symbol, period), class: 'chart-link'
     = link_to position.symbol, edit_finance_position_path(position.id)
   %td.number
     = currency_display position.last_trade
+  %td.number{class: positivity_class(quote[:changePoints])}
+    = currency_display quote[:changePoints]
+  %td.number{class: positivity_class(change_today)}
+    = currency_display change_today
   %td.number
     = decimal_display position.quantity
   %td.number
     = currency_display position.current_value
-  %td.number
-    = currency_display position.purchase_price
   %td.number{class: positivity_class(total_change)}
     = currency_display total_change
   %td.spread
@@ -28,5 +31,5 @@
 
 -# Render the holdings associated with this position
 - position.holdings.order('purchase_date DESC').each_with_index do |holding, index|
-  = holding_partial holding, index
+  = holding_partial index, holding, quote
 

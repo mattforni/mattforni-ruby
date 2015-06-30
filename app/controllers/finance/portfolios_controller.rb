@@ -1,3 +1,7 @@
+require 'stocks/quote'
+
+include Stocks
+
 # TODO Test create
 class Finance::PortfoliosController < FinanceController
   before_action :authenticate_user!
@@ -14,6 +18,11 @@ class Finance::PortfoliosController < FinanceController
 
   def index
     @portfolios = Portfolio.where(user_id: current_user.id).order(:name)
+    symbols = @portfolios.collect do |portfolio|
+      portfolio.positions.collect { |position| position.symbol }
+    end.flatten.uniq
+    @quotes = Quote.get(symbols)
+    puts @quotes.inspect
   end
 
   def new
