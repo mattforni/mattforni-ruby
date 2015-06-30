@@ -24,7 +24,7 @@ class Stock < ActiveRecord::Base
   def update!
     begin
       self.transaction do
-        current = Stocks.last_trade(self.symbol)
+        current = Quote.get(self.symbol)[self.symbol][:lastTrade]
         # If self.last_trade has not been set or has changed, update it
         if self.last_trade.nil? or !close?(current)
           self.last_trade = current

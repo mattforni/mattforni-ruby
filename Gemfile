@@ -8,6 +8,7 @@ gem 'unicorn', '~> 4.8'
 
 # Finance gems
 gem 'stocks', '~> 1.0'
+# gem 'stocks', '~> 1.0', path: '~/Personal/gems'
 
 # Rendering and markup gems
 gem 'haml-rails', '~> 0.4'
