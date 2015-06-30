@@ -9,7 +9,11 @@ class Finance::PortfoliosController < FinanceController
     # Create the new portfolio model from params
     @portfolio = Portfolio.new(portfolio_params)
     @portfolio.user = current_user
-    attempt_create!(@portfolio, finance_portfolio_path, new_finance_portfolio_path)
+    attempt_create!(@portfolio, finance_portfolios_path, new_finance_portfolio_path)
+  end
+
+  def index
+    @portfolios = Portfolio.where(user_id: current_user.id).order(:name)
   end
 
   def new

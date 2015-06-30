@@ -11,7 +11,7 @@ class Finance::StopsController < FinanceController
     @stop = Stop.new(stop_params)
     @stop.symbol.try(:upcase!)
     @stop.user = current_user
-    attempt_create!(@stop, finance_portfolio_path, new_finance_stop_path)
+    attempt_create!(@stop, finance_portfolios_path, new_finance_stop_path)
   end
 
   def destroy
@@ -35,7 +35,7 @@ class Finance::StopsController < FinanceController
 
   def update
     @stop.update_percentage?(params[:stop][:percentage])
-    attempt_update!(@stop, finance_portfolio_path, edit_finance_stop_path(@stop.id))
+    attempt_update!(@stop, finance_portfolios_path, edit_finance_stop_path(@stop.id))
   end
 
   private

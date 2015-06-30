@@ -12,7 +12,7 @@ class Finance::PositionsController < FinanceController
   def update
     @position.portfolio = Portfolio.by_user_and_id(current_user, params[:portfolio_id])
     @position.save!
-    redirect_to finance_portfolio_path
+    redirect_to finance_portfolios_path
   end
 end
 

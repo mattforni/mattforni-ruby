@@ -21,12 +21,11 @@ Mattforni::Application.routes.draw do
         period: 'one_month'
       },
       to: 'finance#historical'
-    get '/portfolio', as: 'finance_portfolio', to: 'finance#portfolio'
     get '/quote/:symbol', as: 'finance_quote', to: 'finance#quote'
     get '/sizing', as: 'finance_sizing', to: 'finance#sizing'
   end
   namespace 'finance' do
-    resources :portfolios, only: [:new, :create]
+    resources :portfolios, only: [:create, :new, :index]
     resources :positions, only: [:edit, :update]
     resources :holdings, except: :index
     resources :stops, except: :index

@@ -9,9 +9,9 @@
     -# link_to position.symbol, charts_url(position.symbol, period), class: 'chart-link'
     = link_to position.symbol, edit_finance_position_path(position.id)
   %td.number
-    = decimal_display position.quantity
-  %td.number
     = currency_display position.last_trade
+  %td.number
+    = decimal_display position.quantity
   %td.number
     = currency_display position.current_value
   %td.number
