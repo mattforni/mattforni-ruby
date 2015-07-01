@@ -15,8 +15,8 @@ class Ability
     # All users can create and read stock models
     can [:create, :read], Stock
 
-    # Users can only manage holding, position and stop models they own
-    can :manage, [Holding, Position, Stop], user_id: user.id
+    # Users can only manage holding, position, portfolio and stop models they own
+    can :manage, [Holding, Portfolio, Position, Stop], user_id: user.id
   end
 end
 

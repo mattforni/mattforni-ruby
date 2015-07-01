@@ -71,7 +71,6 @@ class Stop < ActiveRecord::Base
     update
   end
 
-  # TODO test update_percentage?
   def update_percentage?(percentage)
     return false if self.percentage == percentage
     original = self.stop_price / rate(true)

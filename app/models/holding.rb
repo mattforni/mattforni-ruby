@@ -20,6 +20,7 @@ class Holding < ActiveRecord::Base
     self.transaction do
       # Check if there is already a stock model for this symbol
       stock = Stock.by_symbol(symbol)
+
       # If there is not already a stock model then attempt to create one
       if stock.nil?
         stock = Stock.new({symbol: self.symbol})
