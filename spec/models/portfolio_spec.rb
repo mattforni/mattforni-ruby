@@ -24,7 +24,9 @@ describe Portfolio do
     it 'is unique on :name field' do
       @portfolio.field_uniqueness :name
     end
+  end
 
+  describe 'associations' do
     it 'belongs to :user' do
       @portfolio.belongs_to :user, @user
     end

@@ -35,6 +35,7 @@ FactoryGirl.define do
     sequence(:symbol) { |n| "SYM#{n}" }
     lowest_price 5
     lowest_time Time.now.utc
+    updated_at Time.now.utc - 5.minutes
   end
 
   factory :stop do

@@ -13,7 +13,6 @@ class Stock < ActiveRecord::Base
   validates :symbol, presence: true, uniqueness: true
   validates_with Validators::Exists
 
-  # TODO test these associations
   has_many :positions
   has_many :holdings, through: :positions
 
@@ -25,13 +24,11 @@ class Stock < ActiveRecord::Base
     begin
       self.transaction do
         current = Quote.get(self.symbol)[self.symbol][:lastTrade]
-        # If self.last_trade has not been set or has changed, update it
-        if self.last_trade.nil? or !close?(current)
+        # If self.last_trade has changed, update it
+        if !close?(current)
           self.last_trade = current
+
           # If last_trade is less than the current lowest_price, update it
-          # TODO change >/< to use a signif digit comparisson operator
-          # TODO test that these are updated in different cases
-          # TODO abstract this into a module for generic use
           if self.lowest_price.nil? or self.last_trade < self.lowest_price
             self.lowest_price = self.last_trade
             self.lowest_time = Time.now.utc
@@ -59,7 +56,7 @@ class Stock < ActiveRecord::Base
 
   private
 
-  EPSILON = 0.00001
+  EPSILON = 0.0001
 
   def close?(price)
     (self.last_trade - price).abs < EPSILON
