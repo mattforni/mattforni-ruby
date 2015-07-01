@@ -22,7 +22,6 @@ class Finance::PortfoliosController < FinanceController
       portfolio.positions.collect { |position| position.symbol }
     end.flatten.uniq
     @quotes = Quote.get(symbols)
-    puts @quotes.inspect
   end
 
   def new

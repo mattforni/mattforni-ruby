@@ -1,4 +1,4 @@
-# TODO Test create, index
+# TODO Test create, destroy, index
 class Finance::HoldingsController < FinanceController
   before_action :authenticate_user!
   # CanCan does not currently support StrongParameters
@@ -14,26 +14,12 @@ class Finance::HoldingsController < FinanceController
     attempt_create!(@holding, finance_portfolios_path, new_finance_holding_path)
   end
 
-  # TODO test
   def destroy
     attempt_destroy!(@holding, finance_portfolios_path, finance_holding_path(@holding.id))
   end
 
-  def edit
-  end
-
-  def index
-    @holdings.order!(:symbol, :purchase_date)
-  end
-
   def new
     @portfolios = Portfolio.where(user: current_user)
-  end
-
-  def show
-  end
-
-  def update
   end
 
   private
