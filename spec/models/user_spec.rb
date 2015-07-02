@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-include Validity
-
 describe User do
   before(:each) do
     allow(Stocks).to receive(:exists?).and_return(true)

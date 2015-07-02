@@ -5,8 +5,6 @@ include Ranges
 include Stocks
 
 class Position < ActiveRecord::Base
-  WEIGHTED_ATTRIBUTES = [:commission_price, :purchase_price]
-
   validates :commission_price, presence: true, numericality: COMMISSION_RANGE
   validates :portfolio_id, presence: true
   validates :purchase_price, presence: true, numericality: PRICE_RANGE
@@ -63,29 +61,22 @@ class Position < ActiveRecord::Base
   end
 
   def update!
-    self.update_weighted_avg!(:purchase_price)
     total_commission_price = 0
     total_quantity = 0
+    total_weighted = 0
+
+    # Discard the cached holdings and get the latest
     self.holdings(true).each do |holding|
       total_commission_price += holding.commission_price
       total_quantity += holding.quantity
+      total_weighted += holding.quantity * holding.purchase_price
     end
-    self.commission_price = total_commission_price
-    self.quantity = total_quantity
-    self.save!
-  end
 
-  def update_weighted_avg!(attribute)
-    if !WEIGHTED_ATTRIBUTES.include?(attribute)
-      raise ArgumentError.new("#{attribute} is not a valid weighted attribute")
-    end
-    shares = 0
-    # Discard the cached holdings and get the latest
-    weighted = self.holdings(true).reduce(0) do |total, holding|
-      shares += holding.quantity
-      total += holding.quantity * holding.send(attribute)
-    end
-    self.send("#{attribute}=", weighted/shares)
+    self.commission_price = total_commission_price
+    self.purchase_price = total_weighted / total_quantity
+    self.quantity = total_quantity
+
+    self.save!
   end
 
   private

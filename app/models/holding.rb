@@ -1,3 +1,4 @@
+# TODO model tests
 class Holding < ActiveRecord::Base
   validates :commission_price, presence: true, numericality: {greater_than_or_equal_to: 0}
   validates :position_id, presence: true
@@ -15,7 +16,6 @@ class Holding < ActiveRecord::Base
 
   attr_accessor :portfolio
 
-  # TODO this needs to be tested more thoroughly
   def create!
     self.transaction do
       # Check if there is already a stock model for this symbol
@@ -58,12 +58,7 @@ class Holding < ActiveRecord::Base
       self.save!
 
       # Update the existing position if necessary
-      if position_existed
-        position.update_weighted_avg!(:purchase_price)
-        position.increment(:commission_price, self.commission_price)
-        position.increment(:quantity, self.quantity)
-        position.save!
-      end
+      position.update! if position_existed
     end
   end
 
@@ -82,10 +77,7 @@ class Holding < ActiveRecord::Base
         self.position.stops.each {|stop| stop.destroy!}
         self.position.destroy!
       else # Otherwise update the position
-        self.position.update_weighted_avg!(:purchase_price)
-        self.position.decrement(:commission_price, self.commission_price)
-        self.position.decrement(:quantity, self.quantity)
-        self.position.save!
+        self.position.update!
       end
     end
   end
@@ -96,6 +88,7 @@ class Holding < ActiveRecord::Base
 
   def update?
     update = false
+
     # If delegated last_trade is less than the current lowest_price, update it
     if self.lowest_price.nil? or self.last_trade < self.lowest_price
       self.lowest_price = self.last_trade

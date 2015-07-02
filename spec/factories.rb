@@ -25,7 +25,7 @@ FactoryGirl.define do
     quantity 100
     stock
     symbol { stock.symbol }
-    user
+    user { portfolio.user }
   end
 
   factory :stock do
@@ -41,12 +41,13 @@ FactoryGirl.define do
   factory :stop do
     highest_price 40
     highest_time Time.now.utc
-    percentage 5
-    position
-    stop_price 20
-    symbol { position.stock.symbol }
     lowest_price 5
     lowest_time Time.now.utc
+    percentage 25
+    position
+    stop_price { position.stock.last_trade * (1 - (percentage.to_f / 100.to_f)) }
+    symbol { position.stock.symbol }
+    user { position.user }
   end
 
   factory :user do
