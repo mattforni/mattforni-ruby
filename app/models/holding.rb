@@ -69,16 +69,7 @@ class Holding < ActiveRecord::Base
   def destroy!
     self.transaction do
       self.destroy
-
-      # If there are no more holdings delete the position
-      if self.position.holdings.empty?
-        # TODO should probably cascade
-        # TODO should probably use attempt_destroy with block yielded
-        self.position.stops.each {|stop| stop.destroy!}
-        self.position.destroy!
-      else # Otherwise update the position
-        self.position.update!
-      end
+      self.position.update!
     end
   end
 

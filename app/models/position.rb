@@ -17,8 +17,9 @@ class Position < ActiveRecord::Base
   belongs_to :stock
   belongs_to :user
 
-  has_many :holdings
-  has_many :stops
+  # TODO for some reason cascading deletion is not working in testing
+  has_many :holdings, dependent: :destroy
+  has_many :stops, dependent: :destroy
 
   delegate :last_trade, to: :stock, allow_nil: false
 
@@ -71,6 +72,8 @@ class Position < ActiveRecord::Base
       total_quantity += holding.quantity
       total_weighted += holding.quantity * holding.purchase_price
     end
+
+    self.destroy! and return if total_quantity == 0
 
     self.commission_price = total_commission_price
     self.purchase_price = total_weighted / total_quantity
