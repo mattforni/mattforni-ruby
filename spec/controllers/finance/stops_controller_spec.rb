@@ -27,7 +27,7 @@ describe Finance::StopsController do
       expect(response.status).to eq(200)
       got = assigns(:stop)
       expect(got).to eq(stop)
-      expect(response).to render_template('layouts/application')
+      expect(response).to render_template('layouts/finance')
       expect(response).to render_template(:edit)
     end
   end
@@ -37,7 +37,7 @@ describe Finance::StopsController do
       get :new
 
       expect(response.status).to eq(200)
-      expect(response).to render_template('layouts/application')
+      expect(response).to render_template('layouts/finance')
       expect(response).to render_template(:new)
     end
   end
@@ -118,7 +118,7 @@ describe Finance::StopsController do
       expect(flash[:alert]).to be_nil
       expect(flash[:notice]).to_not be_nil
       expect(flash[:notice]).to eq(record_success(CREATE, stops.first))
-      expect(response).to redirect_to finance_positions_path
+      expect(response).to redirect_to finance_portfolios_path
     end
   end
 
@@ -156,7 +156,7 @@ describe Finance::StopsController do
       expect(flash[:alert]).to be_nil
       expect(flash[:notice]).to_not be_nil
       expect(flash[:notice]).to eq(record_success(UPDATE, stop))
-      expect(response).to redirect_to finance_positions_path
+      expect(response).to redirect_to finance_portfolios_path
     end
   end
 end

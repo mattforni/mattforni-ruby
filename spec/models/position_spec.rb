@@ -130,7 +130,9 @@ describe Position do
         @holdings.each { |h| h.destroy! }
 
         expect(@position.record.destroyed?).to be_truthy
-        @stops.each { |s| expect(s.destroyed?).to be_truthy }
+        @stops.each do |s|
+          expect { s.reload }.to raise_error(ActiveRecord::RecordNotFound)
+        end
       end
     end
   end

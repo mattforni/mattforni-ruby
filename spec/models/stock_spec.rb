@@ -73,7 +73,7 @@ describe Stock do
       it 'should not does not save' do
         # Arrange
         updated_at = @stock.record.updated_at
-        allow(Quote).to receive(:get).and_return(create_response)
+        allow(Quote).to receive(:get).and_return(mock_quote)
 
         # Act
         @stock.record.update!
@@ -87,7 +87,7 @@ describe Stock do
       it 'should update :last_trade' do
         # Arrange
         last_trade = 5
-        allow(Quote).to receive(:get).and_return(create_response(last_trade))
+        allow(Quote).to receive(:get).and_return(mock_quote(last_trade))
 
         # Act
         @stock.record.update!
@@ -102,7 +102,7 @@ describe Stock do
         # Arrange
         last_trade = @stock.record.last_trade - 1 
         lowest_time = @stock.record.lowest_time
-        allow(Quote).to receive(:get).and_return(create_response(last_trade))
+        allow(Quote).to receive(:get).and_return(mock_quote(last_trade))
 
         # Act
         @stock.record.update!
@@ -118,7 +118,7 @@ describe Stock do
         # Arrange
         last_trade = @stock.record.last_trade + 1
         highest_time = @stock.record.highest_time
-        allow(Quote).to receive(:get).and_return(create_response(last_trade))
+        allow(Quote).to receive(:get).and_return(mock_quote(last_trade))
 
         # Act
         @stock.record.update!
@@ -132,10 +132,8 @@ describe Stock do
 
   private
 
-  def create_response(last_trade = 10)
-    response = {}
-    response[@stock.record.symbol] = {lastTrade: last_trade}
-    response
+  def mock_quote(last_trade = 10)
+    quote_response({symbol: @stock.record.symbol, lastTrade: last_trade})
   end
 end
 

@@ -45,7 +45,7 @@ describe Portfolio do
 
     context 'when portfolio with provided id does not exist' do
       it 'should raise a RuntimeError' do
-        expect { Portfolio.by_user_and_id(@user, -1) }.to raise_error(RuntimeError)
+        expect { Portfolio.by_user_and_id(@user, -1) }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 
@@ -68,7 +68,7 @@ describe Portfolio do
       it 'should raise a RuntimeError' do
         @portfolio.record.destroy!
 
-        expect { Portfolio.default(@user) }.to raise_error(RuntimeError)
+        expect { Portfolio.default(@user) }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 

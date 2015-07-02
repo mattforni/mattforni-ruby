@@ -16,14 +16,14 @@ class Portfolio < ActiveRecord::Base
   def self.by_user_and_id(user, id)
     raise 'Must provide a user to query for a portfolio' if user.nil?
     portfolio = Portfolio.where(user: user, id: id).first
-    raise DOES_NOT_EXIST % user.email if portfolio.nil?
+    raise ActiveRecord::RecordNotFound if portfolio.nil?
     portfolio
   end
 
   def self.default(user)
     raise 'Must provide a user to query for a portfolio' if user.nil?
     portfolio = Portfolio.where(user: user).first
-    raise DOES_NOT_EXIST % user.email if portfolio.nil?
+    raise ActiveRecord::RecordNotFound if portfolio.nil?
     portfolio
   end
 

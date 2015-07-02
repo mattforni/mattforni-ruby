@@ -1,10 +1,19 @@
 require 'spec_helper'
 
+include Stocks
+
 describe FinanceController do
-  describe 'GET last_trade' do
+  before(:all) do
+    SYMBOL = 'ABC'
+  end
+
+  describe 'GET quote' do
     context 'when format is not json' do
       it 'responds with 400' do
-        get :last_trade, {symbol: 'ABC'}
+        # Act
+        get :quote, {symbol: SYMBOL}
+
+        # Assert
         expect(response.status).to eq(400)
       end
     end
@@ -12,28 +21,28 @@ describe FinanceController do
     context 'when symbol is invalid' do
       it 'responds with 400' do
         # Arrange
-        allow(Stocks).to receive(:quote).and_return({lastTrade: nil})
+        allow(Quote).to receive(:get).and_return(mock_quote('N/A'))
 
         # Act
-        get :last_trade, {format: 'json', symbol: 'invalid'}
+        get :quote, {format: 'json', symbol: SYMBOL}
 
         # Assert
         expect(response.status).to eq(400)
       end
     end
 
-    it 'gets the last trade' do
+    it 'gets the quote' do
       # Arrange
-      last_trade = 1.234
-      allow(Stocks).to receive(:quote).and_return({lastTrade: last_trade})
+      allow(Quote).to receive(:get).and_return(mock_quote)
 
       # Act
-      get :last_trade, {format: 'json', symbol: 'abc'}
+      get :quote, {format: 'json', symbol: SYMBOL}
 
       # Assert
+      parsed = JSON.parse(response.body)
       expect(response.status).to eq(200)
-      expect(response.body).to eq(last_trade.to_s)
       expect(response.content_type).to eq(Mime::Type.lookup_by_extension(:json))
+      expect(parsed["symbol"]).to eq(SYMBOL)
     end
   end
 
@@ -45,6 +54,12 @@ describe FinanceController do
       # Assert
       expect(response.status).to eq(200)
     end
+  end
+
+  private
+
+  def mock_quote(name = "#{SYMBOL} Co.")
+    quote_response({symbol: SYMBOL, name: name})
   end
 end
 

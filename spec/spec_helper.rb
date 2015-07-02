@@ -58,3 +58,18 @@ RSpec.configure do |config|
   Validity.configure(Validity::TestUnit)
 end
 
+def quote_response(attributes = {lastTrade: 10, symbol: 'FORN', name: 'Forni Co.'})
+  attributes[:name] = 'Forni Co.' if attributes.class == Hash and !attributes.has_key?(:name)
+  attributes[:symbol] = 'FORN' if attributes.class == Hash and !attributes.has_key?(:symbol)
+
+  struct = OpenStruct.new()
+  struct.name = attributes[:name]
+
+  quote = Quote.new(struct)
+  attributes.each_pair { |k, v| quote[k] = v } if quote.valid?
+
+  response = {}
+  response[attributes[:symbol]] = quote
+  response
+end
+

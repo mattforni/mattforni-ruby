@@ -51,7 +51,7 @@ class FinanceController < ApplicationController
   def quote
     symbol = params[:symbol].upcase
     quote = Quote.get(symbol)[symbol]
-    render status: 400 and return if !quote.valid?
+    head 400 and return if !quote.valid?
     render json: quote
   end
 
