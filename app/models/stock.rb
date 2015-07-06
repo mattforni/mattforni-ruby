@@ -24,8 +24,9 @@ class Stock < ActiveRecord::Base
     begin
       self.transaction do
         current = Quote.get(self.symbol)[self.symbol][:lastTrade]
-        # If self.last_trade has changed, update it
-        if !close?(current)
+
+        # If self.last_trade is not set or has changed, update it
+        if self.last_trade.nil? or !close?(current)
           self.last_trade = current
 
           # If last_trade is less than the current lowest_price, update it
@@ -45,6 +46,7 @@ class Stock < ActiveRecord::Base
 
           # Update associated holdings
           self.holdings.each { |holding| holding.save! if holding.update? }
+
           return true
         end
       end
