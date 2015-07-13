@@ -3,7 +3,7 @@
     %title
       welcome
     = include_gon
-    = favicon_link_tag 'favicon.ico'
+    = favicon_link_tag
     = stylesheet_link_tag params[:controller], media: "all", "data-turbolinks-track" => true
     = stylesheet_link_tag File.join(params[:controller], params[:action]), media: "all", "data-turbolinks-track" => true
     = javascript_include_tag "application", "data-turbolinks-track" => true
