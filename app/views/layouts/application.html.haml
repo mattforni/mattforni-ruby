@@ -1,13 +1,10 @@
 %html
-  %head
-    %title
-      welcome
-    = include_gon
-    = favicon_link_tag
-    = stylesheet_link_tag params[:controller], media: "all", "data-turbolinks-track" => true
-    = stylesheet_link_tag File.join(params[:controller], params[:action]), media: "all", "data-turbolinks-track" => true
-    = javascript_include_tag "application", "data-turbolinks-track" => true
-    = csrf_meta_tags
+  = render partial: 'layouts/head', locals: { |
+      action: params[:action],                |
+      controller: params[:controller],        |
+      title: 'welcome'                        |
+    }                                         |
+
   %body
     - devise_error_messages!
     #overlay{class: (alert or notice) ? '' : 'dismissed'}
