@@ -13,6 +13,8 @@
     = currency_display position.last_trade
   %td.number{class: positivity_class(quote[:changePoints])}
     = currency_display quote[:changePoints]
+    .percent-change
+      = "#{decimal_display quote[:changePercent], 2}%"
   %td.number{class: positivity_class(change_today)}
     = currency_display change_today
   %td.number
