@@ -31,8 +31,12 @@ class Position < ActiveRecord::Base
     Position.where({user_id: user.id, symbol: symbol}).first
   end
 
+  def cost_basis
+    self.purchase_price * self.quantity + self.commission_price
+  end
+
   def current_value
-    self.last_trade * self.quantity - self.commission_price
+    self.last_trade * self.quantity
   end
 
   def highest_price
@@ -58,7 +62,11 @@ class Position < ActiveRecord::Base
   end
 
   def total_change
-    self.current_value - self.purchase_price * self.quantity
+    self.current_value - self.cost_basis
+  end
+
+  def total_change_percent
+    self.total_change / self.cost_basis * 100.to_f
   end
 
   def update!

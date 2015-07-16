@@ -31,6 +31,15 @@ class Portfolio < ActiveRecord::Base
     save!
   end
 
+  def cost_basis
+    return @cost if !@cost.nil?
+    cost = self.positions.reduce(0) do |value, position|
+      value += position.cost_basis
+      value
+    end
+    @cost = cost
+  end
+
   def current_value
     return @curr_value if !@curr_value.nil?
     curr_value = self.positions.reduce(0) do |value, position|
@@ -57,6 +66,7 @@ class Portfolio < ActiveRecord::Base
     raise ArgumentError.new(MISSING_USER) if user.nil?
   end
 
+  attr_writer :cost
   attr_writer :curr_value
   attr_writer :tot_change
 end

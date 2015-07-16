@@ -33,6 +33,10 @@ module ApplicationHelper
     return value > 0 ? 'positive' : (value == 0 ? '' : 'negative')
   end
 
+  def safe_str(string)
+    string.gsub(/[\(\)\!\{\}\[\]\!\?\@\#\$\%\^\&\*]/, '-')
+  end
+
   def time_display(time)
     time.strftime("%^b %d %Y %H:%M")
   end

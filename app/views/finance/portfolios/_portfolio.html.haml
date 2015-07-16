@@ -5,9 +5,7 @@
     %th.symbol.left
       Symbol
     %th.right
-      Last Price
-    %th.right
-      Change
+      Last Trade
     %th.right
       Change Today
     %th.right
@@ -25,10 +23,12 @@
   %tr.visible
     %th.left
       Total
-    %td{colspan: 4}
+    %td{colspan: 3}
     %td.number
       = currency_display portfolio.current_value
     %td.number{class: positivity_class(portfolio.total_change)}
       = currency_display portfolio.total_change
+      .price-details
+        = "#{decimal_display portfolio.total_change / portfolio.cost_basis * 100.to_f, 2}%"
     %td{colspan: 2}
 

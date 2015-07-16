@@ -3,8 +3,8 @@
 - total_change = holding.total_change
 
 -# Render the holding row
-%tr{class: "#{holding.position.portfolio.name}-#{holding.symbol}-holding"}
-  %td{colspan: 3}
+%tr{class: "#{safe_str(holding.position.portfolio.name)}-#{holding.symbol}-holding"}
+  %td{colspan: 2}
   %td.number
     = currency_display change_today
   %td.number
