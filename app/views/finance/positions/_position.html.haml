@@ -2,7 +2,7 @@
 - change_today = position.quantity * quote[:changePoints]
 - period ||= 'one_month'
 - stop = position.stop
-- stop_diff = stop.stop_price - position.last_trade if !stop.nil?
+- stop_diff = position.last_trade - stop.stop_price if !stop.nil?
 - total_change = position.total_change
 
 -# Render the position row
