@@ -4,7 +4,8 @@ ruby '2.2.2'
 
 # Core gems
 gem 'rails', '~> 4.1'
-gem 'unicorn', '~> 4.8'
+gem 'puma', '~> 2'
+gem 'rack-timeout', '~> 0.2'
 
 # Finance gems
 gem 'stocks', '~> 1.0'
