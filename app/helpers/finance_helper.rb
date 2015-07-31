@@ -12,6 +12,7 @@ module FinanceHelper
   end
 
   def positivity_class(value)
+    return '' if value.nil? or value == 0
     value < 0 ? 'negative' : 'positive'
   end
 

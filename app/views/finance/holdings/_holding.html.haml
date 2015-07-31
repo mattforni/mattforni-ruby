@@ -1,5 +1,5 @@
 -# Initialize other variables
-- change_today = holding.quantity * quote[:changePoints]
+- change_today = holding.quantity * quote[:changePoints] rescue nil
 - total_change = holding.total_change
 
 -# Render the holding row

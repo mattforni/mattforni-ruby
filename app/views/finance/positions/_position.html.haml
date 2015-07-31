@@ -1,5 +1,5 @@
 -# Initialize other variables
-- change_today = position.quantity * quote[:changePoints]
+- change_today = position.quantity * quote[:changePoints] rescue nil
 - period ||= 'one_month'
 - stop = position.stop
 - stop_diff = position.last_trade - stop.stop_price if !stop.nil?
@@ -17,7 +17,7 @@
   %td.number{class: positivity_class(change_today)}
     = currency_display change_today
     .price-details
-      = "#{decimal_display change_today / position.cost_basis * 100.to_f, 2}%"
+      = "#{decimal_display change_today / position.cost_basis * 100.to_f, 2}%" rescue nil
   %td.number
     = decimal_display position.quantity
   %td.number
