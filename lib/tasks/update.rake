@@ -1,6 +1,13 @@
 desc 'Tasks to be called by the heroku scheduler'
 
+def handle_weekend
+  now = Time.now
+  abort 'Today is a weekend, no need to evaluate' if now.saturday? or now.sunday?
+end
+
 task :update_stocks => :environment do
+  handle_weekend
+
   stocks = Stock.all
   updated = 0
 
@@ -16,6 +23,8 @@ task :update_stocks => :environment do
 end
 
 task :update_stops => :environment do
+  handle_weekend
+
   stops = Stop.all
   stopped_out = {}
 
