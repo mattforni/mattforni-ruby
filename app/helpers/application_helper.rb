@@ -10,6 +10,7 @@ module ApplicationHelper
   end
 
   def asset_exists?(filename, extension)
+    return false if filename.nil? or filename.empty? or extension.nil? or extension.empty?
     !Mattforni::Application.assets.find_asset("#{filename}.#{extension}").nil?
   end
 
@@ -25,6 +26,10 @@ module ApplicationHelper
     number_with_precision(decimal, delimiter: ',', precision: precision)
   end
 
+  def delete_link(target, condition = true)
+    link_to image_tag('red-x.jpg', size: '12x12'), target, data: {confirm: 'You sure?'}, :method => :delete if condition
+  end
+
   def external_image(name, link)
     render partial: 'external/logo', locals: {name: name, link: link}
   end
@@ -33,6 +38,7 @@ module ApplicationHelper
     return value > 0 ? 'positive' : (value == 0 ? '' : 'negative')
   end
 
+  # TODO this is not actually safe, ie. surprise! & surprise@ both eval to 'surprise-'
   def safe_str(string)
     string.gsub(/[\(\)\!\{\}\[\]\!\?\@\#\$\%\^\&\*]/, '-')
   end

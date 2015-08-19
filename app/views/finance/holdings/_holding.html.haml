@@ -4,7 +4,9 @@
 
 -# Render the holding row
 %tr{class: "#{safe_str(holding.position.portfolio.name)}-#{holding.symbol}-holding"}
-  %td{colspan: 2}
+  %td
+    = delete_link finance_holding_path(holding), can?(:destroy, holding)
+  %td
   %td.number
     = currency_display change_today
   %td.number
@@ -16,5 +18,5 @@
   %td.spread
     = spread_chart_partial holding.lowest_price, holding.highest_price, holding.last_trade
   %td.actions
-    = link_to 'Delete', finance_holding_path(holding.id), data: {confirm: 'You sure?'}, method: :delete if can?(:destroy, holding)
+
 

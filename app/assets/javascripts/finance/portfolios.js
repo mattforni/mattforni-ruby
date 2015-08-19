@@ -72,13 +72,25 @@ function spreadGraph(container) {
     });
 }
 
+function toggleVisibility(selector) {
+  $(selector).toggleClass('visible');
+}
+
 $( document ).ready(function() {
-  $('a.chart-link, a.action-link').click(function(event) {
+  $('div#portfolios a').click(function(event) {
     event.stopPropagation();
   });
 
   $('tr.position').click(function() {
-    $('tr.'+$(this).attr('id')+'-holding').toggleClass('visible');
+    toggleVisibility('tr.'+$(this).attr('id')+'-holding');
+  });
+
+  $('div.portfolio-name').mouseenter(function() {
+    toggleVisibility('div#'+$(this).attr('id')+'-options');
+  });
+
+  $('div.portfolio-name').mouseleave(function() {
+    toggleVisibility('div#'+$(this).attr('id')+'-options');
   });
 });
 
