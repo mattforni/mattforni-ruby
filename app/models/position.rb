@@ -69,6 +69,9 @@ class Position < ActiveRecord::Base
   end
 
   def update!
+    holdings = self.holdings(true)
+    self.destroy! and return if holdings.empty?
+
     total_commission_price = 0
     total_quantity = 0
     total_weighted = 0
@@ -79,8 +82,6 @@ class Position < ActiveRecord::Base
       total_quantity += holding.quantity
       total_weighted += holding.quantity * holding.purchase_price
     end
-
-    self.destroy! and return if total_quantity == 0
 
     self.commission_price = total_commission_price
     self.purchase_price = total_weighted / total_quantity

@@ -1,4 +1,4 @@
-# TODO model tests
+# TODO test create!, update?
 class Holding < ActiveRecord::Base
   validates :commission_price, presence: true, numericality: {greater_than_or_equal_to: 0}
   validates :position_id, presence: true
@@ -11,10 +11,9 @@ class Holding < ActiveRecord::Base
   belongs_to :position
   belongs_to :user
 
+  delegate :portfolio, to: :position, allow_nil: false
   delegate :stock, to: :position, allow_nil: false
   delegate :last_trade, to: :stock, allow_nil: false
-
-  attr_accessor :portfolio
 
   def create!
     self.transaction do
@@ -68,8 +67,14 @@ class Holding < ActiveRecord::Base
 
   def destroy!
     self.transaction do
+      # Destroy self.
       self.destroy
+
+      # Destroy the associated position.
       self.position.update!
+
+      # If the portfolio no longer has any positions, delete it as well.
+      self.portfolio.destroy! if self.portfolio.positions.empty?
     end
   end
 
