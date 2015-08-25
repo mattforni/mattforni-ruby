@@ -14,12 +14,12 @@
             %th
                 = f.label 'Stop Price'
             %td
-                = f.number_field :stop_price, step: 0.001
+                = f.number_field :stop_price
         %tr
             %th
                 = f.label 'Percentage'
             %td
-                = f.number_field :percentage, step: 0.001
+                = f.number_field :percentage
         %tr
             %td{colspan: 2}
                 = f.submit 'update'
