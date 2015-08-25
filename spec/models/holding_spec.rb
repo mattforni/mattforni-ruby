@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-# TODO This is now the premiere spec for validity!
 describe Holding do
   BELONGS_TO = [
     :position,
@@ -57,6 +56,20 @@ describe Holding do
     end
   end
 
+  describe '#create!' do
+    context 'when stock and position do *not* exist' do
+      it 'is pending'
+    end
+
+    context 'when position does *not* exist' do
+      it 'is pending'
+    end
+
+    context 'when stock and position do exist' do
+      it 'is pending'
+    end
+  end
+
   describe '#destroy!' do
     context 'when is *not* the last holding' do
       it 'should *not* destroy the position and portfolio' do
@@ -95,6 +108,24 @@ describe Holding do
         expect(@holding.record.position.destroyed?).to be_truthy
         expect(@holding.record.portfolio.destroyed?).to be_truthy
       end
+    end
+  end
+
+  describe '#update?' do
+    context 'when :lowest_price is nil' do
+      it 'is pending'
+    end
+
+    context 'when :last_trade is less than current :lowest_price' do
+      it 'is pending'
+    end
+
+    context 'when :highest_price is nil' do
+      it 'is pending'
+    end
+
+    context 'when :last_trade is greater than current :highest_price' do
+      it 'is pending'
     end
   end
 end
