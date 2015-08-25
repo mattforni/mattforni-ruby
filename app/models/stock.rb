@@ -1,3 +1,4 @@
+require 'epsilon'
 require 'ranges'
 require 'stocks/validators/exists'
 
@@ -61,7 +62,7 @@ class Stock < ActiveRecord::Base
   EPSILON = 0.0001
 
   def close?(price)
-    (self.last_trade - price).abs < EPSILON
+    Epsilon.equal? self.last_trade, price
   end
 end
 
