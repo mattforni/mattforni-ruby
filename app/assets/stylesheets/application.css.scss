@@ -1,84 +1,9 @@
-// Fonts
-@font-face {
-  font-family: 'Cousine';
-  src: url(/fonts/Cousine.ttf) format('truetype');
-}
+@import 'global/fonts.css.scss';
+@import 'global/mixins.css.scss';
 
-@font-face {
-  font-family: 'Neris';
-  src: url(/fonts/Neris.otf) format('opentype');
-}
-
-@font-face {
-  font-family: 'SaxMono';
-  src: url(/fonts/SaxMono.ttf) format('truetype');
-}
-
-// SASS Mixins
-@mixin flex {
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-}
-
-@mixin rounded-corners($radius) {
-  border-radius: $radius;
-  -moz-border-radius: $radius;
-  -webkit-border-radius: $radius;
-}
-
-@mixin rounded-bottom-corners($radius) {
-  border-bottom-left-radius: $radius;
-  -moz-border-radius-bottomleft: $radius;
-  -webkit-border-bottom-left-radius: $radius;
-
-  border-bottom-right-radius: $radius;
-  -moz-border-radius-bottomright: $radius;
-  -webkit-border-bottom-right-radius: $radius;
-}
-
-@mixin rounded-left-corners($radius) {
-  border-bottom-left-radius: $radius;
-  -moz-border-radius-bottomleft: $radius;
-  -webkit-border-bottom-left-radius: $radius;
-
-  border-top-left-radius: $radius;
-  -moz-border-radius-topleft: $radius;
-  -webkit-border-top-left-radius: $radius;
-}
-
-@mixin rounded-right-corners($radius) {
-  border-bottom-right-radius: $radius;
-  -moz-border-radius-bottomright: $radius;
-  -webkit-border-bottom-right-radius: $radius;
-
-  border-top-right-radius: $radius;
-  -moz-border-radius-topright: $radius;
-  -webkit-border-top-right-radius: $radius;
-}
-
-@mixin box-shadow($offset-x, $offset-y, $blur, $color) {
-  box-shadow: $offset-x $offset-y $blur $color;
-  -moz-box-shadow: $offset-x $offset-y $blur $color;
-  -webkit-box-shadow: $offset-x $offset-y $blur $color;
-}
-
-@mixin gradient($top, $bottom) {
-  // old browsers
-  background: $top;
-  // ff3.6+
-  background: -moz-linear-gradient(top, $top 0%, $bottom 100%);
-  // chrome, safari4+
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$top), color-stop(100%,$bottom));
-  // chrome10+, safari5.1+
-  background: -webkit-linear-gradient(top, $top 0%,$bottom 100%);
-  // ie10+
-  background: -ms-linear-gradient(top, $top 0%,$bottom 100%);
-  // w3c
-  background: linear-gradient(to bottom, $top 0%,$bottom 100%);
-  // ie6-9
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$top, endColorstr=$bottom,GradientType=0 );
-}
+$background_color: #FEFEFE;
+$even_color: #E5E5E5;
+$odd_color: #F0F0F0;
 
 // Generic Styling
 * {
@@ -92,6 +17,7 @@
 }
 
 body {
+  background: $background_color;
   height: 100%;
   position: relative;
   width: 100%;
@@ -114,7 +40,7 @@ input.authentication-button {
 }
 
 input.destroy-button {
-  background: #fff image_url('red-x.jpg') no-repeat;
+  background: $background_color image_url('red-x.jpg') no-repeat;
   background-size: 12px 12px;
   border: none;
   cursor: pointer;
@@ -129,10 +55,10 @@ table {
 
 tr {
   &.odd {
-    background-color: #EEE;
+    background-color: $odd_color;
   }
   &.even {
-    background-color: #DDD;
+    background-color: $even_color;
   }
 }
 

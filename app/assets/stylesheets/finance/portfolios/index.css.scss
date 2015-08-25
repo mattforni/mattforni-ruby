@@ -1,5 +1,7 @@
 @import 'application.css.scss';
+@import 'finance.css.scss';
 
+$hover_color: #DADADA;
 $spread_round: 10px;
 
 div.portfolio-name {
@@ -23,7 +25,7 @@ table.portfolio {
   tr {
     display: none;
     &.position:hover td {
-      background-color: #BBB;
+      background-color: $hover_color;
       cursor: pointer;
     }
     &.visible {
