@@ -16,6 +16,9 @@ class Finance::PortfoliosController < FinanceController
     attempt_create!(@portfolio, finance_portfolios_path, new_finance_portfolio_path)
   end
 
+  def destroy
+  end
+
   def index
     @portfolios = Portfolio.where(user_id: current_user.id).order(:name)
     symbols = @portfolios.collect do |portfolio|

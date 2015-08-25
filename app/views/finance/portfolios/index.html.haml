@@ -3,11 +3,12 @@
     = link_to 'Home', root_path
     |
     = link_to 'New Portfolio', new_finance_portfolio_path
-- if @portfolios.empty?
-  No positions yet.
-- else
-  - @portfolios.each do |portfolio|
-    = portfolio_partial portfolio, @quotes if !portfolio.positions.empty?
+#portfolios
+  - if @portfolios.empty?
+    No positions yet.
+  - else
+    - @portfolios.each do |portfolio|
+      = portfolio_partial portfolio, @quotes if !portfolio.positions.empty?
 .link
   .wrapper
     = link_to 'Add', new_finance_holding_path if can?(:create, Holding)

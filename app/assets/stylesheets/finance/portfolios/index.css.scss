@@ -2,10 +2,18 @@
 
 $spread_round: 10px;
 
-div.name {
+div.portfolio-name {
+  cursor: default;
   font-size: 1.15rem;
   font-weight: bold;
   margin: 10px 0 10px 10px;
+}
+
+div.portfolio-options {
+  display: none;
+  &.visible {
+    display: inline-block;
+  }
 }
 
 table.portfolio {
