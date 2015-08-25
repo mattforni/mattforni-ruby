@@ -12,14 +12,14 @@
                 = currency_display @stop.last_trade
         %tr
             %th
-                Stop Price
+                = f.label 'Stop Price'
             %td
-                = currency_display @stop.stop_price
+                = f.number_field :stop_price, step: :any
         %tr
             %th
                 = f.label 'Percentage'
             %td
-                = f.number_field :percentage, step: 0.001
+                = f.number_field :percentage, step: :any
         %tr
             %td{colspan: 2}
                 = f.submit 'update'

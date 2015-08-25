@@ -79,5 +79,15 @@ describe Portfolio do
       expect(portfolio.user).to eq(@user)
     end
   end
+
+  describe '#destroy!' do
+    it 'should destroy dependent positions' do
+      # Act
+      @portfolio.record.destroy!
+
+      # Assert
+      expect(@portfolio.record.positions).to be_empty
+    end
+  end
 end
 

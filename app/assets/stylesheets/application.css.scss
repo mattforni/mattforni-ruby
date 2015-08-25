@@ -113,6 +113,15 @@ input.authentication-button {
   @include rounded-corners(5px);
 }
 
+input.destroy-button {
+  background: #fff image_url('red-x.jpg') no-repeat;
+  background-size: 12px 12px;
+  border: none;
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+}
+
 table {
   border-collapse: collapse;
   border-spacing: 0;

@@ -92,6 +92,17 @@ describe Position do
     end
   end
 
+  describe '#destroy!' do
+    it 'should destroy dependent holdings and stops' do
+      # Act
+      @position.record.destroy!
+
+      # Assert
+      expect(@position.record.holdings).to be_empty
+      expect(@position.record.stops).to be_empty
+    end
+  end
+
   describe '#highest_price' do
     context 'when there are no holdings' do
       it 'should return nil' do

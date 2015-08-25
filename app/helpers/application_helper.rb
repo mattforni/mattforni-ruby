@@ -26,8 +26,8 @@ module ApplicationHelper
     number_with_precision(decimal, delimiter: ',', precision: precision)
   end
 
-  def delete_link(target, condition = true)
-    link_to image_tag('red-x.jpg', size: '12x12'), target, data: {confirm: 'You sure?'}, :method => :delete if condition
+  def destroy_button(target, condition = true)
+    button_to ' ', target, data: {confirm: 'You sure?'}, method: :delete, class: 'destroy-button' if condition
   end
 
   def external_image(name, link)

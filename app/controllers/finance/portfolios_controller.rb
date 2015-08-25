@@ -2,7 +2,7 @@ require 'stocks/quote'
 
 include Stocks
 
-# TODO Test create
+# TODO Test create, destroy
 class Finance::PortfoliosController < FinanceController
   before_action :authenticate_user!
   # CanCan does not currently support StrongParameters
@@ -13,10 +13,11 @@ class Finance::PortfoliosController < FinanceController
     # Create the new portfolio model from params
     @portfolio = Portfolio.new(portfolio_params)
     @portfolio.user = current_user
-    attempt_create!(@portfolio, finance_portfolios_path, new_finance_portfolio_path)
+    attempt_create! @portfolio, finance_portfolios_path, new_finance_portfolio_path
   end
 
   def destroy
+    attempt_destroy! @portfolio, finance_portfolios_path, finance_portfolio_path(@portfolio)
   end
 
   def index

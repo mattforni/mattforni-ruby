@@ -1,3 +1,4 @@
+- position = @stop.position
 %table
     %tr
         %th
@@ -19,6 +20,11 @@
             Percentage
         %td
             = @stop.percentage
+    %tr
+        %th
+            Max Loss
+        %td
+            = currency_display(@stop.stop_price * position.quantity - position.cost_basis)
 = link_to 'portfolio', finance_portfolios_path
 |
 = link_to 'edit', edit_finance_stop_path(@stop.id)

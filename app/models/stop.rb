@@ -1,3 +1,4 @@
+require 'epsilon'
 require 'ranges'
 require 'stocks'
 
@@ -77,14 +78,23 @@ class Stop < ActiveRecord::Base
     update
   end
 
-  def update_percentage?(percentage = nil)
-    # If a new percentage was not provided, do nothing
-    return false if percentage.nil? or self.percentage == percentage
+  def update_stop_price?(params = nil)
+    previous_stop_price = self.stop_price
 
-    original = self.stop_price / rate(true)
-    self.percentage = percentage
-    self.stop_price = rate(true) * original
-    true
+    # Evaluate if percentage was updated
+    percentage = params[:percentage] rescue self.percentage
+    if !percentage.nil? and !Epsilon.equal? self.percentage, percentage
+      original = self.stop_price / rate(true)
+      self.percentage = percentage
+      self.stop_price = rate(true) * original
+    end
+
+    stop_price = params[:stop_price] rescue self.stop_price
+    if !stop_price.nil? and !Epsilon.equal? previous_stop_price, stop_price
+      self.stop_price = stop_price
+    end
+
+    self.stop_price != previous_stop_price
   end
 
   private

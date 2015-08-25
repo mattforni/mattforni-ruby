@@ -77,7 +77,7 @@ function toggleVisibility(selector) {
 }
 
 $( document ).ready(function() {
-  $('div#portfolios a').click(function(event) {
+  $('div.portfolio a').click(function(event) {
     event.stopPropagation();
   });
 

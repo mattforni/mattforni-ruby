@@ -15,7 +15,7 @@ class Finance::HoldingsController < FinanceController
   end
 
   def destroy
-    attempt_destroy!(@holding, finance_portfolios_path, finance_holding_path(@holding.id))
+    attempt_destroy!(@holding, finance_portfolios_path, finance_holding_path(@holding))
   end
 
   def new
