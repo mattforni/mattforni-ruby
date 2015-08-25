@@ -1,6 +1,27 @@
 require 'spec_helper'
 
 describe Position do
+  BELONGS_TO = [
+    :portfolio,
+    :stock,
+    :user
+  ]
+
+  HAS_MANY = [
+    :holdings,
+    :stops
+  ]
+
+  PRESENCE = [
+    :commission_price,
+    :portfolio_id,
+    :purchase_price,
+    :quantity,
+    :stock_id,
+    :symbol,
+    :user_id
+  ]
+
   before(:all) do
     HIGHEST_PRICE = 15
     LOWEST_PRICE = 5
@@ -34,61 +55,61 @@ describe Position do
     ]
   end
 
-  describe 'validations' do
-    it 'has :commission_price field' do
-      @position.field_presence :commission_price
-    end
-
-    it 'has :portfolio_id field' do
-      @position.field_presence :portfolio_id
-    end
-
-    it 'has :purchase_price field' do
-      @position.field_presence :purchase_price
-    end
-
-    it 'has :quantity field' do
-      @position.field_presence :quantity
-    end
-
-    it 'has :stock_id field' do
-      @position.field_presence :stock_id
-    end
-
-    it 'has :symbol field' do
-      @position.field_presence :symbol
-    end
-
-    it 'has :user_id field' do
-      @position.field_presence :user_id
-    end
-  end
-
   describe 'associations' do
-    it 'belongs to portfolio' do
-      @position.belongs_to :portfolio, @portfolio
+    BELONGS_TO.each do |belongs_to|
+      it "belongs_to :#{belongs_to}" do
+        @position.belongs_to belongs_to, @position.record.send(belongs_to)
+      end
     end
 
-    it 'belongs to stock' do
-      @position.belongs_to :stock, @stock
-    end
-
-    it 'belongs to user' do
-      @position.belongs_to :user, @user
-    end
-
-    it 'has many holdings' do
-      @position.has_many :holdings, @holdings
-    end
-
-    it 'has many stops' do
-      @position.has_many :stops, @stops
+    HAS_MANY.each do |has_many|
+      it "has_many :#{has_many}" do
+        @position.has_many has_many, @position.record.send(has_many)
+      end
     end
   end
 
   describe 'delegation' do
     it 'delegates :last_trade to stock' do
       @position.delegates :last_trade, @stock
+    end
+  end
+
+  describe 'validations' do
+    PRESENCE.each do |field|
+      it "has :#{field} field" do
+        @position.field_presence field
+      end
+    end
+  end
+
+  describe '::by_user_and_symbol' do
+    context 'when :position does not exist' do
+      it 'returns nil' do
+        # Assert
+        expect(Position.by_user_and_symbol(@user, 'Invalid')).to be_nil
+      end
+    end
+
+    context 'when :position does not exist for given :user' do
+      it 'return nil' do
+        # Arrange
+        @user.id = -1
+
+        # Assert
+        expect(Position.by_user_and_symbol(@user, @stock.symbol)).to be_nil
+      end
+    end
+
+    context 'when :position exists for :user and :symbol' do
+      it 'returns the :position' do
+        # Act
+        position = Position.by_user_and_symbol(@user, @stock.symbol)
+
+        # Assert
+        expect(position).to_not be_nil
+        expect(position).to eq(@position.record)
+      end
     end
   end
 
