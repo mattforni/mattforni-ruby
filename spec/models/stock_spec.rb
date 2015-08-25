@@ -68,6 +68,26 @@ describe Stock do
     end
   end
 
+  describe '::by_symbol' do
+    context 'when stock does *not* exist' do
+      it 'returns nil' do
+        # Assert
+        expect(Stock.by_symbol('Invalid')).to be_nil
+      end
+    end
+
+    context 'when stock does exist' do
+      it 'returns nil' do
+        # Act
+        stock = Stock.by_symbol @stock.record.symbol
+
+        # Assert
+        expect(stock).to_not be_nil
+        expect(stock).to eq(@stock.record)
+      end
+    end
+  end
+
   describe '#update!' do
     context 'when :last_trade has not changed' do
       it 'should not does not save' do
@@ -100,7 +120,7 @@ describe Stock do
     context 'when :last_trade is lower than :lowest_price' do
       it 'should update :lowest_price and :lowest_time' do
         # Arrange
-        last_trade = @stock.record.last_trade - 1 
+        last_trade = @stock.record.last_trade - 1
         lowest_time = @stock.record.lowest_time
         allow(Quote).to receive(:get).and_return(mock_quote(last_trade))
 
