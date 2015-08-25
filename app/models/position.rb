@@ -17,7 +17,6 @@ class Position < ActiveRecord::Base
   belongs_to :stock
   belongs_to :user
 
-  # TODO for some reason cascading deletion is not working in testing
   has_many :holdings, dependent: :destroy
   has_many :stops, dependent: :destroy
 

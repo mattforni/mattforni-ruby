@@ -164,21 +164,36 @@ describe Stop do
     end
   end
 
-  describe '#update_percentage?' do
-    context 'when percentage has not changed' do
+  describe '#update_stop_price?' do
+    context 'when :percentage has not changed' do
       it 'should be falsey' do
-        expect(@stop.record.update_percentage?).to be_falsey
+        expect(@stop.record.update_stop_price?).to be_falsey
       end
     end
 
-    context 'when percentage has changed' do
+    context 'when :percentage has changed' do
       it 'should update :percentage and :stop_price and be truthy' do
-        stop_price = @stop.record.stop_price
-        percentage = @stop.record.percentage + 1
+        params = {
+          percentage: @stop.record.percentage + 1,
+          stop_price: @stop.record.stop_price
+        }
 
-        expect(@stop.record.update_percentage?(percentage)).to be_truthy
-        expect(@stop.record.percentage).to eq(percentage)
-        expect(@stop.record.stop_price).to_not eq(stop_price)
+        expect(@stop.record.update_stop_price?(params)).to be_truthy
+        expect(@stop.record.percentage).to eq(params[:percentage])
+        expect(@stop.record.stop_price).to_not eq(params[:stop_price])
+      end
+    end
+
+    context 'when :stop_price has changed' do
+      it 'should update :stop_price and be truthy' do
+        params = {
+          percentage: @stop.record.percentage,
+          stop_price: @stop.record.stop_price - 1
+        }
+
+        expect(@stop.record.update_stop_price?(params)).to be_truthy
+        expect(@stop.record.percentage).to eq(params[:percentage])
+        expect(@stop.record.stop_price).to eq(params[:stop_price])
       end
     end
   end

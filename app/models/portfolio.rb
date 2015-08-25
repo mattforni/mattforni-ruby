@@ -11,7 +11,7 @@ class Portfolio < ActiveRecord::Base
 
   belongs_to :user
 
-  has_many :positions
+  has_many :positions, dependent: :destroy
 
   def self.by_user_and_id(user, id)
     raise 'Must provide a user to query for a portfolio' if user.nil?

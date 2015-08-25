@@ -82,14 +82,14 @@ class Stop < ActiveRecord::Base
     previous_stop_price = self.stop_price
 
     # Evaluate if percentage was updated
-    percentage = params[:percentage]
-    if !percentage.nil? and self.percentage != percentage
+    percentage = params[:percentage] rescue self.percentage
+    if !percentage.nil? and !Epsilon.equal? self.percentage, percentage
       original = self.stop_price / rate(true)
       self.percentage = percentage
       self.stop_price = rate(true) * original
     end
 
-    stop_price = params[:stop_price]
+    stop_price = params[:stop_price] rescue self.stop_price
     if !stop_price.nil? and !Epsilon.equal? previous_stop_price, stop_price
       self.stop_price = stop_price
     end
