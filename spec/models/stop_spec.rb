@@ -1,6 +1,26 @@
 require 'spec_helper'
 
 describe Stop do
+  BELONGS_TO = [
+    :position,
+    :user
+  ]
+
+  DELEGATION = [
+    {field: :stock, to: :position},
+    {field: :last_trade, to: :stock}
+  ]
+
+  PRESENCE = [
+    :highest_price,
+    :highest_time,
+    :lowest_price,
+    :lowest_time,
+    :percentage,
+    :position_id,
+    :user_id
+  ]
+
   before(:each) do
     allow(Stocks).to receive(:exists?).and_return(true)
 
@@ -11,60 +31,26 @@ describe Stop do
   end
 
   describe 'validations' do
-    it 'has :highest_price field' do
-      @stop.field_presence :highest_price
-    end
-
-    it 'has :highest_time field' do
-      @stop.field_presence :highest_time
-    end
-
-    it 'has :lowest_price field' do
-      @stop.field_presence :lowest_price
-    end
-
-    it 'has :lowest_time field' do
-      @stop.field_presence :lowest_time
-    end
-
-    it 'has :percentage field' do
-      @stop.field_presence :percentage
-    end
-
-    it 'has :position_id field' do
-      @stop.field_presence :position_id
-    end
-
-    it 'has :stop_price field' do
-      @stop.field_presence :stop_price
-    end
-
-    it 'has :symbol field' do
-      @stop.field_presence :symbol
-    end
-
-    it 'has :user_id field' do
-      @stop.field_presence :user_id
+    PRESENCE.each do |field|
+      it "has :#{field} field" do
+        @stop.field_presence field
+      end
     end
   end
 
   describe 'associations' do
-    it 'belongs to position' do
-      @stop.belongs_to :position, @position      
-    end
-
-    it 'belongs to user' do
-      @stop.belongs_to :user, @user 
+    BELONGS_TO.each do |belongs_to|
+      it "belongs_to :#{belongs_to}" do
+        @stop.belongs_to belongs_to, @stop.record.send(belongs_to)
+      end
     end
   end
 
   describe 'delegation' do
-    it 'delegates :stock to position' do
-      @stop.delegates :stock, @position
-    end
-
-    it 'delegates :last_trade to stock' do
-      @stop.delegates :last_trade, @stock
+    DELEGATION.each do |delegation|
+      it "delegates :#{delegation[:field]} to :#{delegation[:to]}" do
+        @stop.delegates delegation[:field], @stop.record.send(delegation[:to])
+      end
     end
   end
 

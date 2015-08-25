@@ -13,7 +13,7 @@ describe Holding do
     {field: :last_trade, to: :stock}
   ]
 
-  PRESENCE_FIELDS = [
+  PRESENCE = [
     :commission_price,
     :position_id,
     :purchase_date,
@@ -36,7 +36,7 @@ describe Holding do
   describe 'associations' do
     BELONGS_TO.each do |belongs_to|
       it "belongs_to :#{belongs_to}" do
-        @holding.belongs_to belongs_to
+        @holding.belongs_to belongs_to, @holding.record.send(belongs_to)
       end
     end
   end
@@ -50,7 +50,7 @@ describe Holding do
   end
 
   describe 'validations' do
-    PRESENCE_FIELDS.each do |field|
+    PRESENCE.each do |field|
       it "has :#{field} field" do
         @holding.field_presence field
       end

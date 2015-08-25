@@ -58,6 +58,31 @@ RSpec.configure do |config|
   Validity.configure(Validity::TestUnit)
 end
 
+# TODO these aren't working, but revisit this idea
+def validate_belongs_to(record, models)
+  models.each do |model|
+    it "belongs_to :#{model}" do
+      record.belongs_to model, record.record.send(model)
+    end
+  end
+end
+
+def validate_delegation(record, delegations)
+  delegations.each do |delegation|
+    it "delegates :#{delegation[:field]} to :#{delegation[:to]}" do
+      record.delegates delegation[:field], record.record.send(delegation[:to])
+    end
+  end
+end
+
+def validate_presence(record, fields)
+  fields.each do |field|
+    it "has :#{field} field" do
+      record.field_presence field
+    end
+  end
+end
+
 def quote_response(attributes = {lastTrade: 10, symbol: 'FORN', name: 'Forni Co.'})
   attributes[:name] = 'Forni Co.' if attributes.class == Hash and !attributes.has_key?(:name)
   attributes[:symbol] = 'FORN' if attributes.class == Hash and !attributes.has_key?(:symbol)
