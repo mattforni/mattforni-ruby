@@ -5,7 +5,7 @@
 -# Render the holding row
 %tr{class: "#{safe_str(holding.position.portfolio.name)}-#{holding.symbol}-holding"}
   %td
-    = delete_link finance_holding_path(holding), can?(:destroy, holding)
+    = destroy_button finance_holding_path(holding), can?(:destroy, holding)
   %td
   %td.number
     = currency_display change_today
