@@ -1,1 +1,3 @@
-# Migrate remaining files from test/models/* to spec/models/*
+1. 'Banded' alerts where you can set a 'width' on alerts for up or down
+  a. Should include email alerts and can be run when stocks are 'updated'
+
