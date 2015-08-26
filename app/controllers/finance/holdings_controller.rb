@@ -10,7 +10,7 @@ class Finance::HoldingsController < FinanceController
     @holding = Holding.new(holding_params)
     @holding.symbol.try(:upcase!)
     @holding.user = current_user
-    @holding.portfolio = Portfolio.by_user_and_id(current_user, params[:portfolio_id])
+    @holding.creation_portfolio = Portfolio.by_user_and_id(current_user, params[:portfolio_id])
     attempt_create!(@holding, finance_portfolios_path, new_finance_holding_path)
   end
 
@@ -21,6 +21,7 @@ class Finance::HoldingsController < FinanceController
   def new
     @portfolios = Portfolio.where(user: current_user)
   end
+
 
   private
 

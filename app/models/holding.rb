@@ -8,6 +8,8 @@ class Holding < ActiveRecord::Base
   validates :symbol, presence: true
   validates :user_id, presence: true
 
+  attr_accessor :creation_portfolio
+
   belongs_to :position
   belongs_to :user
 
@@ -27,7 +29,7 @@ class Holding < ActiveRecord::Base
       end
 
       # Check if there is already a position model for this user and symbol
-      position = Position.by_portfolio_and_symbol(self.portfolio, symbol)
+      position = Position.by_portfolio_and_symbol(self.creation_portfolio, symbol)
       position_existed = true
       # If there is not already a position then attempt to create one
       if position.nil?
@@ -38,7 +40,7 @@ class Holding < ActiveRecord::Base
           quantity: self.quantity,
           symbol: self.symbol
         })
-        position.portfolio = self.portfolio
+        position.portfolio = self.creation_portfolio
         position.stock = stock
         position.user = self.user
         position.save!
