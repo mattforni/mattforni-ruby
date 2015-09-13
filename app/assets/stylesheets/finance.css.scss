@@ -10,12 +10,16 @@ td.number,th.number {
   text-align: right;
 }
 
-.positive {
+.green, .positive {
   color: green;
 }
 
-.negative {
+.red, .negative {
   color: red;
+}
+
+.yellow {
+  color: #F4C430;
 }
 
 div#quick-quote-wrapper {

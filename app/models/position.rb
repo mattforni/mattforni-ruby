@@ -56,6 +56,14 @@ class Position < ActiveRecord::Base
     @low_price = low_price
   end
 
+  def percentage_of_portfolio
+    self.current_value / self.portfolio.current_value * 100.0
+  end
+
+  def percentage_of_total
+    self.current_value / self.user.current_value * 100.0
+  end
+
   def stop
     self.stops.first
   end

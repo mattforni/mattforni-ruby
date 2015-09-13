@@ -20,6 +20,9 @@
       = "#{decimal_display change_today / position.cost_basis * 100.to_f, 2}%" rescue nil
   %td.number
     = decimal_display position.quantity
+  %td.number{class: percentage_class(position.percentage_of_total)}
+    = percentage_display position.percentage_of_total
+    = "(#{percentage_display position.percentage_of_portfolio})"
   %td.number
     = currency_display position.current_value
   %td.number{class: positivity_class(total_change)}

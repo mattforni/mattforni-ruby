@@ -34,6 +34,10 @@ module ApplicationHelper
     render partial: 'external/logo', locals: {name: name, link: link}
   end
 
+  def percentage_display(percentage, precision = 1)
+    "#{number_with_precision(percentage, precision: precision)}%"
+  end
+
   def price_class(value)
     return value > 0 ? 'positive' : (value == 0 ? '' : 'negative')
   end
