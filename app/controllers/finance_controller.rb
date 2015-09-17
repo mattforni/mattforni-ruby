@@ -6,6 +6,8 @@ class FinanceController < ApplicationController
   include Messages
   include Stocks
 
+  before_action :authenticate_user!, only: [:charts, :details]
+
   around_action :json_only, only: [:historical, :quote]
 
   def charts
@@ -16,13 +18,15 @@ class FinanceController < ApplicationController
     historical_data = get_historical_data(@symbol, @period) do
       logger.error $!.message
       flash[:alert] = $!.message
-      redirect_to charts_path @symbol and return
+      return nil
     end
-    gon.max = historical_data[:max]
-    gon.min = historical_data[:min]
-    gon.time_series_data = historical_data[:time_series_data]
-    gon.symbol = @symbol
-    gon.period = @period
+    if !historical_data.nil?
+      gon.max = historical_data[:max]
+      gon.min = historical_data[:min]
+      gon.time_series_data = historical_data[:time_series_data]
+      gon.symbol = @symbol
+      gon.period = @period
+    end
   end
 
   def details

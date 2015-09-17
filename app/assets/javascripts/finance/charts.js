@@ -12,7 +12,8 @@ const CHART_OPTIONS = {
         mode: 'time',
     },
     yaxis: {
-        minTickSize: 1
+        minTickSize: 1,
+        position: 'right'
     }
 }
 
@@ -54,9 +55,7 @@ function HistoricalChart() {
         }
 
         $.ajax({
-            data: {
-                format: 'json'
-            },
+            data: { format: 'json' },
             dataType: 'json',
             type: 'GET',
             url: BASE_URL+'/'+gon.symbol+'/'+period
@@ -88,8 +87,8 @@ function HistoricalChart() {
     }
 
     function renderData(data, period) {
-        CHART_OPTIONS.yaxis.max = data.max;
-        CHART_OPTIONS.yaxis.min = data.min;
+        CHART_OPTIONS.yaxis.max = data.max + 1;
+        CHART_OPTIONS.yaxis.min = data.min - 1 < 0 ? 0 : data.min - 1;
         $.plot(CHART_SELECTOR, [formatData(data.time_series_data)], CHART_OPTIONS);
         $('div.period').removeClass(SELECTED_CLASS);
         $('div.period#'+period).addClass(SELECTED_CLASS);
@@ -100,14 +99,14 @@ function HistoricalChart() {
     };
 }
 
-if (typeof gon !== 'undefined') {
-  $(document).ready(function() {
-      var chart = new HistoricalChart();
-      chart.getData(gon.period, true);
+$(document).ready(function() {
+    if (typeof gon !== 'undefined') {
+        var chart = new HistoricalChart();
+        chart.getData(gon.period, true);
 
-      $('div.period').click(function() {
-          chart.getData($(this).data('value'), true);
-      });
-  });
-}
+        $('div.period').click(function() {
+            chart.getData($(this).data('value'), true);
+        });
+    }
+});
 

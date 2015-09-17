@@ -12,5 +12,6 @@
   - (0..controller_parts.length).each do |index|
     - controller_path = controller_parts.slice(0, index).join('/')
     = javascript_include_tag controller_path, 'data-turbolinks-track' => true if asset_exists?(controller_path, 'js')
+  = javascript_include_tag [controller, action].join('/'), 'data-turbolinks-track' => true
   = csrf_meta_tags
 
