@@ -4,7 +4,7 @@
       %th
         = f.label :symbol, 'Symbol'
       %td
-        = f.text_field :symbol
+        = @holding.symbol 
     %tr
       %th
         = f.label :purchase_date, 'Purchase Date'
@@ -25,11 +25,6 @@
         = f.label :quantity, 'Quantity'
       %td
         = f.number_field :quantity, step: 0.001
-    %tr
-      %th
-        = f.label :portfolio_id, 'Portfolio'
-      %td
-        = select_tag :portfolio_id, options_from_collection_for_select(@portfolios, 'id', 'name')
     %tr
       %td{colspan: 2}
         = f.submit

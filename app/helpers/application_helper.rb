@@ -27,7 +27,11 @@ module ApplicationHelper
   end
 
   def destroy_button(target, condition = true)
-    button_to ' ', target, data: {confirm: 'You sure?'}, method: :delete, class: 'destroy-button' if condition
+    button_to ' ', target, data: {confirm: 'You sure?'}, method: :delete, class: 'destroy', form_class: 'destroy' if condition
+  end
+
+  def edit_link(target, condition = true)
+    link_to image_tag('icons/edit.png', size: '13x13'), target, class: 'edit' if condition
   end
 
   def external_image(name, link)

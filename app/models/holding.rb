@@ -31,6 +31,7 @@ class Holding < ActiveRecord::Base
       # Check if there is already a position model for this user and symbol
       position = Position.by_portfolio_and_symbol(self.creation_portfolio, symbol)
       position_existed = true
+
       # If there is not already a position then attempt to create one
       if position.nil?
         position_existed = false

@@ -3,4 +3,5 @@
 2. Portfolio analysis, can start with once a night
   a. Per user, analyze ALL portfolios and calculate position percentages/sector exposure/etc
 3. Add in 'total possible loss' to stops/clean up stop view/edit page
+4. Combine FinanceController 'attempt_*' methods into single 'attempt_crud'
 

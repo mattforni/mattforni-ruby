@@ -47,8 +47,16 @@ table.portfolio {
       width: 100px;
       text-align: right;
     }
-    div.price-details {
-      font-size: 0.75rem;
+    div {
+      &.actions {
+        @include flex;
+        align-items: flex-start;
+        justify-content: flex-end;
+      }
+
+      &.price-details {
+        font-size: 0.75rem;
+      }
     }
   }
 }

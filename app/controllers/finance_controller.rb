@@ -1,3 +1,4 @@
+require 'epsilon'
 require 'stocks'
 
 class FinanceController < ApplicationController

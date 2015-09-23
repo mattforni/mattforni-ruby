@@ -4,9 +4,7 @@
 
 -# Render the holding row
 %tr{class: "#{safe_str(holding.position.portfolio.name)}-#{holding.symbol}-holding"}
-  %td
-    = destroy_button finance_holding_path(holding), can?(:destroy, holding)
-  %td
+  %td{colspan: 2}
   %td.number
     = currency_display change_today
   %td.number
@@ -18,6 +16,8 @@
     = currency_display total_change
   %td.spread
     = spread_chart_partial holding.lowest_price, holding.highest_price, holding.last_trade
-  %td.actions
-
+  %td
+    .actions
+      = edit_link edit_finance_holding_path(holding), can?(:edit, holding)
+      = destroy_button finance_holding_path(holding), can?(:destroy, holding)
 
