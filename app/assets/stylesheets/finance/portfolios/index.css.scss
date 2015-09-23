@@ -5,11 +5,13 @@ $hover_color: #DADADA;
 $spread_round: 10px;
 
 div.portfolio-name {
+  align-items: flex-start;
   cursor: default;
   display: inline-block;
   font-size: 1.15rem;
   font-weight: bold;
   margin: 10px 0 10px 10px;
+  @include flex;
 }
 
 div.portfolio-options {
