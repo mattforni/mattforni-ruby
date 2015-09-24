@@ -57,7 +57,7 @@ class Position < ActiveRecord::Base
   end
 
   def needs_adjustment?
-    !PERCENTAGE[:ok].include? self.percentage_of_total
+    PERCENTAGE[:error].include? self.percentage_of_total
   end
 
   def percentage_of_portfolio
@@ -73,7 +73,7 @@ class Position < ActiveRecord::Base
   end
 
   def target_quantity
-    self.user.current_value * PERCENTAGE[:ok].end / 100.0 / self.last_trade
+    self.user.current_value * PERCENTAGE[:warn].end / 100.0 / self.last_trade
   end
 
   def total_change
