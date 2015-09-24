@@ -1,3 +1,7 @@
+require 'ranges'
+
+include Ranges
+
 module FinanceHelper
   def holding_partial(index, holding, quote)
     render partial: 'finance/holdings/holding', locals: {index: index, holding: holding, quote: quote}
@@ -5,10 +9,9 @@ module FinanceHelper
 
   def percentage_class(value)
     return '' if value.nil? or value == 0
-    return 'green' if value > 0 && value < 5
-    return 'yellow' if value >= 5 && value < 15
-    return 'red' if value >= 15
-    value < 0 ? 'negative' : 'positive'
+    return 'green' if PERCENTAGE[:ok].include? value
+    return 'yellow' if PERCENTAGE[:warn].include? value
+    return 'red' if PERCENTAGE[:error].include? value 
   end
 
   def portfolio_partial(portfolio, quotes)

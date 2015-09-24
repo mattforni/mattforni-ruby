@@ -55,9 +55,11 @@ table.portfolio {
         align-items: flex-start;
         justify-content: flex-end;
       }
-
-      &.price-details {
-        font-size: 0.75rem;
+      &.price-details, &.target-quantity {
+        font-size: 0.7rem;
+      }
+      &.target-quantity {
+        color: initial;
       }
     }
   }

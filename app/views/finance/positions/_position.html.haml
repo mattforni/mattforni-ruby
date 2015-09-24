@@ -22,7 +22,9 @@
     = decimal_display position.quantity
   %td.number{class: percentage_class(position.percentage_of_total)}
     = percentage_display position.percentage_of_total
-    = "(#{percentage_display position.percentage_of_portfolio})"
+    - if position.needs_adjustment?
+      .target-quantity
+        = decimal_display position.target_quantity - position.quantity
   %td.number
     = currency_display position.current_value
   %td.number{class: positivity_class(total_change)}
