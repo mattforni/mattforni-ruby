@@ -4,4 +4,5 @@
   a. Per user, analyze ALL portfolios and calculate position percentages/sector exposure/etc
 3. Add in 'total possible loss' to stops/clean up stop view/edit page
 4. Combine FinanceController 'attempt_*' methods into single 'attempt_crud'
+5. Add ability to track selling off holdings
 
