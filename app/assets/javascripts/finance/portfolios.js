@@ -92,5 +92,13 @@ $( document ).ready(function() {
   $('div.portfolio-name').mouseleave(function() {
     toggleVisibility('div#'+$(this).attr('id')+'-options');
   });
+
+  $('div#new-menu').mouseenter(function() {
+    toggleVisibility('div#new-menu-options');
+  });
+
+  $('div#new-menu').mouseleave(function() {
+    toggleVisibility('div#new-menu-options');
+  });
 });
 

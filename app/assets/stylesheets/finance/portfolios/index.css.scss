@@ -65,11 +65,29 @@ table.portfolio {
   }
 }
 
-div.link {
-  padding: 5px 0;
-  width: 100%;
-  div.wrapper {
-    padding: 0 10px;
+div.menu {
+  justify-content: space-between;
+  padding: 10px;
+  text-align: right;
+  @include flex;
+  a#new-menu-link:hover {
+    text-decoration: none;
+  }
+  div#new-menu {
+    cursor: pointer;
+    div#new-menu-options {
+      background: white;
+      display: none;
+      right: 10;
+      position: absolute;
+      z-index: 2;
+      &.visible {
+        display: block;
+      }
+      ul {
+        list-style: none;
+      }
+    }
   }
 }
 

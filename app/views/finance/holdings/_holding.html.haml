@@ -5,7 +5,7 @@
 -# Render the holding row
 %tr{class: "#{safe_str(holding.position.portfolio.name)}-#{holding.symbol}-holding"}
   %td{colspan: 2}
-  %td.number
+  %td.number{class: positivity_class(change_today)}
     = currency_display change_today
   %td.number
     = decimal_display holding.quantity

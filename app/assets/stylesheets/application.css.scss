@@ -93,7 +93,7 @@ div#overlay {
   position: absolute;
   top: 0;
   width: 100%;
-  z-index: 99;
+  z-index: 100;
   &.dismissed {
     display: none;
     z-index: -1;
