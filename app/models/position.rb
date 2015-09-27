@@ -88,8 +88,6 @@ class Position < ActiveRecord::Base
     holdings = self.holdings(true)
     self.destroy! and return if holdings.empty?
 
-    holdings.each {|h| puts h.inspect}
-
     total_commission_price = 0
     total_quantity = 0
     total_weighted = 0

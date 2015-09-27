@@ -81,8 +81,16 @@ class Holding < ActiveRecord::Base
     end
   end
 
+  def purchase_value
+    self.purchase_price * self.quantity - self.commission_price
+  end
+
   def total_change
-    self.current_value - self.purchase_price * self.quantity
+    self.current_value - self.purchase_value
+  end
+
+  def to_s
+    "#{self.symbol} (#{self.purchase_date}) | #{self.quantity} share(s) @ $#{self.purchase_price.round(3)} = $#{self.purchase_value.round(3)}"
   end
 
   def update?

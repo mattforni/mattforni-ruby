@@ -1,5 +1,5 @@
 class Portfolio < ActiveRecord::Base
-  DEFAULT_NAME = 'cash-money'
+  DEFAULT_NAME = 'stacks'
   DOES_NOT_EXIST = "Portfolio does not exist for user '%s'"
   UNIQUENESS_ERROR = 'must be unique for a given user'
 
@@ -16,6 +16,13 @@ class Portfolio < ActiveRecord::Base
   def self.by_user_and_id(user, id)
     raise 'Must provide a user to query for a portfolio' if user.nil?
     portfolio = Portfolio.where(user: user, id: id).first
+    raise ActiveRecord::RecordNotFound if portfolio.nil?
+    portfolio
+  end
+
+  def self.by_user_and_name(user, name)
+    raise 'Must provide a user to query for a portfolio' if user.nil?
+    portfolio = Portfolio.where(user: user, name: name).first
     raise ActiveRecord::RecordNotFound if portfolio.nil?
     portfolio
   end
@@ -47,6 +54,10 @@ class Portfolio < ActiveRecord::Base
       value
     end
     @curr_value = curr_value
+  end
+
+  def to_s
+    "#{self.user.email} - #{self.name}"
   end
 
   def total_change

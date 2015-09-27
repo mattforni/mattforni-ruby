@@ -1,14 +1,3 @@
-PATH
-  remote: ~/Personal/gems
-  specs:
-    stocks (1.0.2)
-      activerecord (~> 4)
-      activesupport (~> 4)
-      lrucache (~> 0.1)
-      yahoofinance (~> 1.2)
-    validity (1.0.2)
-      test-unit (~> 2)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -207,6 +196,11 @@ GEM
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     sqlite3 (1.3.10)
+    stocks (1.0.1)
+      activerecord (~> 4)
+      activesupport (~> 4)
+      lrucache (~> 0.1)
+      yahoofinance (~> 1.2)
     test-unit (2.5.5)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
@@ -219,6 +213,8 @@ GEM
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    validity (1.0.2)
+      test-unit (~> 2)
     warden (1.2.3)
       rack (>= 1.0)
     yahoofinance (1.2.2)
@@ -250,7 +246,7 @@ DEPENDENCIES
   sass-rails (~> 4.0)
   sdoc
   sqlite3 (~> 1.3)
-  stocks (~> 1.0)!
+  stocks (~> 1.0)
   therubyracer (~> 0)
   uglifier (~> 1.3)
   validity (~> 1.0)
