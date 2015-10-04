@@ -16,8 +16,9 @@ div.portfolio-name {
 
 div.portfolio-options {
   display: none;
+  padding-left: 5px;
   &.visible {
-    display: inline-block;
+    @include flex;
   }
 }
 

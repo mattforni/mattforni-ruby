@@ -59,6 +59,7 @@ task :import_401k => :environment do
       portfolio.save!
     end
 
+    existed = 0
     holdings.each do |holding|
       position = Position.where({
         portfolio: portfolio,
@@ -75,7 +76,7 @@ task :import_401k => :environment do
       }).first != nil
 
       if exists
-        puts 'Holding already exists, skipping creation'
+        existed += 1
         next
       end
 
@@ -84,6 +85,7 @@ task :import_401k => :environment do
 
       puts "Created #{holding}"
     end
+    puts "#{existed} holding(s) already existed" if existed > 0
   end
 end
 

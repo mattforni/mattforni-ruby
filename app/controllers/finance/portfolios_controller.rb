@@ -20,8 +20,11 @@ class Finance::PortfoliosController < FinanceController
     attempt_destroy! @portfolio, finance_portfolios_path, finance_portfolio_path(@portfolio)
   end
 
+  def edit
+  end
+
   def index
-    @portfolios = Portfolio.where(user_id: current_user.id).order(:name)
+    @portfolios = Portfolio.includes(:positions).where(user_id: current_user.id).order(:name)
     symbols = @portfolios.collect do |portfolio|
       portfolio.positions.collect { |position| position.symbol }
     end.flatten.uniq
@@ -29,6 +32,10 @@ class Finance::PortfoliosController < FinanceController
   end
 
   def new
+  end
+
+  def update
+    attempt_update! @portfolio, finance_portfolios_path, edit_finance_portfolio_path(@portfolio)
   end
 
   private

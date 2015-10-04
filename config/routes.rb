@@ -24,8 +24,9 @@ Mattforni::Application.routes.draw do
     get '/quote/:symbol', as: 'finance_quote', to: 'finance#quote'
     get '/sizing', as: 'finance_sizing', to: 'finance#sizing'
   end
+
   namespace 'finance' do
-    resources :portfolios, except: [:edit, :show, :update]
+    resources :portfolios, except: :show
     resources :positions, only: [:edit, :update]
     resources :holdings, except: [:index, :show]
     resources :stops, except: :index

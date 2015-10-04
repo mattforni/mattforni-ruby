@@ -1,8 +1,6 @@
 1. 'Banded' alerts where you can set a 'width' on alerts for up or down
   a. Should include email alerts and can be run when stocks are 'updated'
-2. Portfolio analysis, can start with once a night
-  a. Per user, analyze ALL portfolios and calculate position percentages/sector exposure/etc
-3. Add in 'total possible loss' to stops/clean up stop view/edit page
-4. Combine FinanceController 'attempt_*' methods into single 'attempt_crud'
-5. Add ability to track selling off holdings
+2. Add in 'total possible loss' to stops/clean up stop view/edit page
+3. Combine FinanceController 'attempt_*' methods into single 'attempt_crud'
+4. Add ability to track selling off holdings
 

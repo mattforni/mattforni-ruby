@@ -1,6 +1,7 @@
 .portfolio-name{id: safe_str(portfolio.name)}
   = portfolio.name
   .portfolio-options{id: safe_str(portfolio.name)+'-options'}
+    = edit_link edit_finance_portfolio_path(portfolio), can?(:edit, portfolio)
     = destroy_button finance_portfolio_path(portfolio), can?(:destroy, portfolio)
 %table.portfolio
   %tr.visible

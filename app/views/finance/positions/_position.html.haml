@@ -42,6 +42,6 @@
       = link_to 'Stop', new_finance_stop_path(symbol: position.symbol), class: 'action-link' if can?(:create, Stop)
 
 -# Render the holdings associated with this position
-- position.holdings.order('purchase_date DESC').each_with_index do |holding, index|
-  = holding_partial index, holding, quote
+-# position.holdings.order('purchase_date DESC').each_with_index do |holding, index|
+  =# holding_partial index, holding, quote
 
