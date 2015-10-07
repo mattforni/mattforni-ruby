@@ -8,7 +8,6 @@ gem 'puma', '~> 2'
 gem 'rack-timeout', '~> 0.2'
 
 # Finance gems
-# gem 'stocks', '~> 1.0'
 gem 'stocks', '~> 1.0'
 
 # Rendering and markup gems

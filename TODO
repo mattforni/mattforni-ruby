@@ -1,3 +1,4 @@
+0. Add TTL/Cache to portfolio, position total_change
 1. 'Banded' alerts where you can set a 'width' on alerts for up or down
   a. Should include email alerts and can be run when stocks are 'updated'
 2. Add in 'total possible loss' to stops/clean up stop view/edit page
