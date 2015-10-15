@@ -1,7 +1,8 @@
-0. Add TTL/Cache to portfolio, position total_change
-1. 'Banded' alerts where you can set a 'width' on alerts for up or down
-  a. Should include email alerts and can be run when stocks are 'updated'
-2. Add in 'total possible loss' to stops/clean up stop view/edit page
-3. Combine FinanceController 'attempt_*' methods into single 'attempt_crud'
-4. Add ability to track selling off holdings
+- Add TTL/Cache to portfolio, position total_change
+- 'Banded' alerts where you can set a 'width' on alerts for up or down
+  - Should include email alerts and can be run when stocks are 'updated'
+- Add in 'total possible loss' to stops/clean up stop view/edit page
+- Combine FinanceController 'attempt_*' methods into single 'attempt_crud'
+- Add ability to track selling off holdings
+- For 'closed' positions show total return, days held and annualized return
 

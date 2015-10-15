@@ -2,12 +2,15 @@
 @import 'global/mixins.css.scss';
 
 $background_color: #FEFEFE;
+$button_normal_color: #ddd;
+$button_hover_color: #ccc;
 $even_color: #E5E5E5;
 $odd_color: #F0F0F0;
 
 // Generic Styling
 * {
   font-family: 'SaxMono';
+  font-size: 0.85rem;
   margin: 0;
   padding: 0;
   &.number {
@@ -72,6 +75,20 @@ tr {
   }
   &.even {
     background-color: $even_color;
+  }
+}
+
+.button {
+  background-color: $button_normal_color;
+  border: 2px outset $button_normal_color;
+  color: #000;
+  cursor: pointer;
+  padding: 15px 0;
+  @include rounded-corners(5px);
+  &:hover {
+    background-color: $button_hover_color;
+    border: 2px outset $button_hover_color;
+    text-decoration: none;
   }
 }
 

@@ -1,7 +1,5 @@
 #background
   #form-wrapper
-    #sign-up
-      = link_to 'sign up', new_user_registration_path
     #form
       = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
         .input#email
@@ -11,5 +9,9 @@
           = f.password_field :password, placeholder: 'password'
 
         .input#commit 
-          = f.submit "sign in"
+          = f.submit "sign in", class: 'button'
+      #other
+        OR
+        %a{href: new_user_registration_path}
+          #sign-up.button='sign up'
 

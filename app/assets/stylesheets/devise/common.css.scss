@@ -3,10 +3,23 @@
 
 @import "application.css.scss";
 
+div#content {
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 0;
+  @include flex;
+}
+
+// TODO replace this with flex
 div#form-wrapper {
   margin: 100px auto 0 auto;
   position: relative;
-  width: 400px;
+  width: 500px;
   z-index: 1;
   div#form {
     background-color: rgba(0, 0, 0, 0.75);
@@ -23,14 +36,21 @@ div#form-wrapper {
       }
     }
     input {
-      padding: 10px;
+      padding: 15px;
       width: 100%;
       @include rounded-corners(5px);
     }
-  }
-  div#sign-in, div#sign-up {
-    padding-right: 15px;
-    text-align: right;
+    div#other {
+      color: #eee;
+      margin-top: 5px;
+      text-align: center;
+      a {
+        text-decoration: none;
+      }
+      div#sign-in, div#sign-up {
+        margin: 5px 10px 10px 10px;
+      }
+    }
   }
 }
 
