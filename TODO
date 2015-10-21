@@ -5,4 +5,6 @@
 - Combine FinanceController 'attempt_*' methods into single 'attempt_crud'
 - Add ability to track selling off holdings
 - For 'closed' positions show total return, days held and annualized return
+- Risk adjusted position sizing based off of 'beta'
+  - Not quite sure how to weight this, whether by shares or position size
 
