@@ -33,7 +33,7 @@ class Finance::HoldingsController < FinanceController
 
     @holding.transaction do
       @holding.update(holding)
-      
+
       @holding.position.update! if update_position
     end
 

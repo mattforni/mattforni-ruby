@@ -55,7 +55,7 @@ input {
   }
 
   &.destroy {
-    background: $background_color image_url('icons/delete.png') no-repeat;
+    background: transparent image_url('icons/delete.png') no-repeat;
     background-size: 16px 16px;
     border: none;
     cursor: pointer;

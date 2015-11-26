@@ -27,9 +27,11 @@ Mattforni::Application.routes.draw do
 
   namespace 'finance' do
     resources :portfolios, except: :show
-    resources :positions, only: [:edit, :update]
+    resources :positions, only: [:destroy, :edit, :update]
     resources :holdings, except: [:index, :show]
     resources :stops, except: :index
+
+    get 'positions/:id/holdings', as: 'holdings_for_position', to: 'positions#holdings'
   end
 end
 

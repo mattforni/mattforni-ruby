@@ -3,8 +3,8 @@ require 'ranges'
 include Ranges
 
 module FinanceHelper
-  def holding_partial(index, holding, quote)
-    render partial: 'finance/holdings/holding', locals: {index: index, holding: holding, quote: quote}
+  def holding_partial(index, holding, quote, visible = false)
+    render partial: 'finance/holdings/holding', locals: {index: index, holding: holding, quote: quote, visible: visible}
   end
 
   def percentage_class(value)

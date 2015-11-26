@@ -53,7 +53,7 @@ table.portfolio {
     div {
       &.actions {
         @include flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: flex-end;
       }
       &.price-details, &.target-quantity {

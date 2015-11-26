@@ -1,0 +1,3 @@
+- @position.holdings.order('purchase_date DESC').each_with_index do |holding, index|
+  = holding_partial index, holding, @quote, true
+

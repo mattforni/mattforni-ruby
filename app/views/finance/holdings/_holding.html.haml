@@ -1,9 +1,10 @@
 -# Initialize other variables
 - change_today = holding.quantity * quote[:changePoints] rescue nil
 - total_change = holding.total_change
+- visible ||= false
 
 -# Render the holding row
-%tr{class: "#{safe_str(holding.position.portfolio.name)}-#{holding.symbol}-holding"}
+%tr{class: "#{safe_str(holding.position.portfolio.name)}-#{holding.symbol}-holding #{visible ? 'visible' : ''}"}
   %td{colspan: 2}
   %td.number{class: positivity_class(change_today)}
     = currency_display change_today
