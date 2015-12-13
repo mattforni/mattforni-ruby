@@ -1,8 +1,8 @@
 # TODO Test all
 class Finance::PositionsController < FinanceController
   before_action :authenticate_user!
-  authorize_resource only: [:edit, :update] 
-  load_and_authorize_resource except: [:edit, :update]
+  authorize_resource only: :edit
+  load_and_authorize_resource except: :edit
 
   def destroy
     attempt_destroy!(@position, finance_portfolios_path, finance_portfolios_path)
