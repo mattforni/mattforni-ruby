@@ -16,10 +16,10 @@
     = currency_display holding.current_value
   %td.number{class: positivity_class(total_change)}
     = currency_display total_change
-  %td.spread
-    = spread_chart_partial holding.lowest_price, holding.highest_price, holding.last_trade
   %td.cost-basis.number
     = currency_display holding.purchase_price
+  %td.spread
+    = spread_chart_partial holding.lowest_price, holding.highest_price, holding.last_trade
   %td.actions
     .actions
       = edit_link edit_finance_holding_path(holding), can?(:edit, holding)
