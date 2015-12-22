@@ -21,6 +21,8 @@
       Total Change
     %th.spread
       Spread
+    %th.cost-basis
+      Cost Basis
     %th.actions
       Actions
   - portfolio.positions.order(:symbol).each_with_index do |position, index|
@@ -35,5 +37,5 @@
       = currency_display portfolio.total_change
       .price-details
         = "#{decimal_display portfolio.total_change / portfolio.cost_basis * 100.to_f, 2}%"
-    %td{colspan: 2}
+    %td{colspan: 3}
 

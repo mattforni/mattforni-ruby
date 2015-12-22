@@ -17,6 +17,10 @@ class Holding < ActiveRecord::Base
   delegate :stock, to: :position, allow_nil: false
   delegate :last_trade, to: :stock, allow_nil: false
 
+  def cost_basis
+    self.purchase_price * self.quantity + self.commission_price
+  end
+
   def create!
     self.transaction do
       # Check if there is already a stock model for this symbol

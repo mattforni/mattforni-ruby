@@ -33,6 +33,8 @@
       = "#{decimal_display position.total_change_percent, 2}%"
   %td.spread
     = spread_chart_partial position.lowest_price, position.highest_price, position.last_trade
+  %td.cost-basis.number
+    = currency_display position.purchase_price
   %td.actions
     .actions
       - if !stop.nil?
