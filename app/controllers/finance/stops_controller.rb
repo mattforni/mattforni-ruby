@@ -34,8 +34,11 @@ class Finance::StopsController < FinanceController
   end
 
   def update
-    @stop.update_stop_price?(params[:stop])
-    attempt_update!(@stop, finance_portfolios_path, edit_finance_stop_path(@stop.id))
+    if @stop.update_stop_price?(params[:stop])
+      attempt_update!(@stop, finance_portfolios_path, edit_finance_stop_path(@stop.id))
+    else
+      redirect_to edit_finance_stop_path(@stop.id), notice: 'No update necessary'
+    end
   end
 
   private

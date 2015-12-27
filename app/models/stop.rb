@@ -79,22 +79,26 @@ class Stop < ActiveRecord::Base
   end
 
   def update_stop_price?(params = nil)
+    highest_price = self.stop_price / rate(true)
     previous_stop_price = self.stop_price
 
-    # Evaluate if percentage was updated
-    percentage = params[:percentage] rescue self.percentage
-    if !percentage.nil? and !Epsilon.equal? self.percentage, percentage
-      original = self.stop_price / rate(true)
-      self.percentage = percentage
-      self.stop_price = rate(true) * original
-    end
-
-    stop_price = params[:stop_price] rescue self.stop_price
+    # Price has a higher priority
+    stop_price = (params[:stop_price].empty? ? nil : params[:stop_price].to_f) rescue self.stop_price
     if !stop_price.nil? and !Epsilon.equal? previous_stop_price, stop_price
       self.stop_price = stop_price
+      self.percentage = ((1.0 - (self.stop_price / highest_price)) * 100).round(3)
+      return true
     end
 
-    self.stop_price != previous_stop_price
+    # Otherwise check if percentage was updated
+    percentage = (params[:percentage].empty? ? nil : params[:percentage].to_f) rescue self.percentage
+    if !percentage.nil? and !Epsilon.equal? self.percentage, percentage
+      self.percentage = percentage
+      self.stop_price = (rate(true) * highest_price).round(3)
+      return true
+    end
+
+    false
   end
 
   private
