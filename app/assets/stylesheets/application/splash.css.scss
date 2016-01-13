@@ -34,14 +34,16 @@ div#external {
     display: inline-block;
     font-size: 0.75rem;
     height: 50px;
+    overflow: hidden;
     width: 50px;
+    @include rounded-corners(10px);
+    &.hover {
+      @include box-shadow(0, 0, 10px, black);
+    }
     img {
       height: 100%;
       width: 100%;
-      @include rounded-corners(10px);
-      &.hover {
-        @include box-shadow(0, 0, 10px, black);
-      }
+
     }
   }
 }
