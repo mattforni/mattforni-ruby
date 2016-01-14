@@ -1,11 +1,8 @@
-/**
- * This file contains all JavaScript logic pertinent to the finance pages.
- *
- * @author Matt Fornaciari (mattforni@gmail.com)
- */
+//= require application
 
-var QUOTE_URL = '/finance/quote';
+const QUOTE_URL = '/finance/quote';
 
+var finance = angular.module('finance', []);
 var requestQuote = function(symbol, success, error) {
     var request = $.ajax({
         accepts: 'json',

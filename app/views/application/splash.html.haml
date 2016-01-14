@@ -19,7 +19,8 @@
       = link_to 'sign up', new_user_registration_path
       |
       = link_to 'sign in', new_user_session_path
-- if @blog_posts.empty?
+-# TODO disabled for the time being
+- if !@blog_posts.empty? and false
   #blog-posts
     - @blog_posts.each do |blog_post|
       = render partial: 'blog_posts/show', locals: {blog_post: blog_post}

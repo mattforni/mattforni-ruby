@@ -2,8 +2,6 @@
 //= require jquery
 //= require jquery_ujs
 
-var finance = angular.module('finance', []);
-
 function dismissOverlay() {
   $('div#message-wrapper').slideUp(100);
   $('div#overlay').fadeOut(function() {

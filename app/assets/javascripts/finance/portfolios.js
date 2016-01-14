@@ -1,3 +1,4 @@
+//= require finance
 //= require finance/charts/spread_chart
 
 const HOLDINGS_PATH = 'positions/{id}/holdings'

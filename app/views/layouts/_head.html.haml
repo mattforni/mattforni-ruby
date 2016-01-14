@@ -5,13 +5,8 @@
   %title
     = title
   = include_gon
-  = favicon_link_tag
-  = stylesheet_link_tag controller, media: 'all', 'data-turbolinks-track' => true if asset_exists?(controller, 'css')
-  = stylesheet_link_tag page, media: 'all', 'data-turbolinks-track' => true if asset_exists?(page, 'css')
-  = javascript_include_tag 'application', 'data-turbolinks-track' => true
-  - (0..controller_parts.length).each do |index|
-    - controller_path = controller_parts.slice(0, index).join('/')
-    = javascript_include_tag controller_path, 'data-turbolinks-track' => true if asset_exists?(controller_path, 'js')
-  = javascript_include_tag [controller, action].join('/'), 'data-turbolinks-track' => true
+  = favicon_link_tag if asset_exists? (@favicon || 'favicon'), 'ico'
+  = include 'css'
+  = include 'js'
   = csrf_meta_tags
 
