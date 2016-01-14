@@ -16,7 +16,7 @@ $( document ).ready(function() {
     setTimeout(dismissOverlay, 5000);
   }
 
-  $('div.social-logo img').hover(function() {
+  $('div.external-logo').hover(function() {
     $(this).addClass('hover');
   }, function() {
     $(this).removeClass('hover');

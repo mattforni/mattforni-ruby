@@ -28,8 +28,8 @@ div#content {
   }
   div#header {
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.8); 
-    border-bottom: 1px solid rgb(229, 229, 229); 
+    background-color: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgb(229, 229, 229);
     justify-content: space-between;
     padding: $normal-padding;
     @include flex;
@@ -40,15 +40,16 @@ div#content {
       div.external-logo {
         font-size: 0.75rem;
         height: $logo-size;
+        overflow: hidden;
         width: $logo-size;
+        @include rounded-corners($logo-size / 5);
+        &.hover {
+          @include box-shadow(0, 0, $logo-size / 5, black);
+        }
         img {
-          border: 1px solid rgb(229, 229, 229); 
+          border: 1px solid rgb(229, 229, 229);
           height: 100%;
           width: 100%;
-          @include rounded-corners($logo-size / 5);
-          &.hover {
-            @include box-shadow(0, 0, 10px, black);
-          }
         }
       }
     }
