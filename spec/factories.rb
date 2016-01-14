@@ -1,4 +1,11 @@
 FactoryGirl.define do
+  factory :blog_post do
+    content 'this is the content'
+    description 'described by this'
+    short_url 'blog_post'
+    title 'this is a blog post'
+  end
+
   factory :holding do
     commission_price 5
     highest_price 20

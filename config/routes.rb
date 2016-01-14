@@ -5,6 +5,12 @@ Mattforni::Application.routes.draw do
   # Setup devise routes for users
   devise_for :users
 
+  # Setup blog routes
+  scope '/blog' do
+    get '/posts/new', as: :new_blog_post, to: 'blog_posts#new'
+    post '/posts', as: :blog_posts, to: 'blog_posts#create'
+  end
+
   # Setup finance routes
   scope '/finance' do
     get '/', as: :finance, to: 'finance#index'

@@ -1,17 +1,26 @@
-#background
-#external
-  = external_image('github', 'https://github.com/mattforni')
-  = external_image('rubygems', 'https://rubygems.org/profiles/mattforni')
-  = external_image('stackoverflow', 'http://stackoverflow.com/users/2861181/mattforni')
-  = external_image('linked', 'https://www.linkedin.com/in/mattforni/')
-#authenticate
-  - if current_user
-    = link_to 'finance', finance_path
-    |
-    = link_to 'log out', destroy_user_session_path, method: :delete
-  - else
-    = link_to 'sign up', new_user_registration_path
-    |
-    = link_to 'sign in', new_user_session_path
-
+#header
+  #background
+  #external
+    = external_image('github', 'https://github.com/mattforni')
+    = external_image('rubygems', 'https://rubygems.org/profiles/mattforni')
+    = external_image('stackoverflow', 'http://stackoverflow.com/users/2861181/mattforni')
+    = external_image('linked', 'https://www.linkedin.com/in/mattforni/')
+  #title
+    mattforni
+    %span.smaller
+      [ dot ]
+    com
+  #authenticate
+    - if current_user
+      = link_to 'finance', finance_path
+      |
+      = link_to 'log out', destroy_user_session_path, method: :delete
+    - else
+      = link_to 'sign up', new_user_registration_path
+      |
+      = link_to 'sign in', new_user_session_path
+- if @blog_posts.empty?
+  #blog-posts
+    - @blog_posts.each do |blog_post|
+      = render partial: 'blog_posts/show', locals: {blog_post: blog_post}
 

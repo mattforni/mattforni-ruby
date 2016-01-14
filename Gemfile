@@ -7,6 +7,10 @@ gem 'rails', '~> 4.1'
 gem 'puma', '~> 2'
 gem 'rack-timeout', '~> 0.2'
 
+# Blog gems
+gem 'acts-as-taggable-on', '~> 3.5'
+gem 'redcarpet', '~> 3.3'
+
 # Finance gems
 gem 'stocks', '~> 1.0'
 
@@ -14,7 +18,6 @@ gem 'stocks', '~> 1.0'
 gem 'haml-rails', '~> 0.4'
 gem 'nokogiri', '~> 1.6'
 gem 'premailer-rails', '~> 1.8'
-# gem 'RedCloth', '>= 4.2.9'
 
 # The JavaScript libraries
 gem 'angularjs-rails', '~> 1.2'
@@ -29,8 +32,6 @@ gem 'devise', '~> 3.2'
 
 # Authorization
 gem 'cancan', '~> 1.6'
-
-gem 'acts-as-taggable-on', '>= 2.4.1'
 
 # Gem groups
 group :assets do

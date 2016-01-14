@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150616185843) do
+ActiveRecord::Schema.define(version: 20160113220047) do
+
+  create_table "blog_posts", force: :cascade do |t|
+    t.text     "content",     null: false
+    t.string   "description"
+    t.string   "short_url",   null: false
+    t.string   "title",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "blog_posts", ["content"], name: "blog_post_content_index"
+  add_index "blog_posts", ["short_url"], name: "blog_post_short_url_uniqueness", unique: true
+  add_index "blog_posts", ["title"], name: "blog_post_title_uniqueness", unique: true
 
   create_table "holdings", force: :cascade do |t|
     t.string   "symbol",           limit: 10,                                        null: false
@@ -58,28 +71,15 @@ ActiveRecord::Schema.define(version: 20150616185843) do
   add_index "positions", ["user_id", "symbol"], name: "position_by_user_and_symbol_index"
   add_index "positions", ["user_id"], name: "position_by_user_index"
 
-  create_table "posts", force: :cascade do |t|
-    t.string   "title",       limit: 255, null: false
-    t.string   "short_url",   limit: 255, null: false
-    t.string   "description", limit: 255
-    t.text     "content",                 null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "posts", ["content"], name: "post_content_index"
-  add_index "posts", ["short_url"], name: "post_short_url_uniqueness", unique: true
-  add_index "posts", ["title"], name: "post_title_uniqueness", unique: true
-
   create_table "stocks", force: :cascade do |t|
-    t.string   "symbol",         limit: 10,                           null: false
-    t.string   "name",           limit: 255
-    t.decimal  "previous_close",             precision: 15, scale: 5
-    t.decimal  "last_trade",                 precision: 15, scale: 5, null: false
-    t.decimal  "lowest_price",               precision: 15, scale: 5, null: false
-    t.datetime "lowest_time",                                         null: false
-    t.decimal  "highest_price",              precision: 15, scale: 5, null: false
-    t.datetime "highest_time",                                        null: false
+    t.string   "symbol",         limit: 10,                          null: false
+    t.string   "name"
+    t.decimal  "previous_close",            precision: 15, scale: 5
+    t.decimal  "last_trade",                precision: 15, scale: 5, null: false
+    t.decimal  "lowest_price",              precision: 15, scale: 5, null: false
+    t.datetime "lowest_time",                                        null: false
+    t.decimal  "highest_price",             precision: 15, scale: 5, null: false
+    t.datetime "highest_time",                                       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -87,57 +87,37 @@ ActiveRecord::Schema.define(version: 20150616185843) do
   add_index "stocks", ["symbol"], name: "stock_by_symbol_index", unique: true
 
   create_table "stops", force: :cascade do |t|
-    t.string   "symbol",        limit: 10,                                                          null: false
-    t.decimal  "percentage",               precision: 15, scale: 5,                                 null: false
-    t.decimal  "stop_price",               precision: 15, scale: 5,                                 null: false
+    t.string   "symbol",        limit: 10,                          null: false
+    t.decimal  "percentage",               precision: 15, scale: 5, null: false
+    t.decimal  "stop_price",               precision: 15, scale: 5, null: false
     t.decimal  "quantity",                 precision: 15, scale: 3
+    t.decimal  "highest_price",            precision: 15, scale: 5, null: false
+    t.datetime "highest_time",                                      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id",                                                                           null: false
-    t.decimal  "highest_price",                                     default: 1.0,                   null: false
-    t.datetime "highest_time",                                      default: '2014-04-12 00:00:00', null: false
-    t.integer  "position_id",                                                                       null: false
-    t.decimal  "lowest_price",             precision: 15, scale: 5,                                 null: false
-    t.datetime "lowest_time",                                                                       null: false
+    t.integer  "user_id",                                           null: false
+    t.integer  "position_id",                                       null: false
+    t.decimal  "lowest_price",             precision: 15, scale: 5, null: false
+    t.datetime "lowest_time",                                       null: false
   end
 
   add_index "stops", ["user_id"], name: "by_user"
 
-  create_table "taggings", force: :cascade do |t|
-    t.integer  "tag_id"
-    t.integer  "taggable_id"
-    t.string   "taggable_type", limit: 255
-    t.integer  "tagger_id"
-    t.string   "tagger_type",   limit: 255
-    t.string   "context",       limit: 128
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id"
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
-
-  create_table "tags", force: :cascade do |t|
-    t.string "name", limit: 255
-  end
-
-  add_index "tags", ["name"], name: "index_tags_on_name", unique: true
-
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  limit: 255,             null: false
-    t.string   "encrypted_password",     limit: 255,             null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "email",                              null: false
+    t.string   "encrypted_password",                 null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                      default: 0, null: false
+    t.integer  "sign_in_count",          default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
-    t.string   "confirmation_token",     limit: 255
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email",      limit: 255
+    t.string   "unconfirmed_email"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

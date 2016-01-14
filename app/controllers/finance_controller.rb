@@ -4,7 +4,6 @@ require 'stocks'
 class FinanceController < ApplicationController
   layout 'finance'
 
-  include Messages
   include Stocks
 
   before_action :authenticate_user!, only: [:charts, :details]
@@ -61,51 +60,6 @@ class FinanceController < ApplicationController
   end
 
   def sizing
-  end
-
-  protected
-
-  def attempt_create!(record, success_redirect, failure_redirect)
-    begin
-      record.create!
-      flash[:notice] = record_success(CREATE, record)
-      redirect_to success_redirect and return
-    rescue ActiveRecord::RecordInvalid
-      error_message = record_error(CREATE, $!.record)
-      logger.error "#{error_message} - #{$!.record.errors.full_messages.join(', ')}"
-      flash[:alert] = error_message
-      flash[:errors] = $!.record.errors.full_messages
-      redirect_to failure_redirect and return
-    end
-  end
-
-  def attempt_destroy!(record, success_redirect, failure_redirect = nil)
-    failure_redirect ||= success_redirect
-    begin
-      record.destroy!
-      flash[:notice] = record_success(DESTROY, record)
-      redirect_to success_redirect and return
-    rescue ActiveRecord::RecordInvalid
-      error_message = record_error(DESTROY, $!.record)
-      logger.error "#{error_message} - #{$!.record.errors.full_messages.join(', ')}"
-      flash[:alert] = error_message
-      flash[:errors] = $!.record.errors.full_messages
-      redirect_to failure_redirect and return
-    end
-  end
-
-  def attempt_update!(record, success_redirect, failure_redirect)
-    begin
-      record.save!
-      flash[:notice] = record_success(UPDATE, record)
-      redirect_to success_redirect and return
-    rescue ActiveRecord::RecordInvalid
-      error_message = record_error(UPDATE, $!.record)
-      logger.error "#{error_message} - #{$!.record.errors.full_messages.join(', ')}"
-      flash[:alert] = error_message
-      flash[:errors] = $!.record.errors.full_messages
-      redirect_to failure_redirect and return
-    end
   end
 
   private
