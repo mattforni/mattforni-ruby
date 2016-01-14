@@ -40,7 +40,7 @@ $(function ready() {
   });
 
   $('div.portfolio-name').hover(function mouseenter() {
-    toggleVisibility('div#'+$(this).attr('id')+'-options'); 
+    toggleVisibility('div#'+$(this).attr('id')+'-options');
   }, function mouseleave() {
     toggleVisibility('div#'+$(this).attr('id')+'-options');
   });
