@@ -1,4 +1,13 @@
 FactoryGirl.define do
+  factory :alert do
+    active true
+    greater_than 1.234
+    less_than 5.768
+    name 'alert'
+    stock
+    user
+  end
+
   factory :blog_post do
     content 'this is the content'
     description 'described by this'

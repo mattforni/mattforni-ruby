@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160113220047) do
+ActiveRecord::Schema.define(version: 20160124185600) do
+
+  create_table "alerts", force: :cascade do |t|
+    t.boolean  "active",       default: true
+    t.decimal  "greater_than"
+    t.decimal  "less_than"
+    t.string   "name"
+    t.integer  "stock_id",                    null: false
+    t.datetime "triggered_at"
+    t.integer  "user_id",                     null: false
+  end
 
   create_table "blog_posts", force: :cascade do |t|
     t.text     "content",     null: false
