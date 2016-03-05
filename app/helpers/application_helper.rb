@@ -55,9 +55,8 @@ module ApplicationHelper
     time.strftime("%^b %d %Y %H:%M")
   end
 
-  def include(extension)
-    # Only support css and js at the moment
-    return if !['css', 'js'].include?(extension)
+  def include_assets(type)
+    return if type != 'css' and type != 'js'
 
     action = params[:action]
     controller = params[:controller]
@@ -65,31 +64,33 @@ module ApplicationHelper
     controller_parts = controller.split('/')
 
     # Start at the most specific
-    file = asset_exists?(page, extension) ? page : nil
+    asset = asset_exists?(page, type) ? page : nil
 
     # And start working toward less specific
-    file = controller if file.nil? and asset_exists? controller, extension
+    asset = controller if asset.nil? and asset_exists? controller, type
 
-    if file.nil?
+    if asset.nil?
       # Then iterate through all portions of the controller
       (1..controller_parts.length).each do |index|
         controller_path = controller_parts.slice(0, index).join('/')
 
         # If the asset exists stop searching
-        if asset_exists? controller_path, extension
-          file = controller_path
+        if asset_exists? controller_path, type
+          asset = controller_path
           break
         end
       end
     end
 
     # Fallback to the application if nothing was found
-    file = 'application' if file.nil? and asset_exists? 'application', extension
+    asset = 'application' if asset.nil? and asset_exists? 'application', type
 
-    if extension == 'css'
-      stylesheet_link_tag file, media: 'all', 'data-turbolinks-track' => true if !file.nil?
-    elsif extension == 'js'
-      javascript_include_tag file, 'data-turbolinks-track' => true if !file.nil?
+    return if asset.nil?
+
+    if type == 'css'
+      stylesheet_link_tag asset, media: 'all', 'data-turbolinks-track' => true
+    elsif type == 'js'
+      javascript_include_tag asset, 'data-turbolinks-track' => true
     end
   end
 end

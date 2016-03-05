@@ -6,7 +6,7 @@
     = title
   = include_gon
   = favicon_link_tag if asset_exists? (@favicon || 'favicon'), 'ico'
-  = include 'css'
-  = include 'js'
+  = include_assets 'css'
+  = include_assets 'js'
   = csrf_meta_tags
 

@@ -5,6 +5,29 @@ def handle_weekend
   abort 'Today is a weekend, no need to evaluate' if now.saturday? or now.sunday?
 end
 
+task :update_alerts => :environment do
+  handle_weekend
+
+  User.all.each do |user|
+    alerts = user.alerts
+    if !alerts.empty?
+      puts "Evaluating alert(s) for #{user.email}"
+      User.transaction do
+        triggered = []
+        alerts.each do |alert|
+          puts "Evaluating #{alert}"
+          if alert.trigger?
+            triggered << alert
+            alert.save!
+          end
+        end
+
+        # TODO send email
+      end
+    end
+  end
+end
+
 task :update_stocks => :environment do
   handle_weekend
 

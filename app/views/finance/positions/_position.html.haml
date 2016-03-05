@@ -32,7 +32,7 @@
     .price-details
       = "#{decimal_display position.total_change_percent, 2}%"
   %td.cost-basis.number
-    = currency_display position.purchase_price
+    = currency_display position.cost_basis / position.quantity
   %td.spread
     = spread_chart_partial position.lowest_price, position.highest_price, position.last_trade
   %td.actions
