@@ -353,14 +353,6 @@
 <span id="310">310</span>
 <span id="311">311</span>
 <span id="312">312</span>
-<span id="313">313</span>
-<span id="314">314</span>
-<span id="315">315</span>
-<span id="316">316</span>
-<span id="317">317</span>
-<span id="318">318</span>
-<span id="319">319</span>
-<span id="320">320</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2016 Matthew Fornaciari &lt;mattforni@gmail.com&gt;</span>
 <span class='doccomment'>//!</span>
@@ -404,12 +396,16 @@
 <span class='doccomment'>//! extern crate args;</span>
 <span class='doccomment'>//! extern crate getopts;</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! use args::{Args,Order,OrderValidation};</span>
+<span class='doccomment'>//! use args::{Args,ArgsError,Order,OrderValidation};</span>
 <span class='doccomment'>//! use getopts::Occur;</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! const PROGRAM_NAME: &amp;&#39;static str = &quot;program&quot;;</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! fn main() {</span>
+<span class='doccomment'>//!     parse(&amp;vec!(&quot;-i&quot;, &quot;15&quot;));</span>
+<span class='doccomment'>//! }</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! fn parse(input: &amp;Vec&lt;&amp;str&gt;) -&gt; Result&lt;(), ArgsError&gt; {</span>
 <span class='doccomment'>//!     let mut args = Args::new(PROGRAM_NAME);</span>
 <span class='doccomment'>//!     args.flag(&quot;h&quot;, &quot;help&quot;, &quot;Print the usage menu&quot;);</span>
 <span class='doccomment'>//!     args.option(&quot;i&quot;,</span>
@@ -425,36 +421,24 @@
 <span class='doccomment'>//!         Occur::Optional,</span>
 <span class='doccomment'>//!         None);</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//!     args.parse(vec!(&quot;-i&quot;, &quot;15&quot;));</span>
+<span class='doccomment'>//!     try!(args.parse(input));</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//!     match args.value_of(&quot;help&quot;) {</span>
-<span class='doccomment'>//!         Ok(help) =&gt; {</span>
-<span class='doccomment'>//!             if help {</span>
-<span class='doccomment'>//!                 args.full_usage(&amp;format!(&quot;How to use {}&quot;, PROGRAM_NAME));</span>
-<span class='doccomment'>//!                 return;</span>
-<span class='doccomment'>//!             }</span>
-<span class='doccomment'>//!         },</span>
-<span class='doccomment'>//!         Err(error) =&gt; {</span>
-<span class='doccomment'>//!             println!(&quot;{}&quot;, error);</span>
-<span class='doccomment'>//!             return;</span>
-<span class='doccomment'>//!         }</span>
+<span class='doccomment'>//!     let help = try!(args.value_of(&quot;help&quot;));</span>
+<span class='doccomment'>//!     if help {</span>
+<span class='doccomment'>//!         args.full_usage(&amp;format!(&quot;How to use {}&quot;, PROGRAM_NAME));</span>
+<span class='doccomment'>//!         return Ok(());</span>
 <span class='doccomment'>//!     }</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//!     let gt_0 = Box::new(OrderValidation::new(Order::GreaterThan, 0u32));</span>
 <span class='doccomment'>//!     let lt_10 = Box::new(OrderValidation::new(Order::LessThanOrEqual, 10u32));</span>
-
-<span class='doccomment'>//!     match args.validated_value_of(&quot;iter&quot;, &amp;[gt_0, lt_10]) {</span>
-<span class='doccomment'>//!         Ok(iterations) =&gt; {</span>
-<span class='doccomment'>//!             for _ in 0..iterations {</span>
-<span class='doccomment'>//!                 println!(&quot;Doing work ...&quot;);</span>
-<span class='doccomment'>//!             }</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//!             println!(&quot;All done.&quot;);</span>
-<span class='doccomment'>//!         },</span>
-<span class='doccomment'>//!         Err(error) =&gt; {</span>
-<span class='doccomment'>//!             println!(&quot;{}&quot;, error.to_string());</span>
-<span class='doccomment'>//!         }</span>
+<span class='doccomment'>//!     let iters = try!(args.validated_value_of(&quot;iter&quot;, &amp;[gt_0, lt_10]));</span>
+<span class='doccomment'>//!     for iter in 0..iters {</span>
+<span class='doccomment'>//!         println!(&quot;Working on iteration {}&quot;, iter);</span>
 <span class='doccomment'>//!     }</span>
+<span class='doccomment'>//!     println!(&quot;All done.&quot;);</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!     Ok(())</span>
 <span class='doccomment'>//! }</span>
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//!</span>
