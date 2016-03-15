@@ -89,6 +89,11 @@
 <span id="46">46</span>
 <span id="47">47</span>
 <span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ffi</span>::<span class='ident'>OsStr</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>;
@@ -108,12 +113,17 @@
     }
 
     <span class='doccomment'>/// Acts as a convenience method for calling the `Args` implementation.</span>
-    <span class='kw'>fn</span> <span class='ident'>parse</span><span class='op'>&lt;</span><span class='ident'>C</span>: <span class='ident'>IntoIterator</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>raw_args</span>: <span class='ident'>C</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Args</span> <span class='kw'>where</span> <span class='ident'>C</span>::<span class='ident'>Item</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>OsStr</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>has_value</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>opt_name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+        <span class='self'>self</span>.<span class='ident'>args</span>().<span class='ident'>has_value</span>(<span class='ident'>opt_name</span>)
+    }
+
+    <span class='doccomment'>/// Acts as a convenience method for calling the `Args` implementation.</span>
+    <span class='kw'>fn</span> <span class='ident'>parse</span><span class='op'>&lt;</span><span class='ident'>C</span>: <span class='ident'>IntoIterator</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>raw_args</span>: <span class='ident'>C</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>ArgsError</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>C</span>::<span class='ident'>Item</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>OsStr</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>args</span>().<span class='ident'>parse</span>(<span class='ident'>raw_args</span>)
     }
 
     <span class='doccomment'>/// Acts as a convenience method for calling the `Args` implementation.</span>
-    <span class='kw'>fn</span> <span class='ident'>parse_from_cli</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Args</span> {
+    <span class='kw'>fn</span> <span class='ident'>parse_from_cli</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>ArgsError</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>args</span>().<span class='ident'>parse_from_cli</span>()
     }
 
