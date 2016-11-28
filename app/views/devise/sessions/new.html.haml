@@ -7,11 +7,12 @@
 
         .input#password
           = f.password_field :password, placeholder: 'password'
+        .forgot-password
+          = link_to 'forgot your password?', new_user_password_path
 
-        .input#commit 
+        .input#commit
           = f.submit "sign in", class: 'button'
       #other
         OR
         %a{href: new_user_registration_path}
           #sign-up.button='sign up'
-
