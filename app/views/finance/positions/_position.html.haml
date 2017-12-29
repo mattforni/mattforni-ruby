@@ -11,9 +11,10 @@
     -# link_to position.symbol, charts_url(position.symbol, period), class: 'chart-link'
     = link_to position.symbol, edit_finance_position_path(position.id)
   %td.number
-    = currency_display position.last_trade
-    .price-details{class: positivity_class(quote[:changePoints])}
-      = currency_display quote[:changePoints]
+    - if quote
+      = currency_display position.last_trade
+      .price-details{class: positivity_class(quote[:changePoints])}
+        = currency_display quote[:changePoints]
   %td.number{class: positivity_class(change_today)}
     = currency_display change_today
     .price-details
@@ -45,4 +46,3 @@
       - else
         = link_to 'Stop', new_finance_stop_path(symbol: position.symbol), class: 'action-link' if can?(:create, Stop)
       = destroy_button finance_position_path(position), can?(:destroy, position)
-
